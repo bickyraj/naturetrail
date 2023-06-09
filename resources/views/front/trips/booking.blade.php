@@ -32,7 +32,7 @@ if (session()->has('error_message')) {
         <div class="container">
             <div class="grid gap-10 lg:grid-cols-3 xl:grid-cols-4 xl:gap-3">
                 <div class="lg:col-span-2 xl:col-span-3">
-                    <form id="captcha-form" action="{{ route('front.trips.booking.store') }}" method="POST">
+                    <form id="captcha-form" action="{{ route('front.store_payment') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $trip->id }}">
                         <h2 class="mb-2 text-2xl font-bold text-primary">Personal details</h2>
@@ -91,7 +91,7 @@ if (session()->has('error_message')) {
                                 </div>
                             </div>
                             @include('front.elements.recaptcha')
-                            <button class="btn btn-theme" style="background: #ff4c02; color: #fff;">Submit</button>
+                            <button id="make_a_payment_btn" class="btn btn-theme" style="background: #ff4c02; color: #fff;">Submit</button>
                     </form>
                 </div>
 
@@ -104,7 +104,7 @@ if (session()->has('error_message')) {
                             <p class="flex justify-between"><span>Rate:</span><span>USD <span x-text="rate.toLocaleString()"></span></span></p>
                             <hr>
                             <p class="flex justify-between"><span>Total amount:</span><span class="font-bold text-primary">USD <span x-text="(noOfTravellers * rate).toLocaleString()"></span></span></p>
-                      
+
                         </div>
                     </div>
                 </aside>
@@ -124,6 +124,16 @@ if (session()->has('error_message')) {
             if (session_error_message) {
                 toastr.danger(session_error_message);
             }
+
+            $(document).on('click', '#make_a_payment_btn', function(ev) {
+                ev.preventDefault();
+                let btn = $(this);
+                btn.prop('disabled', true);
+                btn.html('submitting...');
+                setTimeout(() => {
+                    $("#captcha-form").submit();
+                }, 1000);
+            });
         });
     </script>
 @endpush
