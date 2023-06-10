@@ -19,6 +19,11 @@
 
 <!-- Footer -->
 <footer class="bg-primary text-white">
+    <div class="container" style="margin-bottom: 15px;">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <a href="{{ route('front.makeapayment') }}" class="btn btn-accent">Make a Payment</a>
+        </div>
+    </div>
     <div class="container fs-sm">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
             <div class="mb-4">
@@ -57,7 +62,7 @@
                     @endif
                 </ul>
             </div>
-           
+
             <div class="col-span-2 lg:col-span-1">
                 <h1 class="font-display text-2xl text-white">Head Office, Nepal</h1>
                 <ul class="icon-list">
@@ -116,8 +121,8 @@
                     </a>
                 </li>
             </ul>
-            
-            
+
+
             <div class="mb-2 affiliations">
                 <div class="mb-2 text-xs">We are affiliated to</div>
                 <ul>

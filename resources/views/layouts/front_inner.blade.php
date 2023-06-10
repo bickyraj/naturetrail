@@ -91,16 +91,18 @@
         });
     </script>
     @stack('scripts')
-    
+
     <script>
         const header = document.querySelector('header')
         {{-- Change header on scroll--}}
         const headerScrollObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting){
-                    header.classList.remove('scrolled')
-                }else {
-                    header.classList.add('scrolled')
+                if (header && header.classList) {
+                    if(entry.isIntersecting){
+                        header.classList.remove('scrolled')
+                    }else {
+                        header.classList.add('scrolled')
+                    }
                 }
             })
         }, {
@@ -108,7 +110,7 @@
         })
         headerScrollObserver.observe(document.querySelector('#topIO'))
     </script>
-    
+
         <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11097804780"></script>
 <script>
