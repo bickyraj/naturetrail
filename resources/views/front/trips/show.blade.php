@@ -471,13 +471,40 @@ if (session()->has('error_message')) {
                                             </svg>
                                         </div>
                                     </button>
-                                    <div id="day{{ $i + 1 }}" class="p-4 border-top-light" x-cloak x-show.transition="day{{ $i + 1 }}Open">
-                                        <!--<div class="grid gap-4 xl:grid-cols-3">-->
-                                        {{-- <img src="{{ asset('assets/front/img/hero.jpg') }}" alt=""> --}}
-                                        <div class="xl:col-span-2">
-                                            <p>
-                                                {!! $itinerary->description !!}
-                                            </p>
+                                    <div id="day{{ $i + 1 }}" class="border-top-light" x-cloak x-show.transition="day{{ $i + 1 }}Open">
+                                        <div class="grid gap-4 xl:grid-cols-2">
+                                            <div class="p-4 {{ $i % 2 == 0 ? 'xl:order-1' : ''}}">
+                                              <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="" class="w-full h-full object-cover">
+                                            </div>
+                                            <div class="p-4">
+                                                <p>
+                                                    {!! $itinerary->description !!}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {{-- icons --}}
+                                        <div class="flex flex-col gap-4 justify-between bg-gray md:flex-row">
+                                            <div class="flex gap-2 p-4">
+                                                <img src="{{ asset('assets/front/img/elevation.png') }}" alt="" class="w-10 h-10">
+                                                <div>
+                                                    <h4 class="text-sm font-bold">Max. altitude</h4>
+                                                    <div>{{ $itinerary->max_altitude }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex gap-2 p-4">
+                                                <img src="{{ asset('assets/front/img/accomodation.png') }}" alt="" class="w-10 h-10">
+                                                <div>
+                                                    <h4 class="text-sm font-bold">Accomodation</h4>
+                                                    <div>{{ $itinerary->accomodation }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex gap-2 p-4">
+                                                <img src="{{ asset('assets/front/img/meal.png') }}" alt="" class="w-10 h-10">
+                                                <div>
+                                                    <h4 class="text-sm font-bold">Meals</h4>
+                                                    <div>{{ $itinerary->meals }}</div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!--</div>-->
                                     </div>
