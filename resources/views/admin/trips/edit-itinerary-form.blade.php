@@ -16,6 +16,12 @@
                   </div>
                 </div>
                 <input type="text" name="trip_itineraries[][name]" id="input-trip-name" value="{{ $itinerary->name }}" class="form-control mb-3 form-control-sm" placeholder="Title">
+                {{-- max_altitude --}}
+                <input type="text" name="trip_itineraries[][max_altitude]" id="input-trip-max-altitude" value="{{ $itinerary->max_altitude }}" class="form-control mb-3 form-control-sm" placeholder="Max altitude">
+                {{-- accomodation --}}
+                <input type="text" name="trip_itineraries[][accomodation]" id="input-trip-accomodation" value="{{ $itinerary->accomodation }}" class="form-control mb-3 form-control-sm" placeholder="Accomodation">
+                {{-- meals --}}
+                <input type="text" name="trip_itineraries[][meals]" id="input-trip-meals" value="{{ $itinerary->meals }}" class="form-control mb-3 form-control-sm" placeholder="Meals">
                 <div class="itinerary-description-block">
                   <div id="summernote-itinerary-{{ $itinerary->day }}" class="summernote-itinerary"><?= $itinerary->description; ?></div>
                 </div>
@@ -42,6 +48,12 @@
                   </div>
                 </div>
                 <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="form-control mb-3 form-control-sm" placeholder="Title">
+                {{-- max altitude --}}
+                <input type="text" name="trip_itineraries[][max_altitude]" id="input-trip-max-altitude" class="form-control mb-3 form-control-sm" placeholder="Title">
+                {{-- accomodation --}}
+                <input type="text" name="trip_itineraries[][accomodation]" id="input-trip-accomodation" class="form-control mb-3 form-control-sm" placeholder="Title">
+                {{-- meals --}}
+                <input type="text" name="trip_itineraries[][meals]" id="input-trip-meals" class="form-control mb-3 form-control-sm" placeholder="Title">
                 <div class="itinerary-description-block">
                   <div id="summernote-itinerary-1" class="summernote-itinerary"></div>
                 </div>

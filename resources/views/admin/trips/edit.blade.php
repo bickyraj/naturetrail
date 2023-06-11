@@ -684,6 +684,9 @@ $(function() {
                       </div>\
                     </div>\
                     <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="form-control mb-3 form-control-sm" placeholder="Title">\
+                    <input type="text" name="trip_itineraries[][max_altitude]" id="input-trip-max-altitude" class="form-control mb-3 form-control-sm" placeholder="Title">\
+                    <input type="text" name="trip_itineraries[][accomodation]" id="input-trip-accomodation" class="form-control mb-3 form-control-sm" placeholder="Title">\
+                    <input type="text" name="trip_itineraries[][meals]" id="input-trip-meals" class="form-control mb-3 form-control-sm" placeholder="Title">\
                     <div class="itinerary-description-block">\
                       <div id="summernote-itinerary-'+n+'" class="summernote-itinerary"></div>\
                     </div>\
@@ -956,9 +959,15 @@ $(function() {
       $.each($("#itinerary-block>.itinerary-group"), function(i, v) {
         var desc = $(v).find('.summernote-itinerary').summernote('code');
         var day = $(v).find('.day-number').find('input').val();
+        const max_altitude = $(v).find("#input-trip-max-altitude").val();
+        const accomodation = $(v).find("#input-trip-accomodation").val();
+        const meals = $(v).find("#input-trip-meals").val();
         formData.append('trip_itineraries['+i+'][day]', day);
         formData.append('trip_itineraries['+i+'][display_order]', i + 1);
         formData.append('trip_itineraries['+i+'][description]', desc);
+        formData.append('trip_itineraries['+i+'][max_altitude]', max_altitude);
+        formData.append('trip_itineraries['+i+'][accomodation]', accomodation);
+        formData.append('trip_itineraries['+i+'][meals]', meals);
       });
 
       $.ajax({
