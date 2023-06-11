@@ -684,9 +684,9 @@ $(function() {
                       </div>\
                     </div>\
                     <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="form-control mb-3 form-control-sm" placeholder="Title">\
-                    <input type="text" name="trip_itineraries[][max_altitude]" id="input-trip-max-altitude" class="form-control mb-3 form-control-sm" placeholder="Title">\
-                    <input type="text" name="trip_itineraries[][accomodation]" id="input-trip-accomodation" class="form-control mb-3 form-control-sm" placeholder="Title">\
-                    <input type="text" name="trip_itineraries[][meals]" id="input-trip-meals" class="form-control mb-3 form-control-sm" placeholder="Title">\
+                    <input type="text" id="input-trip-max-altitude" class="form-control mb-3 form-control-sm" placeholder="Title">\
+                    <input type="text" id="input-trip-accomodation" class="form-control mb-3 form-control-sm" placeholder="Title">\
+                    <input type="text" id="input-trip-meals" class="form-control mb-3 form-control-sm" placeholder="Title">\
                     <div class="itinerary-description-block">\
                       <div id="summernote-itinerary-'+n+'" class="summernote-itinerary"></div>\
                     </div>\

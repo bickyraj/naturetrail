@@ -241,6 +241,7 @@ class TripController extends Controller
 
     public function saveTripItineraries(Trip $trip, $data)
     {
+        dd($data);
         $trip->trip_itineraries()->createMany($data);
         return 1;
     }
