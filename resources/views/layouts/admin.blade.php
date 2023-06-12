@@ -28,29 +28,29 @@ License: You must have a valid license purchased only from themeforest(the above
     <link rel="stylesheet" href="{{ asset('assets/front/css/bootstrap.min.css') }}">
     <!--end::Fonts -->
     <!--begin:: Global Mandatory Vendors -->
-    <link href="./assets/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" type="text/css" />
     <!--end:: Global Mandatory Vendors -->
     <!--begin:: Global Optional Vendors -->
-    
+
     <!--end:: Global Optional Vendors -->
     <!--begin::Global Theme Styles(used by all pages) -->
-    <link href="./assets/css/demo1/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/demo1/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Theme Styles -->
     <!--begin::Layout Skins(used by all pages) -->
-    <link href="./assets/css/demo1/skins/header/base/light.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/css/demo1/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/css/demo1/skins/brand/dark.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/css/demo1/skins/aside/dark.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/vendors/custom/vendors/line-awesome/css/line-awesome.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/vendors/general/toastr/build/toastr.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/demo1/skins/header/base/light.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/demo1/skins/header/menu/light.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/demo1/skins/brand/dark.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/demo1/skins/aside/dark.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendors/custom/vendors/line-awesome/css/line-awesome.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendors/general/toastr/build/toastr.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Layout Skins -->
-    <link href="./assets/vendors/custom/vendors/flaticon/flaticon.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/vendors/custom/vendors/flaticon2/flaticon.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/vendors/general/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/vendors/general/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/vendors/general/sweetalert2/dist/sweetalert2.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/vendors/pace-master/themes/blue/pace-theme-minimal.css" rel="stylesheet" />
-    <link href="./assets/css/admin-style.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendors/custom/vendors/flaticon/flaticon.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendors/custom/vendors/flaticon2/flaticon.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendors/general/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendors/general/bootstrap-select/dist/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendors/general/sweetalert2/dist/sweetalert2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendors/pace-master/themes/blue/pace-theme-minimal.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/admin-style.css') }}" rel="stylesheet" type="text/css" />
 
     @stack('styles')
 </head>
@@ -118,21 +118,21 @@ License: You must have a valid license purchased only from themeforest(the above
     </script>
     <!-- end::Global Config -->
     <!--begin:: Global Mandatory Vendors -->
-    <script src="./assets/vendors/general/jquery/dist/jquery.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/moment/min/moment.min.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/wnumb/wNumb.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/toastr/build/toastr.min.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/block-ui/jquery.blockUI.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/bootstrap-select/dist/js/bootstrap-select.js" type="text/javascript"></script>
-    <script src="./assets/vendors/general/sweetalert2/dist/sweetalert2.min.js" type="text/javascript"></script>
-    <script src="./assets/vendors/custom/js/vendors/sweetalert2.init.js" type="text/javascript"></script>
-    <script data-pace-options='{ "ajax": true }' src="./assets/vendors/pace-master/pace.min.js" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/bootstrap/dist/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/popper.js/dist/umd/popper.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/jquery/dist/jquery.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/js-cookie/src/js.cookie.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/moment/min/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/sticky-js/dist/sticky.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/wnumb/wNumb.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/toastr/build/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/block-ui/jquery.blockUI.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/bootstrap-select/dist/js/bootstrap-select.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/general/sweetalert2/dist/sweetalert2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/custom/js/vendors/sweetalert2.init.js') }}" type="text/javascript"></script>
+    <script data-pace-options='{ "ajax": true }' src="{{ asset('assets/vendors/pace-master/pace.min.js') }}" type="text/javascript"></script>
     <!--end:: Global Mandatory Vendors -->
     <!--begin:: Global Optional Vendors -->
 
@@ -146,6 +146,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--end::Global Theme Bundle -->
     <script type="text/javascript">
         $(document).ajaxStart(function() { Pace.restart(); });
+        $(document).ajaxComplete($.unblockUI);
         $(function() {
             var flashMessage = '<?php echo session()->get('message');?>';
             if (flashMessage != '') {
