@@ -4729,7 +4729,7 @@ a.theme:hover svg {
 
 @media (min-width: 992px) {
   .hero img {
-    height: 98vh;
+    height: 80vh;
 
   }
 }
@@ -4887,7 +4887,7 @@ a.theme:hover svg {
 
 .review p {
   font-style: italic;
-  max-height: 5rem;
+  max-height: 8rem;
   overflow-y: scroll;
   padding-right: 1rem;
   font-size: 0.95rem;
@@ -6522,4 +6522,15 @@ p.select-ratings i:hover {
 .text-gray-600 {
     --tw-text-opacity: 1;
     color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+
+@media (min-width: 768px) {
+  .md\:flex-row {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1200px) {
+    .xl\:order-1{
+        order: 1;
+    }
 }

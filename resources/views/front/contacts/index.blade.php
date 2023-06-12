@@ -393,7 +393,7 @@
         </div>
     </div>
 </section>
-<iframe src="" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28275.51054552614!2d85.322707!3d27.641892!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18e330f2565d%3A0x21fd1082f7db1e89!2sNature%20Trail!5e0!3m2!1sen!2sus!4v1686463950166!5m2!1sen!2sus" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 @endsection
 @push('scripts')
 <script type="text/javascript">

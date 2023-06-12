@@ -26,7 +26,7 @@
             </a>
         </div>
         <div class="actions p-1">
-            <a href="tour-details-print.php" class="flex items-center p-1 text-accent" title="Print tour details">
+            <a href="{{ route('front.trips.print', ['slug' => $trip->slug]) }}" class="flex items-center p-1 text-accent" title="Print tour details">
                 <svg class="w-4 h-4 flex-shrink-0 mr-2">
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#printer" />
                 </svg>

@@ -56,7 +56,7 @@ if (session()->has('error_message')) {
 <div class="flex items-center w-full shadow-md header sticky-top" x-data="{ mobilenavOpen: false }">
     <div class="container relative flex items-end justify-between w-full">
         <!-- Logo -->
-        <a class="flex-shrink-0" href="http://127.0.0.1:8000/">
+        <a class="flex-shrink-0" href="https://naturetrail.manojpanta.com.np/">
             <img src="{{ asset('assets/front/img/logo.png') }}" class="block h-16 brand" alt="{{ config('app.name') }}" width="318" height="197">
         </a><!-- Logo -->
         <div class="flex items-end">

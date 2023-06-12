@@ -7,7 +7,7 @@
             <h2 class="mb-2 text-3xl uppercase font-display">
                 {{ $tour->name }}
             </h2>
-            <p> {{ truncate(strip_tags($tour->trip_info['overview'])) }} </p>
+            <p> {{ truncate(strip_tags($tour->trip_info['overview'] ?? '')) }} </p>
 
             <div class="flex mb-4 wrap">
                 <div class="flex p-2 mr-2 aic">

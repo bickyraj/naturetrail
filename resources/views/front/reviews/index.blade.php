@@ -35,7 +35,7 @@
     <div class="container">
         <div class="grid lg:grid-cols-3 xl:grid-cols-4 gap-10">
             <div class="lg:col-span-2 xl:col-span-3">
-                <div class="grid lg:grid-cols-2 gap-2 lg:gap-3">
+                <div class="grid lg:grid-cols-1 gap-2 lg:gap-3">
                     @forelse ($reviews as $review)
                         <div class="review p-4">
                             <div class="review__content">

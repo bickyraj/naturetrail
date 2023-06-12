@@ -2,8 +2,8 @@
 @section('content')
     <!-- Hero -->
     <section class="relative hero hero-alt">
-        <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="Nature Trail" style="border-radius: 0px;height: 300px;">
-        {{-- <img src="{{ $page->imageUrl }}"> --}}
+       {{-- <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="Nature Trail" style="border-radius: 0px;height: 300px;"> --}}
+        <img src="{{ $page->imageUrl }}" alt="Nature Trail" style="border-radius: 0px;height: 400px;">
         <div class="absolute overlay">
             <div class="container ">
                 <h1>{{ $page->name ?? '' }}</h1>
