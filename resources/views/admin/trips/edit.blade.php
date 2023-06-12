@@ -962,12 +962,18 @@ $(function() {
         const max_altitude = $(v).find("#input-trip-max-altitude").val();
         const accomodation = $(v).find("#input-trip-accomodation").val();
         const meals = $(v).find("#input-trip-meals").val();
+        const fileInput = $(v).find('#input-trip-image');
+        var file = fileInput[0].files[0];
+        if (!file || file == undefined) {
+           file = "";
+        }
         formData.append('trip_itineraries['+i+'][day]', day);
         formData.append('trip_itineraries['+i+'][display_order]', i + 1);
         formData.append('trip_itineraries['+i+'][description]', desc);
         formData.append('trip_itineraries['+i+'][max_altitude]', max_altitude);
         formData.append('trip_itineraries['+i+'][accomodation]', accomodation);
         formData.append('trip_itineraries['+i+'][meals]', meals);
+        formData.append('trip_itineraries['+i+'][image_name]', file);
       });
 
       $.ajax({

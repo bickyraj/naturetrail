@@ -241,7 +241,6 @@ class TripController extends Controller
 
     public function saveTripItineraries(Trip $trip, $data)
     {
-        dd($data);
         $trip->trip_itineraries()->createMany($data);
         return 1;
     }
@@ -594,7 +593,37 @@ class TripController extends Controller
             $trip->trip_itineraries()->delete();
         }
 
-        $trip->trip_itineraries()->createMany($trip_itineraries);
+        foreach ($trip_itineraries as $trip_itinerary) {
+            $itinerary = new TripItinerary();
+            $itinerary->trip_id = $trip->id;
+            $itinerary->name = $trip_itinerary['name'];
+            $itinerary->day = $trip_itinerary['day'];
+            $itinerary->display_order = $trip_itinerary['display_order'];
+            $itinerary->description = $trip_itinerary['description'];
+            $itinerary->max_altitude = $trip_itinerary['max_altitude'];
+            $itinerary->accomodation = $trip_itinerary['accomodation'];
+            $itinerary->meals = $trip_itinerary['meals'];
+
+            if (isset($trip_itinerary['image_name']) && !empty($trip_itinerary['image_name'])) {
+                $imageType = $trip_itinerary['image_name']->getClientOriginalExtension();
+                $imageName = md5(microtime()) . '.' . $imageType;
+                $itinerary->image_name = $imageName;
+                $image_quality = 100;
+                $imageFileSize = $trip_itinerary['image_name']->getClientSize();
+
+                if (($imageFileSize / 1000000) > 1) {
+                    $image_quality = 75;
+                }
+
+                $path = 'public/trips/' . $trip['id'] . "/itineraries/" . $imageName;
+
+                $image = Image::make($trip_itinerary['image_name']);
+
+                Storage::put($path, (string) $image->encode('jpg', $image_quality));
+            }
+            $itinerary->save();
+        }
+        // $trip->trip_itineraries()->createMany($trip_itineraries);
 
         $status = 1;
         $msg = "Trip updated.";

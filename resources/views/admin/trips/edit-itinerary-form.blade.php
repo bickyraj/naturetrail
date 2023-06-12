@@ -22,6 +22,8 @@
                 <input type="text" id="input-trip-accomodation" value="{{ $itinerary->accomodation }}" class="form-control mb-3 form-control-sm" placeholder="Accomodation">
                 {{-- meals --}}
                 <input type="text" id="input-trip-meals" value="{{ $itinerary->meals }}" class="form-control mb-3 form-control-sm" placeholder="Meals">
+                {{-- image --}}
+                <input type="file" id="input-trip-image" value="{{ $itinerary->image_name }}" class="form-control mb-3 form-control-sm">
                 <div class="itinerary-description-block">
                   <div id="summernote-itinerary-{{ $itinerary->day }}" class="summernote-itinerary"><?= $itinerary->description; ?></div>
                 </div>
@@ -54,6 +56,8 @@
                 <input type="text" id="input-trip-accomodation" class="form-control mb-3 form-control-sm" placeholder="Title">
                 {{-- meals --}}
                 <input type="text" id="input-trip-meals" class="form-control mb-3 form-control-sm" placeholder="Title">
+                {{-- image --}}
+                <input type="file" id="input-trip-image" class="form-control mb-3 form-control-sm">
                 <div class="itinerary-description-block">
                   <div id="summernote-itinerary-1" class="summernote-itinerary"></div>
                 </div>
