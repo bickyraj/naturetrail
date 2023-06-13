@@ -13,6 +13,7 @@ use App\TripItinerary;
 use App\TripGallery;
 use Image;
 use Illuminate\Support\Facades\Log;
+use Mockery\Undefined;
 
 class TripController extends Controller
 {
@@ -277,7 +278,9 @@ class TripController extends Controller
             'trip_info',
             'trip_include_exclude',
             'trip_seo',
-            'trip_itineraries',
+            'trip_itineraries' => function ($q) {
+                $q->orderBy('display_order', 'asc');
+            },
             'trip_galleries',
             'similar_trips',
             'addon_trips'
@@ -589,12 +592,19 @@ class TripController extends Controller
         $trip_itineraries = $request->trip_itineraries;
         $trip = Trip::where('id', '=', $request->id)->first();
 
-        if (isset($trip->trip_itineraries) && !empty($trip->trip_itineraries)) {
-            $trip->trip_itineraries()->delete();
-        }
+        // if (isset($trip->trip_itineraries) && !empty($trip->trip_itineraries)) {
+        //     $trip->trip_itineraries()->delete();
+        // }
 
+        $existing_trip_itineraries = $trip->trip_itineraries()->pluck('id')->toArray();
+        $updated_trip_itineraries = [];
         foreach ($trip_itineraries as $trip_itinerary) {
-            $itinerary = new TripItinerary();
+            if ($trip_itinerary['itinerary_id'] != "undefined") {
+                $itinerary = TripItinerary::find($trip_itinerary['itinerary_id']);
+                $updated_trip_itineraries[] = $trip_itinerary['itinerary_id'];
+            } else {
+                $itinerary = new TripItinerary();
+            }
             $itinerary->trip_id = $trip->id;
             $itinerary->name = $trip_itinerary['name'];
             $itinerary->day = $trip_itinerary['day'];
@@ -605,6 +615,11 @@ class TripController extends Controller
             $itinerary->meals = $trip_itinerary['meals'];
 
             if (isset($trip_itinerary['image_name']) && !empty($trip_itinerary['image_name'])) {
+                // check if the itinerary already has an image.
+                if (!empty($itinerary->image_name)) {
+                    // delete existing image.
+                    Storage::delete('public/trips/' . $trip['id'] . "/itineraries/" . $itinerary->image_name);
+                }
                 $imageType = $trip_itinerary['image_name']->getClientOriginalExtension();
                 $imageName = md5(microtime()) . '.' . $imageType;
                 $itinerary->image_name = $imageName;
@@ -623,7 +638,18 @@ class TripController extends Controller
             }
             $itinerary->save();
         }
-        // $trip->trip_itineraries()->createMany($trip_itineraries);
+        // to be deleted itineraries
+        $difference = array_diff($existing_trip_itineraries, $updated_trip_itineraries);
+        $difference = array_values($difference);
+        for ($i=0; $i < count($difference); $i++) {
+            // delete the images from the itineraries first.
+            $diff_trip_itinerary = TripItinerary::find($difference[$i]);
+            if (!empty($diff_trip_itinerary->image_name)) {
+                // delete existing image.
+                Storage::delete('public/trips/' . $trip['id'] . "/itineraries/" . $diff_trip_itinerary->image_name);
+            }
+            $diff_trip_itinerary->delete();
+        }
 
         $status = 1;
         $msg = "Trip updated.";

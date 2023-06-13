@@ -684,9 +684,10 @@ $(function() {
                       </div>\
                     </div>\
                     <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="form-control mb-3 form-control-sm" placeholder="Title">\
-                    <input type="text" id="input-trip-max-altitude" class="form-control mb-3 form-control-sm" placeholder="Title">\
-                    <input type="text" id="input-trip-accomodation" class="form-control mb-3 form-control-sm" placeholder="Title">\
-                    <input type="text" id="input-trip-meals" class="form-control mb-3 form-control-sm" placeholder="Title">\
+                    <input type="text" id="input-trip-max-altitude" class="form-control mb-3 form-control-sm" placeholder="Max altitude">\
+                    <input type="text" id="input-trip-accomodation" class="form-control mb-3 form-control-sm" placeholder="Accomodation">\
+                    <input type="text" id="input-trip-meals" class="form-control mb-3 form-control-sm" placeholder="Meals">\
+                    <input type="file" id="input-trip-image" class="form-control mb-3 form-control-sm">\
                     <div class="itinerary-description-block">\
                       <div id="summernote-itinerary-'+n+'" class="summernote-itinerary"></div>\
                     </div>\
@@ -963,6 +964,7 @@ $(function() {
         const accomodation = $(v).find("#input-trip-accomodation").val();
         const meals = $(v).find("#input-trip-meals").val();
         const fileInput = $(v).find('#input-trip-image');
+        const itinerary_id = $(v).find("#input-trip-itinerary-id").val();
         var file = fileInput[0].files[0];
         if (!file || file == undefined) {
            file = "";
@@ -973,6 +975,7 @@ $(function() {
         formData.append('trip_itineraries['+i+'][max_altitude]', max_altitude);
         formData.append('trip_itineraries['+i+'][accomodation]', accomodation);
         formData.append('trip_itineraries['+i+'][meals]', meals);
+        formData.append('trip_itineraries['+i+'][itinerary_id]', itinerary_id);
         formData.append('trip_itineraries['+i+'][image_name]', file);
       });
 

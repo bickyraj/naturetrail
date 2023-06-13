@@ -15,6 +15,7 @@
                     <div title="move" class="btn btn-outline-brand btn-sm btn-elevate-hover btn-icon pull-right move-itinerary mr-1"><i class="la la-unsorted"></i></div>
                   </div>
                 </div>
+                <input type="hidden" id="input-trip-itinerary-id" name="itinerary_id" value="{{ $itinerary->id }}">
                 <input type="text" name="trip_itineraries[][name]" id="input-trip-name" value="{{ $itinerary->name }}" class="form-control mb-3 form-control-sm" placeholder="Title">
                 {{-- max_altitude --}}
                 <input type="text" id="input-trip-max-altitude" value="{{ $itinerary->max_altitude }}" class="form-control mb-3 form-control-sm" placeholder="Max altitude">
