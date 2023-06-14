@@ -470,9 +470,11 @@ if (session()->has('error_message')) {
                                     </button>
                                     <div id="day{{ $i + 1 }}" class="border-top-light" x-cloak x-show.transition="day{{ $i + 1 }}Open">
                                         <div class="grid gap-4 xl:grid-cols-2">
-                                            <div class="p-4 {{ $i % 2 == 0 ? 'xl:order-1' : ''}}">
-                                              <img src="{{ $itinerary->imageUrl }}" alt="" class="w-full h-full object-cover">
-                                            </div> 
+                                            @if (isset($itinerary->image_name) && !empty($itinerary->image_name))
+                                                <div class="p-4 {{ $i % 2 == 0 ? 'xl:order-1' : ''}}">
+                                                <img src="{{ $itinerary->imageUrl }}" alt="" class="w-full h-full object-cover">
+                                                </div>
+                                            @endif
                                             <div class="p-4">
                                                 <p>
                                                     {!! $itinerary->description !!}
@@ -773,7 +775,7 @@ if (session()->has('error_message')) {
                         </svg>
                     </a> --}}
                     </div>
-            
+
                      @include('front.elements.essential_trip_information')
 
 
