@@ -67,10 +67,12 @@
                 @empty
                 @endforelse
             </div>
-            <div class="flex items-center" style="justify-content: center; margin-top: 50px;">
-                <div id="spinner-block"></div>
-                <button id="show-more" class="btn btn-accent" style="display: block;">show more</button>
-            </div>
+            @if ($destinations->nextPageUrl())
+                <div class="flex items-center" style="justify-content: center; margin-top: 50px;">
+                    <div id="spinner-block"></div>
+                    <button id="show-more" class="btn btn-accent" style="display: block;">show more</button>
+                </div>
+            @endif
         </div>
     </div>
 </section>
@@ -114,7 +116,7 @@ function performSearch() {
         if (nextPage) {
             currentPage++;
             await paginate(currentPage);
-            if (currentPage == totalPage) {
+            if (!nextPage) {
                 $("#show-more").hide();
             }
         }
@@ -185,7 +187,7 @@ function performSearch() {
             }
         }).done(function( data ) {
             $("#spinner-block").html('');
-            if (currentPage == totalPage) {
+            if (!nextPage) {
                 $("#show-more").hide();
             } else {
 
