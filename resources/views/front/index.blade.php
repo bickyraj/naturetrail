@@ -3,45 +3,6 @@
     <!-- Slider -->
     @include('front.elements.banner')
 
-
-
-
-    {{-- Activities --}}
-    <div class="py-10 activities">
-        <div class="container">
-             <div class="items-center justify-between gap-20 mb-4 lg:flex">
-                <div>
-                    <p class="mb-2 text-2xl font-handwriting text-primary">Choose your activity</p>
-                    <div class="flex">
-                        <h2 class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
-                            Things To Do in Nepal
-                            <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
-                        </h2>
-                    </div>
-                </div>
-                <div class="flex gap-10 activities-slider-controls">
-                    <button>
-                        <svg class="w-6 h-6 text-accent">
-                            <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
-                        </svg>
-                    </button>
-                    <button>
-                        <svg class="w-6 h-6 text-accent">
-                            <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <div class="activities-slider">
-
-                @foreach ($activities as $activity)
-                    @include('front.elements.activity-card', ['activity' => $activity])
-                @endforeach
-            </div>
-        </div>
-    </div>{{-- Activities --}}
-
      <!-- About and reviews-->
     <div class="py-10 bg-gray">
         <div class="container">
@@ -49,17 +10,16 @@
                 <div class="lg:col-span-6">
 
                     <div class="mb-4">
-                <p class="mb-2 text-2xl text-center font-handwriting text-primary">About Us</p>
-            <div class="flex justify-center mb-8">
-                <h2 class="relative px-10 text-3xl font-bold text-gray-600 uppercase lg:text-3xl font-display">
-                    {{ Setting::get('homePage')['welcome']['title'] ?? '' }}
-                    <div class="absolute left-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
-                    <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
-                </h2>
-            </div>
-            </div>
-
-                    
+                        <p class="mb-2 text-2xl text-center font-handwriting text-primary">About Us</p>
+                    <div class="flex justify-center mb-8">
+                        <h2 class="relative px-10 text-3xl font-bold text-gray-600 uppercase lg:text-3xl font-display">
+                            {{ Setting::get('homePage')['welcome']['title'] ?? '' }}
+                            <div class="absolute left-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                            <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                        </h2>
+                    </div>
+                </div>
+    
                     <?= Setting::get('homePage')['welcome']['content'] ?? '' ?>
 
                    <div class="grid gap-4 lg:grid-cols-2">
@@ -144,6 +104,43 @@
         </div>
     </div>
     <!-- About -->
+    
+    {{-- Activities --}}
+    <div class="py-10 activities">
+        <div class="container">
+             <div class="items-center justify-between gap-20 mb-4 lg:flex">
+                <div>
+                    <p class="mb-2 text-2xl font-handwriting text-primary">Choose your activity</p>
+                    <div class="flex">
+                        <h2 class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
+                            Things To Do
+                            <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                        </h2>
+                    </div>
+                </div>
+                <div class="flex gap-10 activities-slider-controls">
+                    <button>
+                        <svg class="w-6 h-6 text-accent">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
+                        </svg>
+                    </button>
+                    <button>
+                        <svg class="w-6 h-6 text-accent">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="activities-slider">
+
+                @foreach ($activities as $activity)
+                    @include('front.elements.activity-card', ['activity' => $activity])
+                @endforeach
+            </div>
+        </div>
+    </div>{{-- Activities --}}
+
 
      <!-- Destinations -->
     <div class="py-10 destinations">

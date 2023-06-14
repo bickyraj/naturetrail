@@ -54,6 +54,19 @@
                 <path d="M0 6 10 2 14 4 20 0 26 4 30 2 40 6 0 6" fill="white">
             </svg>
         </div>
+        
+        <div class="absolute left-0 bottom-8 w-full">
+            <div class="container">
+                <form action="">
+                    <div class="flex">
+                        <input class="px-10 py-5 text-gray-700 placeholder-gray-500 bg-white border-0 focus:placeholder-transparent lg:text-lg" type="text" name="q" placeholder="Search site" aria-label="Search site" style="min-width:0;">
+                        <button class="px-4 py-3 lg:text-xl font-medium tracking-wider text-gray-100 rounded-md bg-accent hover:bg-blue-600 focus:bg-blue-600 focus:outline-none">
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div><!-- Hero -->
 </section>
 

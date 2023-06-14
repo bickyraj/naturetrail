@@ -1,4 +1,5 @@
-@charset "UTF-8";
+
+h@charset "UTF-8";
 
 :root {
   --primary: hsl(210, 70%, 35%);
@@ -99,7 +100,7 @@ img {
 }
 
 .bg-primary {
-  background: var(--primary);
+  background-color: #1b5998;
 }
 
 .bg-accent {
@@ -541,7 +542,7 @@ img {
 
 .px-10 {
   padding-left: 2.5rem;
-  padding-right: 2.5rem;
+  padding-right: 4.5rem;
 }
 
 .py-10 {
@@ -4537,7 +4538,7 @@ a.theme:hover svg {
 }
 
 .text-primary {
-  color: var(--primary);
+  color: #1b5998;
 }
 
 .hover\:text-primary:hover {
@@ -4549,7 +4550,7 @@ a.theme:hover svg {
 }
 
 .text-accent {
-  color: var(--accent);
+  color: #f3ad44;
 }
 
 .text-light {
@@ -4641,7 +4642,7 @@ a.theme:hover svg {
 }
 
 .btn-primary {
-  background: var(--primary);
+  background: #1b5998;
   color: white;
   transition: all 200ms ease-out;
 }
@@ -4729,13 +4730,13 @@ a.theme:hover svg {
 
 @media (min-width: 992px) {
   .hero img {
-    height: 80vh;
+    height: 94vh;
 
   }
 }
 @media (max-width: 767px) {
   .hero img {
-    height: 250px;
+    height: 400px;
 
   }
 }
@@ -4960,7 +4961,6 @@ textarea:focus {
 }
 
 .header {
-  background: white;
   color: #011d36;
   height: 5rem;
   z-index: 99;
@@ -5219,18 +5219,18 @@ footer .bottom {
 }
 @media (max-width: 991px) {
   .hero-slider .text {
-    bottom: 2rem;
+    bottom: 6rem;
   }
 }
 
 @media (min-width: 992px) {
   .hero-slider .text {
-    bottom: 5rem;
+    bottom: 10rem;
   }
 }
 
 .hero-slider-controls {
-  bottom: 35%;
+  bottom: 18%;
   right: 5%;
   z-index: 98;
 }
@@ -6247,14 +6247,14 @@ p.select-ratings i:hover {
 .sm-simple ul ul ul a:hover,
 .sm-simple ul ul ul a:focus,
 .sm-simple ul ul ul a:active {
-  border-left: 24px solid transparent;
+  border-left: 10px solid transparent;
 }
 
 .sm-simple ul ul ul ul a,
 .sm-simple ul ul ul ul a:hover,
 .sm-simple ul ul ul ul a:focus,
 .sm-simple ul ul ul ul a:active {
-  border-left: 32px solid transparent;
+  border-left: 10px solid transparent;
 }
 
 .sm-simple ul ul ul ul ul a,
@@ -6316,10 +6316,15 @@ p.select-ratings i:hover {
     background: transparent;
   }
 
-  .sm-simple a {
+  .header .sm-simple > li >  a {
     text-transform: uppercase;
     padding: 0.9rem 18px;
-    color: var(--primary);
+    color: white;
+  }
+  .header.scrolled .sm-simple a {
+    text-transform: uppercase;
+    padding: 0.9rem 18px;
+    color: #1b5998;
   }
 
   .sm-simple a:hover,
@@ -6533,4 +6538,10 @@ p.select-ratings i:hover {
     .xl\:order-1{
         order: 1;
     }
+}
+.header-color{
+    color: white;
+}
+.header.scrolled .header-color{
+    color: #1b5998;
 }

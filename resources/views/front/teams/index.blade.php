@@ -16,7 +16,7 @@
 @section('content')
 <!-- Hero -->
 <section class="hero hero-alt relative">
-    <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="Nature Trails" style="border-radius: 0px;height: 300px;">
+    <img src="{{ asset('assets/front/img/team.jpg') }}" alt="Nature Trails" style="border-radius: 0px;height: 500px;">
     <div class="overlay absolute">
         <div class="container ">
             <h1 class="font-display upper">Our Team</h1>

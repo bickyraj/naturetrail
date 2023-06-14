@@ -406,13 +406,10 @@ if (session()->has('error_message')) {
                                     {!! $trip->trip_info ? $trip->trip_info->highlights : '' !!}
                                 </ul>
 
-                                <div id="overview-text" style="margin-bottom: 15px;" class="prose">
-                                    <?= $trip->trip_info ? $trip->trip_info->overview : '' ?>
+                                <div id="overview-text" x-data="{ expanded: false }" class="mb-4 relative">
+                                    <div x-show="expanded" class="pb-20" x-collapse.min.200px><?= $trip->trip_info ? $trip->trip_info->overview : '' ?></div>
+                                    <div class="flex justify-center absolute bottom-0 w-full py-4" style="background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));"><button class="text-xs bg-light rounded-full px-4 py-2" x-on:click="expanded=!expanded" x-text="expanded?'Show less':'Show more'">Show more</button></div>
                                 </div>
-                                {{-- <p class="text-center">
-                                <button id="toggle-overview" class="btn btn-gray" data-bs-toggle="collapse" data-bs-target="#overview-text">Show
-                                    More</button>
-                            </p> --}}
 
                                 <div class="p-4 mb-3 bg-light">
                                     <h3 class="mb-2 text-xl font-display text-primary"> Trek Profile</h3>
@@ -475,7 +472,7 @@ if (session()->has('error_message')) {
                                         <div class="grid gap-4 xl:grid-cols-2">
                                             <div class="p-4 {{ $i % 2 == 0 ? 'xl:order-1' : ''}}">
                                               <img src="{{ $itinerary->imageUrl }}" alt="" class="w-full h-full object-cover">
-                                            </div>
+                                            </div> 
                                             <div class="p-4">
                                                 <p>
                                                     {!! $itinerary->description !!}
@@ -776,7 +773,8 @@ if (session()->has('error_message')) {
                         </svg>
                     </a> --}}
                     </div>
-
+            
+                     @include('front.elements.essential_trip_information')
 
 
                     @if (iterator_count($trip->addon_trips))

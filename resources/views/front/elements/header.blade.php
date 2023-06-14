@@ -1,72 +1,68 @@
-<?php
-$success_message = "";
-$error_message = "";
-if (session()->has('success_message')) {
-    $success_message = session()->get('success_message');
-}
-
-if (session()->has('error_message')) {
-    $error_message = session()->get('error_message');
-}
-?>
 @push('styles')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @endpush
 
-{{-- Top header --}}
-<div class="text-white bg-primary">
-    <div class="container flex items-center justify-between gap-4 py-1 text-white">
-        <a href="mailto:{{ Setting::get('email') ?? '' }}" class="flex items-center gap-1 text-sm text-light hover:text-white">
-            <svg class="w-4 h-4">
-                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#mail" />
-            </svg>
-            <span class="none lg:inline">{{ Setting::get('email') ?? '' }}</span>
-        </a>
-        {{-- Header Search --}}
-        <form id="search-form" action="{{ route('front.trips.search') }}" method="GET" class="flex header__searchform">
-            <input type="search" name="keyword" id="header-search" value="{{ request()->get('keyword') }}" placeholder="Where do you want to go?" class="px-2 text-sm border-none flex-grow-1 bg-gray">
-            <button class="flex items-center justify-center w-8 h-8 p-1 btn-accent">
-                <svg class="w-4 h-4">
-                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#search" />
-                </svg>
-            </button>
-        </form>{{-- Header Search --}}
-        <div class="flex gap-2">
-            <a href="tel:{{ Setting::get('mobile1') ?? '' }}" class="flex items-center gap-1 text-sm text-light hover:text-white">
-                <svg class="w-4 h-4">
-                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
-                </svg>
-                <span class="none lg:inline">{{ Setting::get('mobile1') ?? '' }}</span>
-            </a>
-            <a href="{{ Setting::get('viber') ?? '' }}" style="color:#d6b8e0">
-                <svg class="w-4 h-4">
-                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#viber" />
-                </svg>
-            </a>
-            <a href="{{ Setting::get('whatsapp') ?? '' }}" style="color:#25d366">
-                <svg class="w-4 h-4">
-                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#whatsapp" />
-                </svg>
-            </a>
-        </div>
-    </div>
-</div>{{-- Top row --}}
 
 {{-- Header --}}
-<div class="flex items-center w-full shadow-md header sticky-top" x-data="{ mobilenavOpen: false }">
+<header class="flex items-center w-full header fixed transition" x-data="{ mobilenavOpen: false, searchboxOpen: false }">
     <div class="container relative flex items-end justify-between w-full">
         <!-- Logo -->
-        <a class="flex-shrink-0" href="https://naturetrail.manojpanta.com.np/">
+        <a class="flex-shrink-0" href="{{ route('home') }}">
             <img src="{{ asset('assets/front/img/logo.png') }}" class="block h-16 brand" alt="{{ config('app.name') }}" width="318" height="197">
         </a><!-- Logo -->
-        <div class="flex items-end">
+        <div class="flex items-end gap-2">
             <!-- Nav -->
             @include('front.elements.navbar')
+            
+            {{-- Search --}}
+            <button class="hidden lg:block p-2" @click="searchboxOpen=true;$refs.searchInput.focus()">
+                <svg class="w-6 h-6 header-color">
+                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#search"></use>
+                </svg>
+            </button>
+            <div x-show="searchboxOpen" class="absolute right-0 top-full" @click.away="searchboxOpen=false">
+                <form action="">
+                    <div class="flex border-2 rounded-lg bg-white">
+                        <input x-ref="searchInput" class="px-6 py-2 text-gray-700 placeholder-gray-500 bg-white border-0 focus:placeholder-transparent" type="text" name="email" placeholder="Search site" aria-label="Search site" style="box-shadow: none">
+                        <button class="px-4 py-3 text-sm font-medium tracking-wider text-gray-100 rounded-md bg-primary hover:bg-blue-600">
+                            <svg class="w-6 h-6 text-white">
+                                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#arrownarrowright"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            {{-- Search --}}
+            
+            {{-- Talk to expert --}}
+            <div class="hidden lg:block">
+                <div class="flex items-center justify-end gap-1 header-color">
+                    <span class="text-xs">Talk to an expert</span>
+                    <a href="" style="color:#d766ff">
+                        <svg class="w-5 h-5">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#viber" />
+                        </svg>
+                    </a>
+                    <a href="{{ Setting::get('whatsapp') ?? '' }}" style="color:#28d146">
+                        <svg class="w-5 h-5">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#whatsapp" />
+                        </svg>
+                    </a>
+                </div>
+                <div>
+                    <a href="tel:{{ Setting::get('mobile1') ?? '' }}" class="flex items-center header-color">
+                        <svg class="w-4 h-4">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
+                        </svg>
+                        <div>{{ Setting::get('mobile1') ?? '' }}</div>
+                    </a>
+                </div>
+            </div>{{-- Talk to expert --}}
 
             {{-- Mobile Nav Button --}}
             <div class="lg:none">
                 <button class="p-2" @click="mobilenavOpen=!mobilenavOpen">
-                    <svg class="w-6 h-6" x-show="!mobilenavOpen">
+                    <svg class="w-6 h-6 header-color" x-show="!mobilenavOpen">
                         <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#menu" />
                     </svg>
                     <svg class="w-6 h-6" x-cloak x-show="mobilenavOpen">
@@ -76,20 +72,8 @@ if (session()->has('error_message')) {
             </div>
         </div>
     </div>
-</div>{{-- Header --}}
+</header>{{-- Header --}}
 @push('scripts')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="{{ asset('assets/js/search-trips.js') }}"></script>
-    <script>
-        (function() {
-            let success_message = "<?php echo $success_message;?>";
-            let error_message = "<?php echo $error_message;?>";
-            if (success_message != "") {
-                toastr.success(success_message);
-            }
-            if (error_message != "") {
-                toastr.warning(error_message);
-            }
-        })();
-    </script>
+    {{--<script src="{{ asset('assets/js/search-trips.js') }}"></script>--}}
 @endpush

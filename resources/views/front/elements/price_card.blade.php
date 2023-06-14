@@ -6,6 +6,7 @@
     </div>
 
     <div class="p-4 text-white">
+        @if($trip->cost)
         <div class="">
             <span class="text-sm mb-2 mr-2">Price starting from</span>
             <s class="font-bold text-xl">${{ number_format($trip->cost) }}</s>
@@ -15,6 +16,7 @@
             <span class="font-bold text-5xl text-accent">{{ number_format($trip->offer_price) }}</span>
             <span class="text-xl">per person</span>
         </div>
+        @endif
         <div class="mb-2 text-center">
             <a href="{{ route('front.trips.booking', $trip->slug) }}" class="mb-2 btn btn-accent w-full">Book Now</a>
             <a href="{{ route('front.trips.customize', $trip->slug) }}" class="btn btn-accent">

@@ -9,7 +9,7 @@
             <div>
                 <form class="flex flex-wrap" id="email-subscribe-form">
                     <label for="emailsub" class="sr-only">Email</label>
-                    <input type="email" id="emailsub" class="text-xl p-4 mb-1 lg:mb-0 lg:mr-2 border-accent rounded-lg" placeholder="Enter your email" required>
+                    <input type="email" id="emailsub" class="lg:text-xl p-4 mb-1 lg:mb-0 lg:mr-2 border-accent rounded-lg" placeholder="Enter your email" required>
                     <button type="submit" class="btn btn-accent">Subscribe</button>
                 </form>
             </div>

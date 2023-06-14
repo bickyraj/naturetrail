@@ -1,7 +1,7 @@
 <div class="p-2">
     <div class="md:flex items-start">
         <div class="mb-4 md:mr-4 flex-shrink-0">
-            <img src="{{ $item->imageUrl }}" width="250" alt="Himalayan Forver" style="border: 13px solid #e8e8e8;">
+            <img src="{{ $item->imageUrl }}" width="250" alt="Nature Trail" style="border: 13px solid #e8e8e8; border-radius: 140px;">
         </div>
         <div>
             <h2 class="mb-1 font-display text-2xl text-primary">{{ $item->name }}</h2>

@@ -27,16 +27,20 @@
     <div class="container" style="padding-top: 50px;">
         <div class="lim mb-4">
             @if((strip_tags($destination->description) != ""))
-            <div class="tour-details-section">
-              <?= $destination->description; ?>
+            <div class="tour-details-section mb-4 relative" x-data="{ expanded: false }">
+                <div x-show="expanded" class="pb-20" x-collapse.min.200px><?= $destination->description; ?></div>
+                <div class="flex justify-center absolute bottom-0 w-full py-4" style="background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));"><button class="text-xs bg-light rounded-full px-4 py-2" x-on:click="expanded=!expanded" x-text="expanded?'Show less':'Show more'">Show more</button></div>
             </div>
             @endif
         </div>
+    </div>
+        <div class="gray" style="background: var(--primary);">
+    <div class="container" style="padding-top: 20px;">
         <div class="mb-4" id="searchDiv">
             <div class="grid lg:grid-cols-3 gap-2">
-                <div class="col-lg-4">
+                <div class="col-lg-4 pb-8">
                     <div class="form-group">
-                        <label for="">Destinations</label>
+                        <label for="" style="color: #fff;">Destinations</label>
                         <select name="" id="select-destination" class="custom-select">
                           <option value="" selected>All Destinations</option>
                           @if($destinations)
@@ -49,12 +53,12 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="">Activities</label>
+                        <label for="" style="color: #fff;">Activities</label>
                         <select name="" id="select-activity" class="custom-select">
                           <option value="" selected>All activities</option>
                           @if($activities)
-                            @foreach($activities as $activity)
-                            <option value="{{ $activity->id }}">{{ $activity->name }}</option>
+                            @foreach($activities as $act)
+                            <option value="{{ $act->id }}">{{ $act->name }}</option>
                             @endforeach
                           @endif
                         </select>
@@ -62,7 +66,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="">Sort by</label>
+                        <label for="" style="color: #fff;">Sort by</label>
                         <select name="" id="" class="custom-select">
                             <option value="">Price (low to high)</option>
                             <option value="">Price (high to low)</option>
@@ -75,6 +79,7 @@
         </div>
 
         <!-- Search Results -->
+    </div>
     </div>
     <div class="bg-light">
         <div class="container py-4">

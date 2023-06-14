@@ -1089,7 +1089,7 @@ select {
   right: 4rem;
 }
 .bottom-8 {
-  bottom: 2rem;
+  bottom: 6rem;
 }
 .top-8 {
   top: 2rem;
@@ -1483,10 +1483,6 @@ select {
 .bg-light {
   --tw-bg-opacity: 1;
   background-color: rgb(218 250 251 / var(--tw-bg-opacity));
-}
-.bg-primary {
-  --tw-bg-opacity: 1;
-  background-color: rgb(13 146 150 / var(--tw-bg-opacity));
 }
 .bg-gray-100 {
   --tw-bg-opacity: 1;

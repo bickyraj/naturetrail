@@ -64,6 +64,7 @@
             <div class="flex items-end justify-between">
 
                 {{-- Price --}}
+                @if($tour->cost)
                 <div class="price">
                     <div class="mr-2 text-gray">
                         <span class="text-sm">
@@ -82,6 +83,7 @@
                         <span class="text-2xl">.{{ $price_arr[1] }}</span>
                     </div>
                 </div>
+                @endif
                 <a href="{{ route('front.trips.show', ['slug' => $tour->slug]) }}" class="btn btn-primary">
                     Explore
                     <svg class="w-4 h-4">

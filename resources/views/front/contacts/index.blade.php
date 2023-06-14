@@ -28,11 +28,15 @@
         </div>
 </section>
 
+<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28275.51054552614!2d85.322707!3d27.641892!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18e330f2565d%3A0x21fd1082f7db1e89!2sNature%20Trail!5e0!3m2!1sen!2sus!4v1686463950166!5m2!1sen!2sus" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
 <section class="py-10">
     <div class="container">
         <div class="grid lg:grid-cols-3 xl:grid-cols-4 gap-10">
             <div class="lg:col-span-2 xl:col-span-3">
-                <p>Feel free to contact us</p>
+                <p>Nature Trail located, right here in Kathmandu, the capital city of Nepal, to serve you twenty-four hours a day, seven days a week. We are located just 20 minutes drive from Kathmandu International Airport to Thamel. Thamel is tourist hub of Nepal. While driving from airport to Nature Trail, if you driving via Durbar Marg, follow Tridevi Marg road, and as soon as you reach centre of Thamel (Kathmandu Guest House) follow further 2 minutes drive north where you could see Nature Trail Office Board. It lies just before Manang Hotel, situation (1st floor) between Manang and Marsyangdi Hotel on the left side. If you walking from Kathmandu Guest house, it takes just 3 minutes to reach Nature Trail office.</p>
+                <p>Tell us more about your interest and we will respond your query within 12 hours !
+</p>
                 <div class="mb-8">
                     <form id="captcha-form" action="{{ route('front.contact.store') }}" method="POST">
                         @csrf
@@ -336,7 +340,7 @@
             </div>
             <aside>
                 <div class="experts-card bg-primary px-2 py-10 text-white">
-
+                    <b>Nature Trail Travels & Tours, Trekking & Expeditions</b>
                     <div class="experts-phone flex mb-2">
                         <a href="tel:+977 9851046017" class="flex aic">
                             <svg class="w-6 h-6 mr-2">
@@ -393,7 +397,7 @@
         </div>
     </div>
 </section>
-<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28275.51054552614!2d85.322707!3d27.641892!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18e330f2565d%3A0x21fd1082f7db1e89!2sNature%20Trail!5e0!3m2!1sen!2sus!4v1686463950166!5m2!1sen!2sus" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
 @endsection
 @push('scripts')
 <script type="text/javascript">
