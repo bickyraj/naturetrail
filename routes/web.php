@@ -267,6 +267,8 @@ Route::post('/trips/customize', 'Front\TripController@customizeStore')->name('fr
 Route::get('/destinations', 'Front\DestinationController@index')->name('front.destinations.index');
 Route::get('/destinations/search', 'Front\DestinationController@search')->name('front.destinations.search');
 Route::get('/destinations/{slug}', 'Front\DestinationController@show')->name('front.destinations.show');
+Route::get('/activities', 'Front\ActivityController@index')->name('front.activities.index');
+Route::get('/activities/search', 'Front\ActivityController@search')->name('front.activities.search');
 Route::get('/activities/{slug}', 'Front\ActivityController@show')->name('front.activities.show');
 Route::get('/regions/{slug}', 'Front\RegionController@show')->name('front.regions.show');
 Route::get('/blogs/{slug}', 'Front\BlogController@show')->name('front.blogs.show');
