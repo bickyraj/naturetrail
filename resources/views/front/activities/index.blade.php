@@ -112,7 +112,7 @@ function performSearch() {
   $("#show-more").on('click', async function(event) {
         event.preventDefault();
         currentPage++;
-        if (currentPage <= totalPage) {
+        if (nextPage) {
             await paginate(currentPage);
             if (currentPage == totalPage) {
                 $("#show-more").hide();
