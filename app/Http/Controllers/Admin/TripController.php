@@ -926,4 +926,99 @@ class TripController extends Controller
             'message' => $message
         ]);
     }
+
+    public function editSlider($id)
+    {
+        $slider = TripGallery::find($id);
+        return view('admin.trips.edit-slider', compact('slider'));
+    }
+
+    public function updateTripGallery(Request $request)
+    {
+        $status = 0;
+        $msg = "";
+        $slider = TripGallery::find($request->id);
+        $slider->alt_tag = $request->alt_tag;
+        $slider->caption = $request->caption;
+        $slider->status = 1;
+
+        if ($request->hasFile('file')) {
+            $imageName = $request->file->getClientOriginalName();
+            $imageType = $request->file->getClientOriginalExtension();
+            $imageNameUniqid = md5($imageName . microtime()) . '.' . $imageType;
+            $imageName = $imageNameUniqid;
+
+            $slider->image_name = $imageName;
+        }
+
+        if ($slider->save()) {
+            // save image.
+            if ($request->hasFile('file')) {
+
+                $path = 'public/trip-galleries/';
+                // Storage::deleteDirectory($path . $slider->trip_id);
+
+                $image_quality = 100;
+
+                if (($slider->image_size / 1000000) > 1) {
+                    $image_quality = 75;
+                }
+
+                $cropped_data = json_decode($request->cropped_data, true);
+                $path = 'public/trip-galleries/';
+
+                $image = Image::make($request->file);
+
+                // crop image
+                $image->crop(round($cropped_data['width']), round($cropped_data['height']), round($cropped_data['x']), round($cropped_data['y']));
+
+                Storage::put($path . $slider['trip_id'] . '/' . $imageName, (string) $image->encode('jpg', $image_quality));
+
+                // thumbnail image
+                $image->fit(400, 200, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+
+                Storage::put($path . $slider['trip_id'] . '/thumb_' . $imageName, (string) $image->encode('jpg', $image_quality));
+                $status = 1;
+            } else {
+                if (isset($request->cropped_data) && !empty($request->cropped_data)) {
+                    $cropped_data = json_decode($request->cropped_data, true);
+
+                    $path = 'public/trip-galleries/';
+                    $image = Image::make(Storage::get('public/trip-galleries/' . $slider->trip_id . '/' . $slider->image_name));
+
+                    Storage::deleteDirectory($path . $slider->trip_id);
+
+                    // crop image
+                    $image->crop(round($cropped_data['width']), round($cropped_data['height']), round($cropped_data['x']), round($cropped_data['y']));
+
+                    $ext = pathinfo($slider->image_name, PATHINFO_EXTENSION);
+
+                    $imageNameUniqid = md5($slider->image_name . microtime()) . '.' . $ext;
+
+                    Storage::put($path . $slider['trip_id'] . '/' . $imageNameUniqid, (string) $image->encode('jpg', 100));
+
+                    // thumbnail image
+                    $image->fit(400, 200, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+
+                    Storage::put($path . $slider['trip_id'] . '/thumb_' . $imageNameUniqid, (string) $image->encode('jpg', 100));
+
+                    $slider->image_name = $imageNameUniqid;
+                    $slider->save();
+                }
+            }
+
+            $status = 1;
+            $msg = "Gallery updated successfully.";
+            session()->flash('message', $msg);
+        }
+
+        return response()->json([
+            'status' => $status,
+            'message' => $msg
+        ]);
+    }
 }

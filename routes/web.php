@@ -152,6 +152,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 	Route::post('trips/includes/update', 'TripController@updateTripIncludes')->name('trips.includes.update');
 	Route::post('trips/meta/update', 'TripController@updateTripMeta')->name('trips.meta.update');
 	Route::post('trips/itineraries/update', 'TripController@updateTripItineraries')->name('trips.itineraries.update');
+    Route::get('trips/slider/edit/{id}', 'TripController@editSlider')->name('trips.slider.edit');
 	Route::post('trips/galleries/update', 'TripController@updateTripGallery')->name('trips.galleries.update');
 	Route::post('trips/galleries', 'TripController@storeTripGallery')->name('trips.galleries.store');
 	Route::get('trips/{trip_id}/galleries', 'TripController@getAllTripGallery')->name('trips.galleries.get-all-galleries');

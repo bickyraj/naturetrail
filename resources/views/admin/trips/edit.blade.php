@@ -502,6 +502,9 @@
                                         <td>{!! $gallery->caption? $gallery->caption:'--' !!}</td>
                                         <td>{!! $gallery->alt_tag? $gallery->alt_tag:'--' !!}</td>
                                         <td>
+                                            <a href="{{ route('admin.trips.slider.edit', $gallery->id) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">
+                                                <i class="la la-edit"></i>
+                                            </a>
                                           <button class="btn btn-sm btn-clean btn-icon btn-icon-md kt_sweetalert_delete_image" data-id="{{ $gallery->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                           </button>
