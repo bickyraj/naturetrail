@@ -81,6 +81,7 @@
     let typingTimer;
     const debounceTime = 500;
     let totalPage = "{{ $activities->total() }}";
+    let nextPage = "{{ $activities->nextPageUrl() }}"
     let currentPage = "{{ $activities->currentPage() }}";
     $('html, body').animate({
         scrollTop: $("#searchDiv").offset().top
@@ -139,6 +140,7 @@ function performSearch() {
                 success: function(res) {
                     if (res.success) {
                         $("#activity-card-block").append(res.data);
+                        nextPage = res.pagination.next_page;
                     }
                 }
             }).done(function( data ) {
@@ -177,6 +179,7 @@ function performSearch() {
                     $("#activity-card-block").html(res.data);
                     totalPage = res.pagination.total;
                     currentPage = res.pagination.current_page;
+                    nextPage = res.pagination.next_page;
                 }
 
             }

@@ -81,6 +81,7 @@
     let typingTimer;
     const debounceTime = 500;
     let totalPage = "{{ $destinations->total() }}";
+    let nextPage = "{{ $destinations->nextPageUrl() }}"
     let currentPage = "{{ $destinations->currentPage() }}";
     $('html, body').animate({
         scrollTop: $("#searchDiv").offset().top
@@ -110,8 +111,8 @@ function performSearch() {
 
   $("#show-more").on('click', async function(event) {
         event.preventDefault();
-        currentPage++;
-        if (currentPage <= totalPage) {
+        if (nextPage) {
+            currentPage++;
             await paginate(currentPage);
             if (currentPage == totalPage) {
                 $("#show-more").hide();
@@ -139,6 +140,7 @@ function performSearch() {
                 success: function(res) {
                     if (res.success) {
                         $("#destination-card-block").append(res.data);
+                        nextPage = res.pagination.next_page;
                     }
                 }
             }).done(function( data ) {
@@ -177,6 +179,7 @@ function performSearch() {
                     $("#destination-card-block").html(res.data);
                     totalPage = res.pagination.total;
                     currentPage = res.pagination.current_page;
+                    nextPage = res.pagination.next_page;
                 }
 
             }

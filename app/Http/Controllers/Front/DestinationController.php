@@ -29,6 +29,11 @@ class DestinationController extends Controller
             return response()->json([
                 'data' => $html,
                 'success' => true,
+                'pagination' => [
+                    'current_page' => $destinations->currentPage(),
+                    'next_page' => $destinations->nextPageUrl() ? true : false,
+                    'total' => $destinations->total()
+                ],
                 'message' => 'List fetched'
             ]);
         } else {
@@ -68,6 +73,7 @@ class DestinationController extends Controller
             'data' => $html,
             'pagination' => [
                 'current_page' => $destinations->currentPage(),
+                'next_page' => $destinations->nextPageUrl() ? true : false,
                 'total' => $destinations->total()
             ],
             'success' => true,

@@ -29,6 +29,11 @@ class ActivityController extends Controller
             return response()->json([
                 'data' => $html,
                 'success' => true,
+                'pagination' => [
+                    'current_page' => $activities->currentPage(),
+                    'next_page' => $activities->nextPageUrl() ? true : false,
+                    'total' => $activities->total()
+                ],
                 'message' => 'List fetched'
             ]);
         } else {
@@ -59,6 +64,7 @@ class ActivityController extends Controller
             'data' => $html,
             'pagination' => [
                 'current_page' => $activities->currentPage(),
+                'next_page' => $activities->nextPageUrl() ? true: false,
                 'total' => $activities->total()
             ],
             'success' => true,
