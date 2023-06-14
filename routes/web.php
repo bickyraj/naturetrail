@@ -264,6 +264,8 @@ Route::post('/trips/departure-booking', 'Front\TripController@departureBookingSt
 Route::get('/trip-departures/filter/{month?}', 'Front\TripDepartureController@filter')->name('front.trip-departures.filter');
 Route::post('/trips/booking', 'Front\TripController@bookingStore')->name('front.trips.booking.store');
 Route::post('/trips/customize', 'Front\TripController@customizeStore')->name('front.trips.customize.store');
+Route::get('/destinations', 'Front\DestinationController@index')->name('front.destinations.index');
+Route::get('/destinations/search', 'Front\DestinationController@search')->name('front.destinations.search');
 Route::get('/destinations/{slug}', 'Front\DestinationController@show')->name('front.destinations.show');
 Route::get('/activities/{slug}', 'Front\ActivityController@show')->name('front.activities.show');
 Route::get('/regions/{slug}', 'Front\RegionController@show')->name('front.regions.show');
