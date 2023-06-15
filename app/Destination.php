@@ -53,4 +53,9 @@ class Destination extends Model
     {
         return $this->belongsToMany(Trip::class, 'destination_trip', 'destination_id', 'trip_id');
     }
+
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class, 'activity_destination', 'destination_id', 'id');
+    }
 }

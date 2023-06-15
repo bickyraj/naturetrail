@@ -1,3 +1,6 @@
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.css">
+@endpush
 @extends('layouts.front_inner')
 @section('meta_og_title'){!! $seo->meta_title??'' !!}@stop
 @section('meta_description'){!! $seo->meta_description??'' !!}@stop
@@ -32,6 +35,11 @@
                 <div class="flex justify-center absolute bottom-0 w-full py-4" style="background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));"><button class="text-xs bg-light rounded-full px-4 py-2" x-on:click="expanded=!expanded" x-text="expanded?'Show less':'Show more'">Show more</button></div>
             </div>
             @endif
+        </div>
+        <div class="activities-slider">
+            @foreach ($activities as $activity)
+                @include('front.elements.activity-card', ['activity' => $activity])
+            @endforeach
         </div>
     </div>
         <div class="gray" style="background: var(--primary);">
@@ -90,6 +98,7 @@
 </section>
 @endsection
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.min.js"></script>
 <script type="text/javascript">
     let destination_id = "{!! $destination->id ?? ''  !!}";
     $(document).ajaxStart(function(){
@@ -134,6 +143,23 @@
     }).done(function( data ) {
       // console.log('done');
     });
+
+    const activitiesSlider = tns({
+        container: '.activities-slider',
+        nav: false,
+        controlsContainer: '.activities-slider-controls',
+        items: 2,
+        gutter: 16,
+        rewind: true,
+        responsive: {
+            768: {
+                items: 3
+            },
+            992: {
+                items: 5
+            }
+        }
+    })
   }
 </script>
 @endpush
