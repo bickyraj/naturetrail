@@ -37,9 +37,10 @@ class DestinationController extends Controller
                 'message' => 'List fetched'
             ]);
         } else {
+		    $block_3_trips = \App\Trip::where('block_3', 1)->latest()->get();
             $destinations = \App\Destination::where('status', '=', 1)->paginate($this->page_limit);
             $activities = \App\Activity::where('status', '=', 1)->get();
-            return view('front.destinations.index', compact('destinations', 'activities'));
+            return view('front.destinations.index', compact('destinations', 'activities', 'block_3_trips'));
         }
     }
 

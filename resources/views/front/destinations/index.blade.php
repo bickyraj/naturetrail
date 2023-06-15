@@ -1,3 +1,6 @@
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.css">
+@endpush
 @extends('layouts.front_inner')
 @section('content')
 <!-- Hero -->
@@ -17,16 +20,11 @@
         </div>
 </section>
 
-<section class="pt-5">
+<section>
     <div class="container">
         <div class="mb-4" id="searchDiv">
+            <input type="hidden" id="search-keyword" type="text" placeholder="search by country" name="keywords">
             <div class="grid lg:grid-cols-3 gap-2">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="">Keywords</label>
-                        <input id="search-keyword" type="text" placeholder="search by country" name="keywords">
-                    </div>
-                </div>
                 {{-- <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Activities</label>
@@ -76,8 +74,43 @@
         </div>
     </div>
 </section>
+<!-- Trip of the month -->
+    <div class="py-10 text-white bg-primary">
+        <div class="container">
+
+         <p class="mb-2 text-2xl text-white font-handwriting">This doesn't get any better</p>
+
+            <div class="flex">
+                <h2 class="relative pr-10 text-3xl font-bold uppercase lg:text-5xl font-display">
+                    {{ Setting::get('homePage')['trip_block_3']['title'] ?? '' }}
+                    <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                </h2>
+            </div>
+
+            <div class="flex justify-end gap-4 trips-month-slider-controls">
+                <button class="p-2 rounded-lg bg-light">
+                    <svg class="w-6 h-6 text-accent">
+                        <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
+                    </svg>
+                </button>
+                <button class="p-2 rounded-lg bg-light">
+                    <svg class="w-6 h-6 text-accent">
+                        <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="trips-month-slider">
+                @forelse ($block_3_trips as $block3tour)
+                    @include('front.elements.tour_card_slider', ['tour' => $block3tour])
+                @empty
+                @endforelse
+            </div>
+        </div>
+    </div>
 @endsection
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.min.js"></script>
 <script type="text/javascript">
     let xhr;
     let typingTimer;
@@ -152,6 +185,14 @@ function performSearch() {
             });
         });
     }
+
+    const monthSlider = tns({
+                container: '.trips-month-slider',
+                nav: false,
+                controlsContainer: '.trips-month-slider-controls',
+                autoplay: true,
+                autoplayButtonOutput: false
+            })
 
   function filter() {
     var keyword = $("#search-keyword").val();
