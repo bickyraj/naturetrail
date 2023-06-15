@@ -5,27 +5,31 @@
 @section('content')
 <!-- Hero -->
 <section class="hero hero-alt relative">
-    <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="">
-    <div class="overlay absolute">
-        <div class="container ">
-            <h1>Destinations</h1>
-            <div class="breadcrumb-wrapper">
+    <img src="{{ asset('assets/front/img/destinations.webp') }}" alt="">
+    <div class="absolute top-1/2 w-full">
+        <div class="container text-center">
+            <h1 style="max-width: unset;">Destinations</h1>
+            <div class="text-xl text-white">Explore Tours by Destination</div>
+        </div>
+    </div>
+
+            {{-- <div class="breadcrumb-wrapper">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb fs-sm wrap">
                         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Destinations</li>
                     </ol>
                 </nav>
-            </div>
-        </div>
+            </div> --}}
 </section>
 
 <section>
+    {{--
     <div class="container">
         <div class="mb-4" id="searchDiv">
             <input type="hidden" id="search-keyword" type="text" placeholder="search by country" name="keywords">
-            <div class="grid lg:grid-cols-3 gap-2">
-                {{-- <div class="col-lg-4">
+            <div class="grid lg:grid-cols-3 gap-4">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Activities</label>
                         <select name="" id="select-activity" class="custom-select">
@@ -37,8 +41,8 @@
                           @endif
                         </select>
                     </div>
-                </div> --}}
-                {{-- <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Sort by</label>
                         <select name="price" id="select-sort" class="custom-select">
@@ -46,20 +50,20 @@
                             <option value="desc" selected>Price (high to low)</option>
                         </select>
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
 
         <!-- Search Results -->
-    </div>
+    </div> --}}
     <div class="bg-light">
-        <div class="container py-4">
+        <div class="container py-20">
             @if(isset($keyword) && !empty($keyword))
             <p id="search-p" class="fs-sm">Search results for "<strong>{{ strtoupper($keyword) }}</strong>"</p>
             @endif
 
 
-            <div id="destination-card-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-3 mb-5">
+            <div id="destination-card-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-5">
                 @forelse ($destinations as $destination)
                     @include('front.elements.destination_card', ['destination' => $destination])
                 @empty
@@ -112,28 +116,29 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.min.js"></script>
 <script type="text/javascript">
-    let xhr;
-    let typingTimer;
-    const debounceTime = 500;
-    let totalPage = "{{ $destinations->total() }}";
-    let nextPage = "{{ $destinations->nextPageUrl() }}"
-    let currentPage = "{{ $destinations->currentPage() }}";
-    $('html, body').animate({
-        scrollTop: $("#searchDiv").offset().top
-    }, "fast");
 
-  $(".custom-select").on('change', function(event) {
-    filter();
-  });
+//     let xhr;
+//     let typingTimer;
+//     const debounceTime = 500;
+//     let totalPage = "{{ $destinations->total() }}";
+//     let nextPage = "{{ $destinations->nextPageUrl() }}"
+//     let currentPage = "{{ $destinations->currentPage() }}";
+//     $('html, body').animate({
+//         scrollTop: $("#searchDiv").offset().top
+//     }, "fast");
 
-  $("#search-keyword").on('keyup', function(event) {
-    handleKeyDown();
-  });
+//   $(".custom-select").on('change', function(event) {
+//     filter();
+//   });
 
-  function handleKeyDown() {
-    clearTimeout(typingTimer);
-    typingTimer = setTimeout(performSearch, debounceTime);
-}
+//   $("#search-keyword").on('keyup', function(event) {
+//     handleKeyDown();
+//   });
+
+//   function handleKeyDown() {
+//     clearTimeout(typingTimer);
+//     typingTimer = setTimeout(performSearch, debounceTime);
+// }
 
 function performSearch() {
     if (xhr && xhr.readyState !== 4) {

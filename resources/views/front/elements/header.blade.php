@@ -38,7 +38,7 @@
             <div class="hidden lg:block">
                 <div class="flex items-center justify-end gap-1 header-color">
                     <span class="text-xs">Talk to an expert</span>
-                    <a href="" style="color:#d766ff">
+                    <a href="{{ Setting::get('viber') ?? '' }}" style="color:#d766ff">
                         <svg class="w-5 h-5">
                             <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#viber" />
                         </svg>

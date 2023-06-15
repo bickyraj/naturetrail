@@ -19,11 +19,13 @@
 
 <!-- Footer -->
 <footer class="bg-primary text-white">
+    {{--
     <div class="container" style="margin-bottom: 15px;">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <a href="{{ route('front.makeapayment') }}" class="btn btn-accent">Make a Payment</a>
         </div>
     </div>
+    --}}
     <div class="container fs-sm">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
             <div class="mb-4">
@@ -53,8 +55,8 @@
             <div class="mb-4">
                 <h1 class="font-display text-2xl text-white">Trekking Regions</h1>
                 <ul>
-                    @if($footer2)
-                    @foreach($footer2 as $menu)
+                    @if($footer3)
+                    @foreach($footer3 as $menu)
                       <li class="text-sm">
                         <a href="{!! ($menu->link)?$menu->link:'javascript:;' !!}">{{ $menu->name }}</a>
                       </li>
@@ -121,7 +123,12 @@
                     </a>
                 </li>
             </ul>
-
+            
+            <div class="mb-2 affiliations">
+               <div class="col-lg-12 col-md-12 col-sm-12">
+            <a href="{{ route('front.makeapayment') }}" class="btn btn-accent">Make a Payment</a>
+        </div> 
+            </div>
 
             <div class="mb-2 affiliations">
                 <div class="mb-2 text-xs">We are affiliated to</div>
@@ -139,7 +146,7 @@
     <div class="bg-primary text-xs text-center pb-20">
         <div class="container md:flex justify-between">
             <div class="mb-2">
-                &copy; {{ date('Y') }}. All right Reserved.
+                All Contents &copy; 2004 - {{ date('Y') }}. All right Reserved.
             </div>
             <div class="mb-4">
                 Powered by

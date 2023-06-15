@@ -14,30 +14,34 @@
     <img src="{{ $destination->imageUrl }}" alt="">
     <div class="overlay absolute">
         <div class="container ">
-            <h1>{{ $destination->name }}</h1>
+            <h1 style="text-align: center;">{{ $destination->name }}</h1>
             <div class="breadcrumb-wrapper">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb fs-sm wrap">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                       {{-- <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ $destination->name }}</li>
+                        --}}
                     </ol>
                 </nav>
             </div>
+
         </div>
 </section>
 
 <section class="pt-5">
-    <div class="container" style="padding-top: 50px;">
-        <div class="lim mb-4">
+    <div class="container" style="padding-top: 20px;max-width: 1100px;">
+        <div class="mb-4">
             @if((strip_tags($destination->description) != ""))
             <div class="tour-details-section mb-4 relative" x-data="{ expanded: false }">
-                <div x-show="expanded" class="pb-20" x-collapse.min.200px><?= $destination->description; ?></div>
+                <div x-show="expanded" class="prose mx-auto pb-20" x-collapse.min.427px><?= $destination->description; ?></div>
                 <div class="flex justify-center absolute bottom-0 w-full py-4" style="background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));"><button class="text-xs bg-light rounded-full px-4 py-2" x-on:click="expanded=!expanded" x-text="expanded?'Show less':'Show more'">Show more</button></div>
             </div>
             @endif
         </div>
+    </div>
+
         {{-- Activities --}}
-    <div class="py-10 activities">
+    <div class="py-10 activities bg-gray">
         <div class="container">
              <div class="items-center justify-between gap-20 mb-4 lg:flex">
                 <div>
@@ -71,14 +75,38 @@
             </div>
         </div>
     </div>{{-- Activities --}}
-    </div>
-        <div class="gray" style="background: var(--primary);">
-    <div class="container" style="padding-top: 20px;">
+
+
+    {{-- Travel Guide --}}
+    <div class="relative py-10">
+        <div class="container">
+            <div class="grid gap-4 lg:grid-cols-2">
+                <div class="lg:pr-10 prose">
+                    <h2>
+                        <div class="mb-2 text-2xl font-handwriting text-primary">The Definitive</div>
+                        <div class="text-gray-600 text-3xl font-display font-bold uppercase lg:text-5xl">{{ $destination->name }} Travel Guide</div>
+                    </h2>
+                    <p>{!! $destination->tour_guide_description !!}</p>
+                    {{-- <p>Nepal, a land of rugged mountains, vibrant culture, and spiritual enlightenment, offers a mesmerizing experience for travelers seeking adventure, serenity, and cultural immersion. This definitive travel guide aims to provide you with essential information and insights to make your journey to Nepal an unforgettable one. From the majestic Himalayas to the ancient temples and bustling markets, Nepal promises a diverse range of experiences for every traveler.</p>
+
+                    <p>To begin your exploration, the Himalayas stand as Nepal's crown jewel, offering breathtaking vistas and thrilling treks. Mount Everest, the world's highest peak, beckons adventure enthusiasts to conquer its summit, while the Annapurna Circuit invites trekkers to experience the mesmerizing beauty of the Annapurna mountain range. Whether you're an experienced mountaineer or a beginner hiker, Nepal offers a range of trekking options suited to various skill levels. </p> --}}
+
+                    <a href="https://naturetrail.manojpanta.com.np/nepal-travel-info" class="btn btn-accent" style="text-decoration:none;">View Full Guide</a>
+                </div>
+                @if (!empty($destination->tour_guide_image_name))
+                    <div class="lg:absolute w-full lg:w-1/2 right-0"><img src="{{ $destination->tour_guide_image_url }}" style="padding-top: 44px;"></div>
+                @endif
+            </div>
+        </div>
+    </div>{{-- Travel Guide --}}
+
+        <div class="bg-gray">
+    <div class="container" style="padding-top: 20px;padding-bottom: 20px;">
         <div class="mb-4" id="searchDiv">
             <div class="grid lg:grid-cols-3 gap-2">
                 {{-- <div class="col-lg-4 pb-8">
                     <div class="form-group">
-                        <label for="" style="color: #fff;">Destinations</label>
+                        <label for="" style="color: #000;">Destinations</label>
                         <select name="" id="select-destination" class="custom-select">
                           <option value="" selected>All Destinations</option>
                           @if($destinations)
@@ -91,7 +119,7 @@
                 </div> --}}
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="" style="color: #fff;">Activities</label>
+                        <label for="" style="color: #000;">Activities</label>
                         <select name="" id="select-activity" class="custom-select">
                           <option value="" selected>All activities</option>
                           @if($activities)
@@ -104,7 +132,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="" style="color: #fff;">Sort by</label>
+                        <label for="" style="color: #000;">Sort by</label>
                         <select name="" id="select-sort" class="custom-select">
                             <option value="asc">Price (low to high)</option>
                             <option value="desc" selected>Price (high to low)</option>

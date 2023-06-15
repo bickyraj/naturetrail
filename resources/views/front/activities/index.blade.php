@@ -3,22 +3,25 @@
 <!-- Hero -->
 <section class="hero hero-alt relative">
     <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="">
-    <div class="overlay absolute">
-        <div class="container ">
-            <h1>Activities</h1>
-            <div class="breadcrumb-wrapper">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb fs-sm wrap">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Activities</li>
-                    </ol>
-                </nav>
-            </div>
+    <div class="absolute top-1/2 w-full">
+        <div class="container text-center">
+            <h1 style="max-width: unset;">Activities</h1>
+            <div class="text-xl text-white">Explore Tours by Activity</div>
         </div>
+    </div>
+
+    {{-- <div class="breadcrumb-wrapper">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb fs-sm wrap">
+                <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Activities</li>
+            </ol>
+        </nav>
+    </div> --}}
 </section>
 
-<section class="pt-5">
-    <div class="container">
+<section>
+    {{--<div class="container">
         <div class="mb-4" id="searchDiv">
             <div class="grid lg:grid-cols-3 gap-2">
                 <div class="col-lg-4">
@@ -27,7 +30,7 @@
                         <input id="search-keyword" type="text" placeholder="search by country" name="keywords">
                     </div>
                 </div>
-                {{-- <div class="col-lg-4">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Activities</label>
                         <select name="" id="select-activity" class="custom-select">
@@ -39,8 +42,8 @@
                           @endif
                         </select>
                     </div>
-                </div> --}}
-                {{-- <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Sort by</label>
                         <select name="price" id="select-sort" class="custom-select">
@@ -48,20 +51,21 @@
                             <option value="desc" selected>Price (high to low)</option>
                         </select>
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
 
         <!-- Search Results -->
-    </div>
+    </div>--}}
+    
     <div class="bg-light">
-        <div class="container py-4">
+        <div class="container py-10">
             @if(isset($keyword) && !empty($keyword))
             <p id="search-p" class="fs-sm">Search results for "<strong>{{ strtoupper($keyword) }}</strong>"</p>
             @endif
 
 
-            <div id="activity-card-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-3 mb-5">
+            <div id="activity-card-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-8 mb-5">
                 @forelse ($activities as $activity)
                     @include('front.elements.activity-card', ['activity' => $activity])
                 @empty
