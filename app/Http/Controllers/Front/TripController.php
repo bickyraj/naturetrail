@@ -13,6 +13,7 @@ use Carbon\Carbon;
 
 class TripController extends Controller
 {
+    private $page_limit = 1;
 	public function show($slug)
 	{
 		$trip = Trip::where('slug', '=', $slug)->with([
@@ -159,20 +160,26 @@ class TripController extends Controller
 				});
 			}
 
-			if ($sortBy) {
-				if ($sortBy == "price_l_h") {
-					$query->orderBy('offer_price', 'ASC');
-				} else {
-					$query->orderBy('offer_price', 'DESC');
-				}
+			if (isset($sortBy) && !empty($sortBy)) {
+                $query->orderBy('offer_price', $sortBy);
 			}
 		}
 
-		$trips = $query->latest()->get();
-		$html = view('front.elements.trip-block')->with(compact('trips'))->render();
+		$trips = $query->latest()->paginate($this->page_limit);
+        $html = "";
+        if (!empty($trips)) {
+            foreach ($trips as $trip) {
+                $html .= view('front.elements.tour-card')->with(['tour' => $trip])->render();
+            }
+        }
 
 		return response()->json([
 			'data' => $html,
+            'pagination' => [
+                'current_page' => $trips->currentPage(),
+                'next_page' => $trips->nextPageUrl() ? true : false,
+                'total' => $trips->total()
+            ],
 			'success' => true,
 			'message' => 'List fetched'
 		]);
