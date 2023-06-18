@@ -255,8 +255,8 @@ class DestinationController extends Controller
             // save image.
             if ($request->hasFile('file')) {
 
-                $path = 'public/destinations/';
-                Storage::deleteDirectory($path . $destination->id);
+                // $path = 'public/destinations/';
+                // Storage::deleteDirectory($path . $destination->id);
 
                 $image_quality = 100;
 
@@ -288,7 +288,7 @@ class DestinationController extends Controller
                     $path = 'public/destinations/';
                     $image = Image::make(Storage::get('public/destinations/' . $destination->id . '/' . $destination->image_name));
 
-                    Storage::deleteDirectory($path . $destination->id);
+                    // Storage::deleteDirectory($path . $destination->id);
 
                     // crop image
                     $image->crop(round($cropped_data['width']), round($cropped_data['height']), round($cropped_data['x']), round($cropped_data['y']));

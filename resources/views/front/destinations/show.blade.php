@@ -86,19 +86,22 @@
                         <div class="mb-2 text-2xl font-handwriting text-primary">The Definitive</div>
                         <div class="text-gray-600 text-3xl font-display font-bold uppercase lg:text-5xl">{{ $destination->name }} Travel Guide</div>
                     </h2>
-                    <p>{!! $destination->tour_guide_description !!}</p>
-                    {{-- <p>Nepal, a land of rugged mountains, vibrant culture, and spiritual enlightenment, offers a mesmerizing experience for travelers seeking adventure, serenity, and cultural immersion. This definitive travel guide aims to provide you with essential information and insights to make your journey to Nepal an unforgettable one. From the majestic Himalayas to the ancient temples and bustling markets, Nepal promises a diverse range of experiences for every traveler.</p>
+                   {{-- <p>{!! $destination->tour_guide_description !!}</p> --}}
+                     <p>Nepal, a land of rugged mountains, vibrant culture, and spiritual enlightenment, offers a mesmerizing experience for travelers seeking adventure, serenity, and cultural immersion. This definitive travel guide aims to provide you with essential information and insights to make your journey to Nepal an unforgettable one. From the majestic Himalayas to the ancient temples and bustling markets, Nepal promises a diverse range of experiences for every traveler.</p>
 
-                    <p>To begin your exploration, the Himalayas stand as Nepal's crown jewel, offering breathtaking vistas and thrilling treks. Mount Everest, the world's highest peak, beckons adventure enthusiasts to conquer its summit, while the Annapurna Circuit invites trekkers to experience the mesmerizing beauty of the Annapurna mountain range. Whether you're an experienced mountaineer or a beginner hiker, Nepal offers a range of trekking options suited to various skill levels. </p> --}}
+                    <p>To begin your exploration, the Himalayas stand as Nepal's crown jewel, offering breathtaking vistas and thrilling treks. Mount Everest, the world's highest peak, beckons adventure enthusiasts to conquer its summit, while the Annapurna Circuit invites trekkers to experience the mesmerizing beauty of the Annapurna mountain range. Whether you're an experienced mountaineer or a beginner hiker, Nepal offers a range of trekking options suited to various skill levels. </p>
 
                     <a href="https://naturetrail.manojpanta.com.np/nepal-travel-info" class="btn btn-accent" style="text-decoration:none;">View Full Guide</a>
                 </div>
                 @if (!empty($destination->tour_guide_image_name))
                     <div class="lg:absolute w-full lg:w-1/2 right-0"><img src="{{ $destination->tour_guide_image_url }}" style="padding-top: 44px;"></div>
+                @else
+                    <div class="lg:absolute w-full lg:w-1/2 right-0"><img src="{{ asset('assets/front/img/nepal.webp') }}" style="padding-top: 44px;"></div>
                 @endif
             </div>
         </div>
     </div>{{-- Travel Guide --}}
+
 
         <div class="bg-gray">
     <div class="container" style="padding-top: 20px;padding-bottom: 20px;">
@@ -156,6 +159,10 @@
         </div>
     </div>
 </section>
+
+
+    @include('front.elements.plan_trip')
+
 @endsection
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.min.js"></script>

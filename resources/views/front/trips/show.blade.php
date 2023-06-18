@@ -469,7 +469,7 @@ if (session()->has('error_message')) {
                                         </div>
                                     </button>
                                     <div id="day{{ $i + 1 }}" class="border-top-light" x-cloak x-show.transition="day{{ $i + 1 }}Open">
-                                        <div class="grid gap-4 xl:grid-cols-2">
+                                        <div class="{{ isset($itinerary->image_name) && !empty($itinerary->image_name)? 'grid gap-4 xl:grid-cols-2': '' }}">
                                             @if (isset($itinerary->image_name) && !empty($itinerary->image_name))
                                                 <div class="p-4 {{ $i % 2 == 0 ? 'xl:order-1' : ''}}">
                                                 <img src="{{ $itinerary->imageUrl }}" alt="" class="w-full h-full object-cover">
