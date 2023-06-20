@@ -40,7 +40,7 @@
                 </svg>
                 <span class="text-sm">Download Tour Brochure</span>
             </a>
-            <a href="#" class="flex items-center p-1 text-accent" title="Share tour">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ route('front.trips.show', ['slug' => $trip->slug]) }}" class="flex items-center p-1 text-accent" title="Share tour">
                 <svg class="w-4 h-4 flex-shrink-0 mr-2">
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#share" />
                 </svg>

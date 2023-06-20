@@ -2,7 +2,7 @@
 @section('content')
 <!-- Hero -->
 <section class="hero hero-alt relative">
-    <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="">
+    <!--<img src="{{ asset('assets/front/img/hero.jpg') }}" alt="">-->
     <div class="absolute top-1/2 w-full">
         <div class="container text-center">
             <h1 style="max-width: unset;">Activities</h1>
@@ -59,7 +59,7 @@
     </div>--}}
     
     <div class="bg-light">
-        <div class="container py-10">
+        <div class="container py-20">
             @if(isset($keyword) && !empty($keyword))
             <p id="search-p" class="fs-sm">Search results for "<strong>{{ strtoupper($keyword) }}</strong>"</p>
             @endif
@@ -71,17 +71,62 @@
                 @empty
                 @endforelse
             </div>
-            @if ($activities->nextPageUrl())
+            {{-- @if ($activities->nextPageUrl())
                 <div class="flex items-center" style="justify-content: center; margin-top: 50px;">
                     <div id="spinner-block"></div>
                     <button id="show-more" class="btn btn-accent" style="display: block;">show more</button>
                 </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 </section>
+
+@include('front.elements.plan_trip')
+   
+<!-- Trip of the month -->
+<div class="py-10 text-white bg-primary">
+    <div class="container">
+
+     <p class="mb-2 text-2xl text-white font-handwriting">This doesn't get any better</p>
+
+        <div class="flex">
+            <h2 class="relative pr-10 text-3xl font-bold uppercase lg:text-5xl font-display">
+                Trip of the Day
+                <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+            </h2>
+        </div>
+
+        <div class="flex justify-end gap-4 trips-month-slider-controls">
+            <button class="p-2 rounded-lg bg-light">
+                <svg class="w-6 h-6 text-accent">
+                    <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
+                </svg>
+            </button>
+            <button class="p-2 rounded-lg bg-light">
+                <svg class="w-6 h-6 text-accent">
+                    <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="trips-month-slider">
+            @forelse ($block_3_trips as $block3tour)
+                @include('front.elements.tour_card_slider', ['tour' => $block3tour])
+            @empty
+            @endforelse
+        </div>
+    </div>
+</div>
+    
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.css">
+@endpush
+
 @push('scripts')
+
+<script src="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.min.js"></script>
 <script type="text/javascript">
     let xhr;
     let typingTimer;
@@ -89,9 +134,9 @@
     let totalPage = "{{ $activities->total() }}";
     let nextPage = "{{ $activities->nextPageUrl() }}"
     let currentPage = "{{ $activities->currentPage() }}";
-    $('html, body').animate({
-        scrollTop: $("#searchDiv").offset().top
-    }, "fast");
+    // $('html, body').animate({
+    //     scrollTop: $("#searchDiv").offset().top
+    // }, "fast");
 
   $(".custom-select").on('change', function(event) {
     filter();
@@ -199,5 +244,12 @@ function performSearch() {
             }
         });
   }
+   const monthSlider = tns({
+                container: '.trips-month-slider',
+                nav: false,
+                controlsContainer: '.trips-month-slider-controls',
+                autoplay: true,
+                autoplayButtonOutput: false
+            })
 </script>
 @endpush

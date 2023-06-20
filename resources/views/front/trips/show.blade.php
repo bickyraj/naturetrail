@@ -542,32 +542,59 @@ if (session()->has('error_message')) {
                         </div>
                     </div>
 
-                    @if (!$trip->trip_departures->isEmpty())
-                        <div id="date-price" class="px-4 pt-10 pb-4 mb-4 bg-white tds lg:px-10">
-                            <div class="p-3 bg-white">
-                                <div class="items-center justify-between mb-4 lg:flex">
-                                    <h2 class="text-4xl uppercase lg:text-5xl font-display text-primary">Upcoming Departures
-                                    </h2>
-
-                                    <form action="">
-                                        <div class="form-group">
-                                            <select name="" id="" class="bg-light">
-                                                <option selected disabled>Choose Month & Year</option>
-                                                <option value="">Jan 2021</option>
-                                                <option value="">Feb 2021</option>
-                                                <option value="">Mar 2021</option>
-                                            </select>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="grid grid-cols-2 gap-1 md:grid-cols-3 xl:grid-cols-4">
-                                    @foreach ($trip->trip_departures as $departure)
-                                        @include('front.elements.tour_departure_card', $departure)
+                     @if (!$trip->trip_departures->isEmpty())
+                    <div id="date-price" class="">
+                    <div class="bg-white p-4">
+                         <h2 class="text-4xl lg:text-5xl font-display text-primary uppercase">Upcoming Departure Dates
+                        </h2>
+                        <div class="table-wrapper-scroll">
+                            <table class="table mb-2">
+                                <thead>
+                                    <th class="upper text-left">Date</th>
+                                    <th class="upper text-left">Price</th>
+                                    <th class="upper text-left">Seats Left</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    @foreach($trip->trip_departures as $departure)
+                                        <tr>
+                                            <td>
+                                                <div class="flex aic">
+                                                    <svg class="icon mr-1 text-primary">
+                                                        <use xlink:href="{{ asset('assets/front/img/sprite.svg#calendar') }}" />
+                                                    </svg>
+                                                    {{ formatDate($departure->from_date) }} — {{ formatDate($departure->to_date) }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="flex aic">
+                                                    <svg class="icon mr-1 text-primary">
+                                                        <use xlink:href="{{ asset('assets/front/img/sprite.svg#tag') }}" />
+                                                    </svg>
+                                                    <div>
+                                                        <small class="text-gray"><s>USD {{ number_format($trip->cost) }}</s></small><br>
+                                                        <span class="text-green">USD <b>{{ number_format($departure->price) }}</b></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="flex aic">
+                                                    <svg class="icon mr-1 text-primary">
+                                                        <use xlink:href="{{ asset('assets/front/img/sprite.svg#users') }}" />
+                                                    </svg>
+                                                    {{ $departure->seats }}
+                                                </div>
+                                            </td>
+                                            <td><a href="{{ route('front.trips.departure-booking', ['slug' => $trip->slug, 'id' => $departure->id]) }}" class="btn btn-sm btn-accent">Join Group</a></td>
+                                        </tr>
                                     @endforeach
-                                </div>
-                            </div>
+                                </tbody>
+                            </table>
+                            <!-- <p class="text-center"><button id="more-dates" class="btn btn-sm btn-gray">See more dates</button></p> -->
                         </div>
-                    @endif
+                    </div>
+                    </div>
+                     @endif
 
                     @if (iterator_count($trip->trip_reviews))
                         <div id="reviews" class="px-4 pt-10 pb-4 mb-4 bg-white tds lg:px-10">
@@ -659,8 +686,9 @@ if (session()->has('error_message')) {
                                 Customize
                             </a>
                         </div>
+                       
                         <div class="flex">
-                            <a href="#" class="flex items-center p-1 mr-2 text-accent" title="Print tour details">
+                            <a href="{{ route('front.trips.print', ['slug' => $trip->slug]) }}" class="flex items-center p-1 mr-2 text-accent" title="Print tour details">
                                 <svg class="flex-shrink-0 w-6 h-6 mr-2">
                                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#printer" />
                                 </svg>
@@ -672,26 +700,26 @@ if (session()->has('error_message')) {
                                 </svg>
                                 <span>Download Tour Brochure</span>
                             </a>
-                        </div>
+                        </div> 
                     </div>
 
                     <div>
                         <h2 class="mb-2 uppercase lg:text-xl font-display text-primary">Share this tour</h2>
-                        <a href="#" class="mr-2 text-primary hover:text-accent">
-                            <svg class="w-6 h-6">
-                                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#facebook" />
-                            </svg>
-                        </a>
-                        <a href="#" class="mr-2 text-primary hover:text-accent">
-                            <svg class="w-6 h-6">
-                                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#twitter" />
-                            </svg>
-                        </a>
-                        <a href="#" class="text-primary hover:text-accent">
-                            <svg class="w-6 h-6">
-                                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#instagram" />
-                            </svg>
-                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ route('front.trips.show', ['slug' => $trip->slug]) }}" class="text-primary hover:text-accent mr-2">
+                        <svg class="w-6 h-6">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#facebook" />
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?url={{ route('front.trips.show', ['slug' => $trip->slug]) }}&text=" class="text-primary hover:text-accent mr-2">
+                        <svg class="w-6 h-6">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#twitter" />
+                        </svg>
+                    </a>
+                    <a href="{{ Setting::get('instagram') }}" class="text-primary hover:text-accent">
+                        <svg class="w-6 h-6">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#instagram" />
+                        </svg>
+                    </a>
                     </div>
                 </div>
 

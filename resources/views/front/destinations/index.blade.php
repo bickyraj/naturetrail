@@ -56,6 +56,7 @@
 
         <!-- Search Results -->
     </div> --}}
+    
     <div class="bg-light">
         <div class="container py-20">
             @if(isset($keyword) && !empty($keyword))
@@ -63,7 +64,7 @@
             @endif
 
 
-            <div id="destination-card-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-5">
+            <div id="destination-card-block" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-5">
                 @forelse ($destinations as $destination)
                     @include('front.elements.destination_card', ['destination' => $destination])
                 @empty
@@ -78,6 +79,9 @@
         </div>
     </div>
 </section>
+
+@include('front.elements.plan_trip')
+    
 <!-- Trip of the month -->
     <div class="py-10 text-white bg-primary">
         <div class="container">
@@ -86,7 +90,7 @@
 
             <div class="flex">
                 <h2 class="relative pr-10 text-3xl font-bold uppercase lg:text-5xl font-display">
-                    {{ Setting::get('homePage')['trip_block_3']['title'] ?? '' }}
+                    Trip of the Destinations
                     <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
                 </h2>
             </div>
@@ -112,6 +116,7 @@
             </div>
         </div>
     </div>
+    
 @endsection
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.min.js"></script>

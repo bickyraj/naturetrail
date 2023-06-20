@@ -362,7 +362,7 @@
                 @empty
                 @endforelse
             </div>
-            <a href="https://naturetrail.manojpanta.com.np/blogs" class="theme">Go to blog
+            <a href="https://www.naturetrail.com/blogs" class="theme">Go to blog
                 <svg>
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
                 </svg>
@@ -370,7 +370,7 @@
         </div>
     </div><!-- Blog -->
 
-    @include('front.elements.search_widget')
+   {{-- @include('front.elements.search_widget') --}}
 @endsection
 
 @push('scripts')

@@ -53,7 +53,7 @@
                 </ul>
             </div>
             <div class="mb-4">
-                <h1 class="font-display text-2xl text-white">Trekking Regions</h1>
+                <h1 class="font-display text-2xl text-white">Quick Links</h1>
                 <ul>
                     @if($footer3)
                     @foreach($footer3 as $menu)
@@ -128,6 +128,13 @@
                <div class="col-lg-12 col-md-12 col-sm-12">
             <a href="{{ route('front.makeapayment') }}" class="btn btn-accent">Make a Payment</a>
         </div> 
+            </div>
+            
+            <div class="mb-2 affiliations">
+                <ul>
+                    <p class="mr-1 p-2"><a href="#"><img class="lazyload" data-src="{{ asset('assets/front/img/certified1.png') }}"
+                                alt="Travel Life"></a></p>
+                </ul>
             </div>
 
             <div class="mb-2 affiliations">

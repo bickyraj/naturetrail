@@ -79,6 +79,7 @@ class ActivityController extends Controller
 		$destinations = \App\Destination::select('id', 'name')->get();
 		$activities = \App\Activity::select('id', 'name')->get();
 
-		return view('front.activities.show', compact('activity', 'destinations', 'activities', 'seo'));
+        $regions = \App\Region::all();
+		return view('front.activities.show', compact('activity', 'destinations', 'activities', 'seo', 'regions'));
 	}
 }

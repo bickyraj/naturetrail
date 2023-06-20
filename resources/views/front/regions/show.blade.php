@@ -6,34 +6,29 @@
 @section('meta_og_description'){!! $seo->meta_description??'' !!}@stop
 @section('meta_og_image'){!! $seo->socialImageUrl??'' !!}@stop
 @section('content')
+
 <!-- Hero -->
 <section class="hero hero-alt relative">
     <img src="{{ $region->imageUrl }}" alt="">
-    <div class="overlay absolute">
-        <div class="container ">
-            <h1>{{ $region->name }}</h1>
-            <div class="breadcrumb-wrapper">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb fs-sm wrap">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $region->name }}</li>
-                    </ol>
-                </nav>
-            </div>
+    <div class="absolute top-1/2 w-full">
+        <div class="container text-center">
+            <div class="text-2xl text-white text-center">Regions</div>
+            <h1 style="max-width: unset;">{{ $region->name }}</h1>
         </div>
+    </div>
 </section>
 
 <section class="pt-5">
     <div class="container" style="padding-top: 70px;">
-        <div class="lim mb-4">
+        <div class="mb-10">
             @if((strip_tags($region->description) != ""))
-            <div class="tour-details-section">
+            <div class="prose mx-auto text-center">
               <?= $region->description; ?>
             </div>
             @endif
         </div>
         <div class="mb-4" id="searchDiv">
-            <div class="grid lg:grid-cols-3 gap-2">
+            <div class="max-w-5xl mx-auto grid lg:grid-cols-3 gap-4">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Destinations</label>
@@ -63,7 +58,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Sort by</label>
-                        <select name="" id="" class="custom-select">
+                        <select name="" id="select-sort" class="custom-select">
                             <option value="">Price (low to high)</option>
                             <option value="">Price (high to low)</option>
                             <option value="">Ratings (low to high)</option>
@@ -77,8 +72,8 @@
         <!-- Search Results -->
     </div>
     <div class="bg-light">
-        <div class="container py-4">
-            <div id="tirps-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-3">
+        <div class="container py-20">
+            <div id="tirps-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-8">
             </div>
         </div>
     </div>

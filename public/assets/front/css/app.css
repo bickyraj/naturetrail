@@ -4289,7 +4289,6 @@ body {
 
 .prose {
   line-height: 1.8;
-  text-align: justify;
 }
 
 .lim p {
@@ -4748,6 +4747,18 @@ a.theme:hover svg {
     height: 400px;
 
   }
+}
+
+.hero-alt{
+   background: rgb(131,199,212);
+    background: linear-gradient(225deg, rgba(131,199,212,1), rgba(40,143,236,1));
+    min-height: 400px;
+}
+
+@media(min-width:992px){
+    .hero-alt{
+        min-height: 500px;
+    }
 }
 
 .hero-alt img {
@@ -5346,8 +5357,7 @@ footer .bottom {
 }
 
 .activity img {
-  height: 15rem;
-  height: 15rem;
+  height: 20rem;
   -o-object-fit: cover;
   object-fit: cover;
 }
@@ -5710,19 +5720,19 @@ footer .bottom {
   }
 
   .tour-details #date-price td:nth-of-type(1):before {
-    content: "Start Date";
+    content: "Date";
   }
 
   .tour-details #date-price td:nth-of-type(2):before {
-    content: "End Date";
-  }
-
-  .tour-details #date-price td:nth-of-type(3):before {
     content: "Offer Price";
   }
 
+  .tour-details #date-price td:nth-of-type(3):before {
+    content: "Seat Left";
+  }
+
   .tour-details #date-price td:nth-of-type(4):before {
-    content: "Status";
+    content: "";
   }
 
   .tour-details #date-price td:nth-of-type(5):before {

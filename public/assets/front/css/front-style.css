@@ -174,3 +174,8 @@ svg.icon {
     font-size: 18px;
     font-weight: 600;
 }
+
+svg.icon {
+    width: 1rem;
+    height: 1rem;
+}

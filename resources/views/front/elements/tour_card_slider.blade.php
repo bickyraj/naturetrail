@@ -29,7 +29,8 @@
                     </div>
                 </div>
             </div>
-
+            
+            @if($tour->cost)
             <div class="mb-4 price">
                 <div class="text-accent">
                     <span class="text-sm">
@@ -48,7 +49,8 @@
                     <span>.{{ $price_arr[1] }}</span>
                 </div>
             </div>
-
+            @endif
+            
             <div>
                 <a href="{{ route('front.trips.show', $tour->slug) }}" class="btn btn-accent">
                     Explore
