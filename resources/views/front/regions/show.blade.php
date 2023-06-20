@@ -29,7 +29,7 @@
         </div>
         <div class="mb-4" id="searchDiv">
             <div class="max-w-5xl mx-auto grid lg:grid-cols-3 gap-4">
-                <div class="col-lg-4">
+                {{-- <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Destinations</label>
                         <select name="" id="select-destination" class="custom-select">
@@ -54,15 +54,13 @@
                           @endif
                         </select>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Sort by</label>
                         <select name="" id="select-sort" class="custom-select">
-                            <option value="">Price (low to high)</option>
-                            <option value="">Price (high to low)</option>
-                            <option value="">Ratings (low to high)</option>
-                            <option value="" selected>Ratings (high to low)</option>
+                            <option value="asc">Price (low to high)</option>
+                            <option value="desc" selected>Price (high to low)</option>
                         </select>
                     </div>
                 </div>
@@ -76,34 +74,75 @@
             <div id="tirps-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-8">
             </div>
         </div>
+        <div class="flex items-center" style="justify-content: center; margin-top: 50px;">
+            <div id="spinner-block"></div>
+            <button id="show-more" class="btn btn-accent" style="display: block; margin-bottom: 50px;">show more</button>
+        </div>
     </div>
 </section>
 @endsection
 @push('scripts')
 <script type="text/javascript">
-    // let destination_id = "{!! $region->id ?? ''  !!}";
-    $(document).ajaxStart(function(){
-    });
-
-  /* Gets called when request is sent */
-  $(document).ajaxSend(function(evt, req, set){
-  });
-
-  /* Gets called when request complete */
-  $(document).ajaxComplete(function(event,request,settings){
-  });
+    let region_id = "{!! $region->id ?? ''  !!}";
+    let xhr;
+    let typingTimer;
+    const debounceTime = 500;
+    let totalPage;
+    let nextPage;
+    let currentPage = 1;
 
   filter();
   $(".custom-select").on('change', function(event) {
     filter();
   });
 
+  $("#show-more").on('click', async function(event) {
+        event.preventDefault();
+        if (nextPage) {
+            currentPage++;
+            await paginate(currentPage);
+            if (!nextPage) {
+                $("#show-more").hide();
+            }
+        }
+    });
+
+async function paginate(page) {
+        return new Promise((resolve, reject) => {
+            var keyword = $("#search-keyword").val();
+            var sortBy = $("#select-sort").val();
+            const url = "{{ route('front.trips.filter') }}" + "?page=" + currentPage + "&region_id=" + region_id + "&sortBy=" + sortBy;
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                async: "false",
+                beforeSend: function(xhr) {
+                    var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                Loading Trips...\
+                                </button>';
+                    $("#spinner-block").html(spinner);
+                    $("#show-more").hide();
+                },
+                success: function(res) {
+                    if (res.success) {
+                        $("#tirps-block").append(res.data);
+                        nextPage = res.pagination.next_page;
+                    }
+                }
+            }).done(function( data ) {
+                $("#spinner-block").html('');
+                $("#show-more").show();
+                resolve(true);
+            });
+        });
+    }
+
   function filter() {
-    var destination_id = $("#select-destination").val();
-    var activity_id = $("#select-activity").val();
+    currentPage = 1;
     var sortBy = $("#select-sort").val();
-    let region_id = "{!! $region->id !!}";
-    var url = "{{ url('trips/filter') }}" + "?region=" + region_id + "&destination_id=" + destination_id + "&activity_id=" + activity_id + "&sortBy=" + sortBy;
+    var url = "{{ url('trips/filter') }}" + "?page=" + currentPage + "&region_id=" + region_id + "&sortBy=" + sortBy;
     $.ajax({
       url: url,
       type: "GET",
@@ -115,15 +154,25 @@
                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
                       Loading Trips...\
                     </button>';
-        $("#tirps-block").html(spinner);
+                    $("#spinner-block").html(spinner);
+                    $("#show-more").hide();
       },
       success: function(res) {
         if (res.success) {
           $("#tirps-block").html(res.data);
+          totalPage = res.pagination.total;
+            currentPage = res.pagination.current_page;
+            nextPage = res.pagination.next_page;
         }
       }
     }).done(function( data ) {
-      // console.log('done');
+        $("#spinner-block").html('');
+        if (!nextPage) {
+            $("#show-more").hide();
+        } else {
+
+            $("#show-more").show();
+        }
     });
   }
 </script>

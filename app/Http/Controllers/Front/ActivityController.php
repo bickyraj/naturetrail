@@ -64,7 +64,7 @@ class ActivityController extends Controller
             'data' => $html,
             'pagination' => [
                 'current_page' => $activities->currentPage(),
-                'next_page' => $activities->nextPageUrl() ? true: false,
+                'next_page' => $activities->nextPageUrl() ? true : false,
                 'total' => $activities->total()
             ],
             'success' => true,
@@ -72,14 +72,16 @@ class ActivityController extends Controller
         ]);
     }
 
-	public function show($slug)
-	{
-		$activity = Activity::where('slug', '=', $slug)->first();
-		$seo = $activity->seo;
-		$destinations = \App\Destination::select('id', 'name')->get();
-		$activities = \App\Activity::select('id', 'name')->get();
+    public function show($slug)
+    {
+        $activity = Activity::where('slug', '=', $slug)->first();
+        $seo = $activity->seo;
+        $destinations = \App\Destination::select('id', 'name')->get();
+        $activities = \App\Activity::select('id', 'name')->get();
 
-        $regions = \App\Region::all();
-		return view('front.activities.show', compact('activity', 'destinations', 'activities', 'seo', 'regions'));
-	}
+        $regions = \App\Region::whereHas('activities', function ($query) {
+            $query->where('activity_id', 1);
+        })->get();
+        return view('front.activities.show', compact('activity', 'destinations', 'activities', 'seo', 'regions'));
+    }
 }

@@ -90,19 +90,17 @@
     </div>{{-- Activities --}}
 
     <div class="gray" style="background: var(--primary);">
-    <div class="container" style="padding-top: 20px;">
-        <div class="mb-4 flex justify-end" id="searchDiv">
-            <div class="form-group items-center flex gap-2">
-                <label for="sort" class="whitespace-nowrap">Sort by</label>
-                <select name="sort" id="select-sort" class="p-2 text-sm">
-                    <option value="asc">Price (low to high)</option>
-                    <option value="desc">Price (high to low)</option>
-                </select>
+        <div class="container" style="padding-top: 20px;">
+            <div class="mb-4 flex justify-end" id="searchDiv">
+                <div class="form-group items-center flex gap-2">
+                    <label for="sort" class="whitespace-nowrap">Sort by</label>
+                    <select name="sort" id="select-sort" class="p-2 text-sm">
+                        <option value="asc">Price (low to high)</option>
+                        <option value="desc">Price (high to low)</option>
+                    </select>
+                </div>
             </div>
         </div>
-
-        <!-- Search Results -->
-    </div>
     </div>
     <div class="bg-light">
         <div class="container py-4">
@@ -224,8 +222,9 @@
             $("#show-more").show();
         }
     });
+  }
 
-    const activitiesSlider = tns({
+  const activitiesSlider = tns({
         container: '.activities-slider',
         nav: false,
         controlsContainer: '.activities-slider-controls',
@@ -240,7 +239,6 @@
                 items: 5
             }
         }
-    })
-  }
+    });
 </script>
 @endpush

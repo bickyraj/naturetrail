@@ -13,7 +13,7 @@ use Carbon\Carbon;
 
 class TripController extends Controller
 {
-    private $page_limit = 6;
+    private $page_limit = 1;
 	public function show($slug)
 	{
 		$trip = Trip::where('slug', '=', $slug)->with([
@@ -133,7 +133,7 @@ class TripController extends Controller
 		$destination_id = $request->destination_id;
 		$activity_id = $request->activity_id;
         $sortBy = $request->sortBy;
-        $region_id = $request->region;
+        $region_id = $request->region_id;
 		$query = Trip::query();
 
 		if (isset($keyword) && !empty($keyword)) {
