@@ -41,6 +41,7 @@
     </div>
 
     {{-- Activities --}}
+    @if($activity->id == 1)
     <div class="py-10 activities bg-gray">
         <div class="container">
              <div class="items-center justify-between gap-20 mb-4 lg:flex">
@@ -88,6 +89,7 @@
             </div>
         </div>
     </div>{{-- Activities --}}
+    @endif
 
     <div class="gray" style="background: var(--primary);">
         <div class="container" style="padding-top: 20px;">
