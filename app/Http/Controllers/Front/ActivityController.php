@@ -82,6 +82,9 @@ class ActivityController extends Controller
         $regions = \App\Region::whereHas('activities', function ($query) {
             $query->where('activity_id', 1);
         })->get();
-        return view('front.activities.show', compact('activity', 'destinations', 'activities', 'seo', 'regions', 'sub_activities'));
+        $find_climbing_expedition_regions = \App\Region::whereHas('activities', function ($query) use ($activity) {
+            $query->where('activity_id', $activity->id);
+        })->get();
+        return view('front.activities.show', compact('activity', 'destinations', 'activities', 'seo', 'regions', 'sub_activities', 'find_climbing_expedition_regions'));
     }
 }
