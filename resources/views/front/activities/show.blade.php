@@ -108,7 +108,7 @@
                             </h2>
                         </div>
                     </div>
-                    <div class="flex gap-10 sub-activities-slider-controls">
+                    <div class="flex gap-10 expedition-slider-controls">
                         <button>
                             <svg class="w-6 h-6 text-accent">
                                 <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
@@ -121,7 +121,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="sub-activities-slider">
+                <div class="expedition-slider">
                     @forelse ($find_climbing_expedition_regions as $expedition_region)
                         <div>
                             <a href="{{ $expedition_region->link }}" class="activity">
@@ -357,6 +357,25 @@
           container: '.sub-activities-slider',
           nav: false,
           controlsContainer: '.sub-activities-slider-controls',
+          items: 2,
+          gutter: 16,
+          rewind: true,
+          responsive: {
+              768: {
+                  items: 3
+              },
+              992: {
+                  items: 5
+              }
+          }
+      });
+  }
+
+  if (document.getElementsByClassName('expedition-slider').length > 0) {
+      const subactivitiesSlider = tns({
+          container: '.expedition-slider',
+          nav: false,
+          controlsContainer: '.expedition-slider-controls',
           items: 2,
           gutter: 16,
           rewind: true,

@@ -87,7 +87,9 @@ class DestinationController extends Controller
         $destination = Destination::where('slug', '=', $slug)->first();
 		$seo = $destination->seo;
 		$destinations = \App\Destination::select('id', 'name')->get();
-		$activities = \App\Activity::all();
+		$activities = \App\Activity::whereHas('destinations', function($q) use ($destination) {
+            $q->where('destination_id', $destination->id);
+        })->get();
 		return view('front.destinations.show', compact('destination', 'destinations', 'activities', 'seo'));
 	}
 }

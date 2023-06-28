@@ -60,4 +60,9 @@ class Activity extends Model
     {
         return $this->hasMany('App\Activity', 'parent_id', 'id');
     }
+
+    // public function destinations()
+    // {
+    //     return $this->belongsToMany(Destination::class, 'activity_destination', 'activity_id', 'id');
+    // }
 }
