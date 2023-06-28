@@ -40,6 +40,57 @@
         </div>
     </div>
 
+    {{-- things to do --}}
+    @if(isset($sub_activities) && !empty($sub_activities))
+    <div class="py-10 activities bg-gray">
+        <div class="container">
+             <div class="items-center justify-between gap-20 mb-4 lg:flex">
+                <div>
+                    {{-- <p class="mb-2 text-2xl font-handwriting text-primary">Choose your region</p> --}}
+                    <div class="flex">
+                        <h2 class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
+                            Find Climbing & Expeditions By  Level
+                            <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                        </h2>
+                    </div>
+                </div>
+                <div class="flex gap-10 sub-activities-slider-controls">
+                    <button>
+                        <svg class="w-6 h-6 text-accent">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
+                        </svg>
+                    </button>
+                    <button>
+                        <svg class="w-6 h-6 text-accent">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="sub-activities-slider">
+                @forelse ($sub_activities as $sub_activity)
+                    <div>
+                        <a href="{{ $sub_activity->link }}" class="activity">
+                            <div class="relative">
+                                <img src="{{ $sub_activity->imageUrl }}" alt="{{ $sub_activity->name }}" class="block w-full">
+                                <div class="text absolute text-white px-2 py-4">
+                                    <h2 class="font-display uppercase">{{ $sub_activity->name }}</h2>
+                                    <div class="tours">
+                                        <span class="fs-xl bold">{{ $sub_activity->trips->count() }}</span>
+                                        <span class="fs-sm">tours</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @empty
+                @endforelse
+            </div>
+        </div>
+    </div>{{-- Activities --}}
+    @endif
+    {{-- end of things to do --}}
+
     {{-- Activities --}}
     @if($activity->id == 1)
     <div class="py-10 activities bg-gray">
@@ -67,7 +118,6 @@
                     </button>
                 </div>
             </div>
-
             <div class="activities-slider">
                 @forelse ($regions as $region)
                     <div>
@@ -230,6 +280,22 @@
         container: '.activities-slider',
         nav: false,
         controlsContainer: '.activities-slider-controls',
+        items: 2,
+        gutter: 16,
+        rewind: true,
+        responsive: {
+            768: {
+                items: 3
+            },
+            992: {
+                items: 5
+            }
+        }
+    });
+    const subactivitiesSlider = tns({
+        container: '.sub-activities-slider',
+        nav: false,
+        controlsContainer: '.sub-activities-slider-controls',
         items: 2,
         gutter: 16,
         rewind: true,

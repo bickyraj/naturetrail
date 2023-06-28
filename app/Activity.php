@@ -50,4 +50,14 @@ class Activity extends Model
     {
         return $this->belongsToMany(Trip::class, 'activity_trip', 'activity_id', 'trip_id');
     }
+
+    public function parent()
+    {
+        return $this->hasOne('App\Activity', 'id', 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany('App\Activity', 'parent_id', 'id');
+    }
 }

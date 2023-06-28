@@ -78,10 +78,10 @@ class ActivityController extends Controller
         $seo = $activity->seo;
         $destinations = \App\Destination::select('id', 'name')->get();
         $activities = \App\Activity::select('id', 'name')->get();
-
+        $sub_activities = $activity->children;
         $regions = \App\Region::whereHas('activities', function ($query) {
             $query->where('activity_id', 1);
         })->get();
-        return view('front.activities.show', compact('activity', 'destinations', 'activities', 'seo', 'regions'));
+        return view('front.activities.show', compact('activity', 'destinations', 'activities', 'seo', 'regions', 'sub_activities'));
     }
 }
