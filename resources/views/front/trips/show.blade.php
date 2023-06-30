@@ -412,7 +412,7 @@ if (session()->has('error_message')) {
                                 </div>
 
                                 <div class="p-4 mb-3 bg-light">
-                                    <h3 class="mb-2 text-xl font-display text-primary"> Trek Profile</h3>
+                                    <h3 class="mb-2 text-xl font-display text-primary"> Important Note</h3>
                                     <p class="mb-0 text-sm">
                                         {!! $trip->trip_info ? $trip->trip_info->important_note : '' !!}
                                     </p>
@@ -550,7 +550,7 @@ if (session()->has('error_message')) {
                         <div class="table-wrapper-scroll">
                             <table class="table mb-2">
                                 <thead>
-                                    <th class="upper text-left">Date</th>
+                                    <th class="upper text-left">{{ $trip->name }}</th>
                                     <th class="upper text-left">Price</th>
                                     <th class="upper text-left">Seats Left</th>
                                     <th></th>

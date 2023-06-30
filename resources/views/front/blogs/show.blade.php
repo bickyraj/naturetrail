@@ -5,7 +5,7 @@
     <img src="{{ $blog->imageUrl }}" alt="" style="border-radius: 0px;height: 80vh;">
     <div class="overlay absolute">
         <div class="container ">
-            <h1>{{ $blog->name }}</h1>
+            <h1 style="font-size: calc(2vw + 1rem);">{{ $blog->name }}</h1>
             <div class="breadcrumb-wrapper">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb fs-sm wrap">

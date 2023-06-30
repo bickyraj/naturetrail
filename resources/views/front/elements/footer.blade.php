@@ -28,7 +28,9 @@
     --}}
     <div class="container fs-sm">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            <div class="mb-4">
+            <div class="mb-4 col-span-2 lg:col-span-1">
+                <div id="TA_excellent377" class="TA_excellent"><ul id="B53fPW4H" class="TA_links VQZgkV"><li id="7ovBpuTFQ8" class="2srDuwCwKx1"><a target="_blank" href="https://www.tripadvisor.com/Attraction_Review-g293890-d2651131-Reviews-Nature_Trail_Travels_Tours_Trekking_Expeditions_Day_Tours-Kathmandu_Kathmandu_Val.html"><img src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg" alt="TripAdvisor" class="widEXCIMG" id="CDSWIDEXCLOGO"/></a></li></ul></div><script async src="https://www.jscache.com/wejs?wtype=excellent&amp;uniq=377&amp;locationId=2651131&amp;lang=en_US&amp;display_version=2" data-loadtrk onload="this.loadtrk=true"></script>
+                {{--
                 <h1 class="font-display text-2xl text-white">Trekking Destination</h1>
                 <ul>
                     @if($footer1)
@@ -39,8 +41,9 @@
                     @endforeach
                     @endif
                 </ul>
+                --}}
             </div>
-            <div class="mb-4">
+            <div class="mb-4 col-span-2 lg:col-span-1">
                 <h1 class="font-display text-2xl text-white">Things to do in Nepal</h1>
                 <ul>
                     @if($footer2)

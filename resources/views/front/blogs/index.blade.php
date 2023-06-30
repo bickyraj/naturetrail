@@ -10,7 +10,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb fs-sm wrap">
                         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Blog</li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="https://www.naturetrail.com/blogs">Blog </a> | <a href="https://www.naturetrail.com"> News </a></li>
                     </ol>
                 </nav>
             </div>

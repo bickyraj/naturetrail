@@ -96,7 +96,7 @@
     {{-- Find Climbing & Expeditions By Regions --}}
     @if ($activity->id == 3)
         @if(isset($find_climbing_expedition_regions) && !empty($find_climbing_expedition_regions))
-        <div class="py-10 activities bg-gray">
+        <div class="py-10 activities bg-white">
             <div class="container">
                 <div class="items-center justify-between gap-20 mb-4 lg:flex">
                     <div>
