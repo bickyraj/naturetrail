@@ -8,7 +8,7 @@ use App\Activity;
 
 class ActivityController extends Controller
 {
-    private $page_limit = 6;
+    private $page_limit = 8;
 
     public function index(Request $request)
     {
