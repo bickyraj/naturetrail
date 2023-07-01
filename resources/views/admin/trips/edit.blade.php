@@ -241,6 +241,12 @@
                                   <input type="file" style="display: none;" id="map_file" class="form-control form-control-sm" name="map_file_name">
                                 </div>
                               </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-form-label">Map Iframe</label>
+                                    <div class="col-lg-7">
+                                        <textarea class="form-control form-control-sm" name="iframe" id="" cols="30" rows="10">{{ $trip->iframe }}</textarea>
+                                    </div>
+                                </div>
                               <hr>
                               <div class="form-group row">
                                 <label class="col-lg-2 col-form-label">PDF File</label>

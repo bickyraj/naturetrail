@@ -40,7 +40,60 @@
         </div>
     </div>
 
-    {{-- things to do --}}
+    {{-- Things to do --}}
+    @if ($activity->id == 9)
+        @if(isset($sub_activities) && !empty($sub_activities))
+        <div class="py-10 activities bg-gray">
+            <div class="container">
+                <div class="items-center justify-between gap-20 mb-4 lg:flex">
+                    <div>
+                        {{-- <p class="mb-2 text-2xl font-handwriting text-primary">Choose your region</p> --}}
+                        <div class="flex">
+                            <h2 class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
+                                Things To Do
+                                <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="flex gap-10 things-to-do-slider-controls">
+                        <button>
+                            <svg class="w-6 h-6 text-accent">
+                                <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
+                            </svg>
+                        </button>
+                        <button>
+                            <svg class="w-6 h-6 text-accent">
+                                <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="things-to-do-slider">
+                    @forelse ($sub_activities as $sub_activity)
+                        <div>
+                            <a href="{{ $sub_activity->link }}" class="activity">
+                                <div class="relative">
+                                    <img src="{{ $sub_activity->imageUrl }}" alt="{{ $sub_activity->name }}" class="block w-full">
+                                    <div class="text absolute text-white px-2 py-4">
+                                        <h2 class="font-display uppercase">{{ $sub_activity->name }}</h2>
+                                        <div class="tours">
+                                            <span class="fs-xl bold">{{ $sub_activity->trips->count() }}</span>
+                                            <span class="fs-sm">tours</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @empty
+                    @endforelse
+                </div>
+            </div>
+        </div>
+        @endif
+    @endif
+    {{-- end of things to do --}}
+
+    {{-- Find Climbing & Expeditions By  Level --}}
     @if ($activity->id == 3)
         @if(isset($sub_activities) && !empty($sub_activities))
         <div class="py-10 activities bg-gray">
@@ -91,7 +144,7 @@
         </div>
         @endif
     @endif
-    {{-- end of things to do --}}
+    {{-- end of Find Climbing & Expeditions By  Level --}}
 
     {{-- Find Climbing & Expeditions By Regions --}}
     @if ($activity->id == 3)
@@ -145,8 +198,6 @@
         @endif
     @endif
     {{-- end of Find Climbing & Expeditions By Regions --}}
-
-    {{-- end of things to do --}}
 
     {{-- Activities --}}
     @if($activity->id == 1)
@@ -376,6 +427,24 @@
           container: '.expedition-slider',
           nav: false,
           controlsContainer: '.expedition-slider-controls',
+          items: 2,
+          gutter: 16,
+          rewind: true,
+          responsive: {
+              768: {
+                  items: 3
+              },
+              992: {
+                  items: 5
+              }
+          }
+      });
+  }
+  if (document.getElementsByClassName('things-to-do-slider').length > 0) {
+      const thingsToDoSlider = tns({
+          container: '.things-to-do-slider',
+          nav: false,
+          controlsContainer: '.things-to-do-slider-controls',
           items: 2,
           gutter: 16,
           rewind: true,

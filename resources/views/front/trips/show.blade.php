@@ -63,6 +63,9 @@ if (session()->has('error_message')) {
                 /*height: 70vh;*/
                 /*overflow-y: scroll;*/
             }
+            .trip-map-iframe {
+                display: flex;
+            }
         </style>
     @endpush
 @section('content')
@@ -686,7 +689,7 @@ if (session()->has('error_message')) {
                                 Customize
                             </a>
                         </div>
-                       
+
                         <div class="flex">
                             <a href="{{ route('front.trips.print', ['slug' => $trip->slug]) }}" class="flex items-center p-1 mr-2 text-accent" title="Print tour details">
                                 <svg class="flex-shrink-0 w-6 h-6 mr-2">
@@ -700,7 +703,7 @@ if (session()->has('error_message')) {
                                 </svg>
                                 <span>Download Tour Brochure</span>
                             </a>
-                        </div> 
+                        </div>
                     </div>
 
                     <div>
@@ -742,6 +745,20 @@ if (session()->has('error_message')) {
                         <a href="#ex1" rel="modal:open">
                             <img class="img-fluid" src="{{ $trip->mapImageUrl }}" alt="{{ $trip->name }}">
                         </a>
+                    </div>
+                </div>
+                 @endif
+
+                 @if(!empty($trip->iframe))
+                <div class="mb-8">
+                    <div class="card-header">
+                        <h2 class="mb-2 text-2xl uppercase font-display text-primary">Map</h2>
+                    </div>
+                    <div class="card-body p-0">
+                        <!-- Link to open the modal -->
+                        <div class="trip-map-iframe">
+                            {!! $trip->iframe !!}
+                        </div>
                     </div>
                 </div>
                  @endif

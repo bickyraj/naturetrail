@@ -76,6 +76,7 @@ class TripController extends Controller
         $trip->starting_point = $request->starting_point;
         $trip->ending_point = $request->ending_point;
         $trip->rating = $request->rating;
+        $trip->iframe = $request->iframe;
         $trip->show_status = $request->show_status;
         $trip->slug = $this->create_slug_title($trip->name);
         $trip->status = 1;
@@ -332,6 +333,7 @@ class TripController extends Controller
         $trip->starting_point = $request->starting_point;
         $trip->ending_point = $request->ending_point;
         $trip->rating = $request->rating;
+        $trip->iframe = $request->iframe;
         $trip->show_status = $request->show_status;
         $trip->slug = $this->create_slug_title($trip->name);
         $trip->status = 1;
