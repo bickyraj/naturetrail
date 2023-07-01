@@ -1,35 +1,34 @@
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.css">
+@endpush
 @extends('layouts.front_inner')
 @section('content')
 <!-- Hero -->
 <section class="hero hero-alt relative">
-    <!--<img src="{{ asset('assets/front/img/hero.jpg') }}" alt="">-->
+    <img src="{{ asset('assets/front/img/activities.webp') }}" alt="">
     <div class="absolute top-1/2 w-full">
         <div class="container text-center">
             <h1 style="max-width: unset;">Activities</h1>
-            <div class="text-xl text-white">Explore Tours by Activity</div>
+            <div class="text-xl text-white">Explore Activities</div>
         </div>
     </div>
 
-    {{-- <div class="breadcrumb-wrapper">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb fs-sm wrap">
-                <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Activities</li>
-            </ol>
-        </nav>
-    </div> --}}
+            {{-- <div class="breadcrumb-wrapper">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb fs-sm wrap">
+                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Destinations</li>
+                    </ol>
+                </nav>
+            </div> --}}
 </section>
 
 <section>
-    {{--<div class="container">
+    {{--
+    <div class="container">
         <div class="mb-4" id="searchDiv">
-            <div class="grid lg:grid-cols-3 gap-2">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="">Keywords</label>
-                        <input id="search-keyword" type="text" placeholder="search by country" name="keywords">
-                    </div>
-                </div>
+            <input type="hidden" id="search-keyword" type="text" placeholder="search by country" name="keywords">
+            <div class="grid lg:grid-cols-3 gap-4">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Activities</label>
@@ -56,8 +55,8 @@
         </div>
 
         <!-- Search Results -->
-    </div>--}}
-    
+    </div> --}}
+
     <div class="bg-light">
         <div class="container py-20">
             @if(isset($keyword) && !empty($keyword))
@@ -65,91 +64,86 @@
             @endif
 
 
-            <div id="activity-card-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-8 mb-5">
+            <div id="activity-card-block" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-5">
                 @forelse ($activities as $activity)
                     @include('front.elements.activity-card', ['activity' => $activity])
                 @empty
                 @endforelse
             </div>
-            {{-- @if ($activities->nextPageUrl())
+            @if ($activities->nextPageUrl())
                 <div class="flex items-center" style="justify-content: center; margin-top: 50px;">
                     <div id="spinner-block"></div>
                     <button id="show-more" class="btn btn-accent" style="display: block;">show more</button>
                 </div>
-            @endif --}}
+            @endif
         </div>
     </div>
 </section>
 
 @include('front.elements.plan_trip')
-   
+
 <!-- Trip of the month -->
-<div class="py-10 text-white bg-primary">
-    <div class="container">
+    <div class="py-10 text-white bg-primary">
+        <div class="container">
 
-     <p class="mb-2 text-2xl text-white font-handwriting">This doesn't get any better</p>
+         <p class="mb-2 text-2xl text-white font-handwriting">This doesn't get any better</p>
 
-        <div class="flex">
-            <h2 class="relative pr-10 text-3xl font-bold uppercase lg:text-5xl font-display">
-                Trip of the Day
-                <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
-            </h2>
-        </div>
+            <div class="flex">
+                <h2 class="relative pr-10 text-3xl font-bold uppercase lg:text-5xl font-display">
+                    Trip of the Activities
+                    <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                </h2>
+            </div>
 
-        <div class="flex justify-end gap-4 trips-month-slider-controls">
-            <button class="p-2 rounded-lg bg-light">
-                <svg class="w-6 h-6 text-accent">
-                    <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
-                </svg>
-            </button>
-            <button class="p-2 rounded-lg bg-light">
-                <svg class="w-6 h-6 text-accent">
-                    <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
-                </svg>
-            </button>
-        </div>
+            <div class="flex justify-end gap-4 trips-month-slider-controls">
+                <button class="p-2 rounded-lg bg-light">
+                    <svg class="w-6 h-6 text-accent">
+                        <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
+                    </svg>
+                </button>
+                <button class="p-2 rounded-lg bg-light">
+                    <svg class="w-6 h-6 text-accent">
+                        <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
+                    </svg>
+                </button>
+            </div>
 
-        <div class="trips-month-slider">
-            @forelse ($block_3_trips as $block3tour)
-                @include('front.elements.tour_card_slider', ['tour' => $block3tour])
-            @empty
-            @endforelse
+            <div class="trips-month-slider">
+                @forelse ($block_3_trips as $block3tour)
+                    @include('front.elements.tour_card_slider', ['tour' => $block3tour])
+                @empty
+                @endforelse
+            </div>
         </div>
     </div>
-</div>
-    
+
 @endsection
-
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.css">
-@endpush
-
 @push('scripts')
-
 <script src="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.min.js"></script>
 <script type="text/javascript">
-    let xhr;
-    let typingTimer;
-    const debounceTime = 500;
+
+//     let xhr;
+//     let typingTimer;
+//     const debounceTime = 500;
     let totalPage = "{{ $activities->total() }}";
     let nextPage = "{{ $activities->nextPageUrl() }}"
     let currentPage = "{{ $activities->currentPage() }}";
-    // $('html, body').animate({
-    //     scrollTop: $("#searchDiv").offset().top
-    // }, "fast");
+//     $('html, body').animate({
+//         scrollTop: $("#searchDiv").offset().top
+//     }, "fast");
 
-  $(".custom-select").on('change', function(event) {
-    filter();
-  });
+//   $(".custom-select").on('change', function(event) {
+//     filter();
+//   });
 
-  $("#search-keyword").on('keyup', function(event) {
-    handleKeyDown();
-  });
+//   $("#search-keyword").on('keyup', function(event) {
+//     handleKeyDown();
+//   });
 
-  function handleKeyDown() {
-    clearTimeout(typingTimer);
-    typingTimer = setTimeout(performSearch, debounceTime);
-}
+//   function handleKeyDown() {
+//     clearTimeout(typingTimer);
+//     typingTimer = setTimeout(performSearch, debounceTime);
+// }
 
 function performSearch() {
     if (xhr && xhr.readyState !== 4) {
@@ -162,8 +156,8 @@ function performSearch() {
 
   $("#show-more").on('click', async function(event) {
         event.preventDefault();
-        currentPage++;
         if (nextPage) {
+            currentPage++;
             await paginate(currentPage);
             if (!nextPage) {
                 $("#show-more").hide();
@@ -173,8 +167,7 @@ function performSearch() {
 
     async function paginate(page) {
         return new Promise((resolve, reject) => {
-            var keyword = $("#search-keyword").val();
-            const url = "{!! route('front.activities.index') !!}" + "?page=" + page + "&keyword=" + keyword;
+            const url = "{!! route('front.activities.index') !!}" + "?page=" + page;
             $.ajax({
                 url: url,
                 type: "GET",
@@ -202,6 +195,14 @@ function performSearch() {
         });
     }
 
+    const monthSlider = tns({
+                container: '.trips-month-slider',
+                nav: false,
+                controlsContainer: '.trips-month-slider-controls',
+                autoplay: true,
+                autoplayButtonOutput: false
+            })
+
   function filter() {
     var keyword = $("#search-keyword").val();
     // var activity_id = $("#select-activity").val();
@@ -220,7 +221,7 @@ function performSearch() {
             beforeSend: function(xhr) {
                 var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
-                            Loading Activities...\
+                            Loading Destinations...\
                             </button>';
                 $("#spinner-block").html(spinner);
                 $("#show-more").hide();
@@ -244,12 +245,5 @@ function performSearch() {
             }
         });
   }
-   const monthSlider = tns({
-                container: '.trips-month-slider',
-                nav: false,
-                controlsContainer: '.trips-month-slider-controls',
-                autoplay: true,
-                autoplayButtonOutput: false
-            })
 </script>
 @endpush

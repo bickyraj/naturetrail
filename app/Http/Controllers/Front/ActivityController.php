@@ -37,8 +37,9 @@ class ActivityController extends Controller
                 'message' => 'List fetched'
             ]);
         } else {
+            $block_3_trips = \App\Trip::where('block_3', 1)->latest()->get();
             $activities = \App\Activity::where('status', '=', 1)->paginate($this->page_limit);
-            return view('front.activities.index', compact('activities'));
+            return view('front.activities.index', compact('activities', 'block_3_trips'));
         }
     }
 
