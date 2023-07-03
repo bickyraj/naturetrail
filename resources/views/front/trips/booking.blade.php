@@ -12,6 +12,9 @@ if (session()->has('error_message')) {
 @extends('layouts.front_inner')
 @push('styles')
     <style>
+        .payment-radio-block {
+            display: flex;
+        }
         .nature-from-radio-button {
             cursor: pointer;
             margin-right: 6px;
@@ -24,6 +27,7 @@ if (session()->has('error_message')) {
         }
 
         .nature-form-check {
+            margin-right: 40px;
             margin-bottom: 12px;
             display: flex;
             align-content: flex-start;
@@ -99,22 +103,24 @@ if (session()->has('error_message')) {
                             </div>
                         </div>
 
-                        <div class="grid gap-2 mb-2 lg:grid-cols-3">
+                        <div class="grid gap-2 mb-2 lg:grid-cols-1">
                             <div class="form-group">
                                 <label for="">Payment </label>
-                                <div class="form-check nature-form-check">
-                                    <input class="nature-from-radio-button" type="radio" name="payment_type"
-                                        id="flexRadioDefault1" value="full" x-model="paymentType">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Full amount payment
-                                    </label>
-                                </div>
-                                <div class="form-check nature-form-check">
-                                    <input class="nature-from-radio-button" checked type="radio" name="payment_type"
-                                        id="flexRadioDefault2" valud="half" x-model="paymentType">
-                                    <label class="form-check-label" for="flexRadioDefault2">
-                                        25% advance payment
-                                    </label>
+                                <div class="payment-radio-block">
+                                    <div class="form-check nature-form-check">
+                                        <input class="nature-from-radio-button" type="radio" name="payment_type"
+                                            id="flexRadioDefault1" value="full" x-model="paymentType">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Full amount payment
+                                        </label>
+                                    </div>
+                                    <div class="form-check nature-form-check">
+                                        <input class="nature-from-radio-button" checked type="radio" name="payment_type"
+                                            id="flexRadioDefault2" valud="half" x-model="paymentType">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            25% advance payment
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
