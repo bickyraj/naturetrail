@@ -145,6 +145,46 @@
         @endif
     @endif
     {{-- end of Find Climbing & Expeditions By  Level --}}
+    
+    {{-- Climbing & Expeditions only --}}
+    @if ($activity->id == 3)
+    <div class="py-20 bg-gradient">
+        <div class="container">
+            <div class="grid lg:grid-cols-2 gap-10">
+                <div class="flex flex-col justify-center w-full h-full">
+                    <p class="mb-2 text-xl font-handwriting text-gray-600 uppercase">Available for rental</p>
+                    <h2 class="mb-10 text-3xl lg:text-4xl text-primary">Climbing and Expedition Gears</h2>
+                    <div class="tour-details">
+                        <ul class="columns includes">
+                            <li>Mountaineering Boots</li>
+                            <li>Crampons</li>
+                            <li>Ice Axe</li>
+                            <li>Climbing Harness</li>
+                            <li>Ropes</li>
+                            <li>Carabiners</li>
+                            <li>Helmet</li>
+                            <li>Mountaineering Clothing</li>
+                            <li>Down Jacket</li>
+                            <li>Gloves</li>
+                            <li>Goggles</li>
+                            <li>High-Altitude Tent</li>
+                            <li>Sleeping Bag</li>
+                            <li>Oxygen System</li>
+                            <li>Climbing Backpack</li>
+                            <li>Headlamp</li>
+                            <li>Cooking Equipment</li>
+                            <li>Personal Protective Equipment (PPE)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center w-full h-full">
+                    <img src="{{ asset('assets/front/img/mountaineering-gear.png') }}" >
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    {{-- Climbing & Expeditions only --}}
 
     {{-- Find Climbing & Expeditions By Regions --}}
     @if ($activity->id == 3)

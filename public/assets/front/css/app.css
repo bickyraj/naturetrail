@@ -6341,11 +6341,13 @@ p.select-ratings i:hover {
     text-transform: uppercase;
     padding: 0.9rem 18px;
     color: white;
+    text-shadow: 0 0 3px black;
   }
   .header.scrolled .sm-simple a {
     text-transform: uppercase;
     padding: 0.9rem 18px;
     color: #1b5998;
+    text-shadow: none;
   }
 
   .sm-simple a:hover,
@@ -6562,9 +6564,11 @@ p.select-ratings i:hover {
 }
 .header-color{
     color: white;
+    filter: drop-shadow(0 0 3px black);
 }
 .header.scrolled .header-color{
     color: #1b5998;
+    filter: none;
 }
 #CDSWIDSSP {
     font: normal 12px Trip Sans VF,Trip Sans,Arial,sans-serif;
