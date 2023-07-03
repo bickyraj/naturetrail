@@ -10,6 +10,29 @@ if (session()->has('error_message')) {
 }
 ?>
 @extends('layouts.front_inner')
+@push('styles')
+    <style>
+        .nature-from-radio-button {
+            cursor: pointer;
+            margin-right: 6px;
+            width: 16px !important;
+            padding: 0px !important;
+        }
+
+        .nature-form-check label {
+            cursor: pointer !important;
+        }
+
+        .nature-form-check {
+            margin-bottom: 12px;
+            display: flex;
+            align-content: flex-start;
+            justify-content: flex-start;
+            align-items: center;
+
+        }
+    </style>
+@endpush
 @section('content')
     <!-- Hero -->
     <section class="relative hero-alt">
@@ -28,7 +51,7 @@ if (session()->has('error_message')) {
             </div>
     </section>
 
-    <section class="py-20" x-data="{ noOfTravellers: 1, rate: {{ $trip->cost }} }">
+    <section class="py-20" x-data="{ noOfTravellers: 1, rate: {{ $trip->cost }}, paymentType: 'half' }">
         <div class="container">
             <div class="grid gap-10 lg:grid-cols-3 xl:grid-cols-4 xl:gap-3">
                 <div class="lg:col-span-2 xl:col-span-3">
@@ -39,7 +62,8 @@ if (session()->has('error_message')) {
                         <div class="grid gap-4 mb-2 lg:grid-cols-3">
                             <div class="form-group">
                                 <label for="">First name *</label>
-                                <input type="text" class="form-control" name="first_name" placeholder="First name" required>
+                                <input type="text" class="form-control" name="first_name" placeholder="First name"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="">Middle name</label>
@@ -47,7 +71,8 @@ if (session()->has('error_message')) {
                             </div>
                             <div class="form-group">
                                 <label for="">Last name *</label>
-                                <input type="text" class="form-control" name="last_name" placeholder="Last name" required>
+                                <input type="text" class="form-control" name="last_name" placeholder="Last name"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="">Country *</label>
@@ -59,7 +84,8 @@ if (session()->has('error_message')) {
                             </div>
                             <div class="form-group">
                                 <label for="">Contact no. *</label>
-                                <input type="tel" name="contact_no" class="form-control" placeholder="Contact no." required>
+                                <input type="tel" name="contact_no" class="form-control" placeholder="Contact no."
+                                    required>
                             </div>
                         </div>
                         <div class="grid gap-2 mb-2 lg:grid-cols-3">
@@ -73,25 +99,49 @@ if (session()->has('error_message')) {
                             </div>
                         </div>
 
+                        <div class="grid gap-2 mb-2 lg:grid-cols-3">
+                            <div class="form-group">
+                                <label for="">Payment </label>
+                                <div class="form-check nature-form-check">
+                                    <input class="nature-from-radio-button" type="radio" name="payment_type"
+                                        id="flexRadioDefault1" value="full" x-model="paymentType">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Full
+                                    </label>
+                                </div>
+                                <div class="form-check nature-form-check">
+                                    <input class="nature-from-radio-button" checked type="radio" name="payment_type"
+                                        id="flexRadioDefault2" valud="half" x-model="paymentType">
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        Half
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
                         <h2 class="mt-20 mb-2 text-2xl font-bold text-primary">Trip details</h3>
                             <div class="grid gap-2 mb-2 lg:grid-cols-3">
                                 <div class="form-group">
                                     <label for="">No. of travellers </label>
-                                    <input type="number" name="no_of_travellers" class="form-control" min="1" x-model="noOfTravellers" placeholder="No. of travellers">
+                                    <input type="number" name="no_of_travellers" class="form-control" min="1"
+                                        x-model="noOfTravellers" placeholder="No. of travellers">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Preferred departure date</label>
-                                    <input type="date" name="preferred_departure_date" name="" id="" class="form-control" min="<?php echo date('Y-m-d'); ?>">
+                                    <input type="date" name="preferred_departure_date" name="" id=""
+                                        class="form-control" min="<?php echo date('Y-m-d'); ?>">
                                 </div>
                             </div>
                             <div class="grid gap-2 mb-2 lg:grid-cols-3">
                                 <div class="form-group lg:col-span-2">
                                     <label for="">Message </label>
-                                    <textarea name="emergency_contact" id="" cols="60" rows="3" class="form-control" placeholder="Message"></textarea>
+                                    <textarea name="emergency_contact" id="" cols="60" rows="3" class="form-control"
+                                        placeholder="Message"></textarea>
                                 </div>
                             </div>
                             @include('front.elements.recaptcha')
-                            <button id="make_a_payment_btn" class="btn btn-theme" style="background: #ff4c02; color: #fff;">Submit</button>
+                            <button id="make_a_payment_btn" class="btn btn-theme"
+                                style="background: #ff4c02; color: #fff;">Submit</button>
                     </form>
                 </div>
 
@@ -100,12 +150,18 @@ if (session()->has('error_message')) {
                         <h2 class="text-2xl font-bold text-primary">Book {{ $trip->name }}</h2>
                         <div class="mt-4 card-body">
                             <p class="flex justify-between"><span>Duration:</span>{{ $trip->duration }} days</p>
-                            <p class="flex justify-between"><span>No of Travellers:</span><span><span x-text="noOfTravellers"></span> people</span></p>
-                            <p class="flex justify-between"><span>Rate:</span><span>USD <span x-text="rate.toLocaleString()"></span></span></p>
+                            <p class="flex justify-between"><span>No of Travellers:</span><span><span
+                                        x-text="noOfTravellers"></span> people</span></p>
+                            <p class="flex justify-between"><span>Rate:</span><span>USD <span
+                                        x-text="rate.toLocaleString()"></span></span></p>
                             <hr>
-                            <p class="flex justify-between"><span>Total amount:</span><span class="font-bold text-primary">USD <span x-text="(noOfTravellers * rate).toLocaleString()"></span></span></p>
-                            
-                            <p class="flex justify-between"><span>Payable Now:</span><span class="font-bold text-primary">USD <span x-text="(noOfTravellers * rate * 0.25).toLocaleString()"></span></span></p>
+                            <p class="flex justify-between"><span>Total amount:</span><span
+                                    class="font-bold text-primary">USD <span
+                                        x-text="(noOfTravellers * rate).toLocaleString()"></span></span></p>
+
+                            <p class="flex justify-between"><span>Payable Now:</span><span
+                                    class="font-bold text-primary">USD <span
+                                        x-text="(noOfTravellers * rate * ((paymentType === 'half')? 0.25: 1)).toLocaleString()"></span></span></p>
 
                         </div>
                     </div>

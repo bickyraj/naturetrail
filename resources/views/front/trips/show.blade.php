@@ -639,11 +639,6 @@ if (session()->has('error_message')) {
                         </div>
                     @endif
 
-
-                    {{-- <div class="mb-4">
-                    <iframe src="https://www.google.com/maps/d/embed?mid=1o2LaX1o68hVBiycWHWDrK_F18H1epiGB" width="100%" height="480" class="border-none"></iframe>
-                </div> --}}
-
                     @if (!$trip->trip_faqs->isEmpty())
                         <div id="faqs" class="px-4 pt-10 pb-4 mb-4 bg-white tds lg:px-10">
                             <h2 class="mb-4 text-4xl uppercase lg:text-5xl font-display text-primary">Frequently Asked Questions</h2>

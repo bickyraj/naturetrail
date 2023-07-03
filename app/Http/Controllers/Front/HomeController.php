@@ -145,7 +145,12 @@ class HomeController extends Controller
             $trip_offer_price = floatval($trip->offer_price);
             $trip_cost_price = floatval($trip->cost);
             $trip_price = ($trip_offer_price != 0)? $trip_offer_price: $trip_cost_price;
-            $price_after_percent = 0.25 * $trip_price * intval($request->no_of_travellers);
+
+            $trip_rate = 0.25;
+            if ($request->payment_type == "full") {
+                $trip_rate = 1;
+            }
+            $price_after_percent = $trip_rate * $trip_price * intval($request->no_of_travellers);
             $invoice->amount = $price_after_percent;
             $invoice->price = $price_after_percent;
             $invoice->trip_name = $trip->name;
