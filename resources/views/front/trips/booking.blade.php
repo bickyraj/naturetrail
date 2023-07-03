@@ -106,14 +106,14 @@ if (session()->has('error_message')) {
                                     <input class="nature-from-radio-button" type="radio" name="payment_type"
                                         id="flexRadioDefault1" value="full" x-model="paymentType">
                                     <label class="form-check-label" for="flexRadioDefault1">
-                                        Full
+                                        Full amount payment
                                     </label>
                                 </div>
                                 <div class="form-check nature-form-check">
                                     <input class="nature-from-radio-button" checked type="radio" name="payment_type"
                                         id="flexRadioDefault2" valud="half" x-model="paymentType">
                                     <label class="form-check-label" for="flexRadioDefault2">
-                                        Half
+                                        25% advance payment
                                     </label>
                                 </div>
                             </div>
