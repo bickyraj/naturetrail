@@ -51,7 +51,7 @@ if (session()->has('error_message')) {
             </div>
     </section>
 
-    <section class="py-20" x-data="{ noOfTravellers: 1, rate: {{ $trip->cost }}, paymentType: 'half' }">
+    <section class="py-20" x-data="{ noOfTravellers: 1, rate: {{ (isset($trip->offer_price) && !empty($trip->offer_price))?$trip->offer_price: $trip->cost }}, paymentType: 'half' }">
         <div class="container">
             <div class="grid gap-10 lg:grid-cols-3 xl:grid-cols-4 xl:gap-3">
                 <div class="lg:col-span-2 xl:col-span-3">
