@@ -43,6 +43,7 @@
 @endif
 
 <!-- similar blogs -->
+@if (isset($blog->similar_blogs) && !empty($similar_blogs)))
 <section class="news mb-5 mt-20 bg-gray">
     <div class="container">
         <h2 class="relative pr-10 text-3xl font-bold uppercase lg:text-5xl text-gray-600 font-display pb-10 pt-10">Similar Blogs</h2>
@@ -65,6 +66,7 @@
         </div>
     </div>
 </section>
+@endif
 
 <!-- Latest News -->
 <section class="news mb-5 mt-20 bg-gray">
