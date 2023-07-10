@@ -17,7 +17,7 @@ class BlogController extends Controller
 
 	public function show($slug, Contents $contents)
 	{
-		$blog = Blog::where('slug', '=', $slug)->first();
+		$blog = Blog::where('slug', '=', $slug)->with('similar_blogs')->first();
         if ($blog->toc != "") {
             $contents->fromText($blog->toc)->setTags(['h2', 'h3', 'h4'])->setMinLength(100);
             $body = $contents->getHandledText();
