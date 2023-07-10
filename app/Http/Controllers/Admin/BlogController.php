@@ -30,7 +30,8 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('admin.blogs.add');
+        $blogs = Blog::orderBy('name')->get();
+        return view('admin.blogs.add', compact('blogs'));
     }
 
     /**
@@ -106,6 +107,12 @@ class BlogController extends Controller
 
                 $status = 1;
             }
+
+            // save similar trips to the similar_trips table
+            if ($request->similar_blogs) {
+                $blog->similar_blogs()->attach($request->similar_blogs);
+            }
+
             $status = 1;
             $msg = "Blog created successfully.";
             session()->flash('message', $msg);
@@ -136,8 +143,12 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $blog = Blog::find($id);
-        return view('admin.blogs.edit', compact('blog'));
+        $blog = Blog::with([
+            'similar_blogs',
+        ])->find($id);
+        $blogs = Blog::orderBy('name', 'ASC')->where('id', '!=', $id)->get();
+        $similar_blog_ids = $blog->similar_blogs->pluck('id')->toArray();
+        return view('admin.blogs.edit', compact('blog', 'similar_blog_ids', 'blogs'));
     }
 
     /**
@@ -247,6 +258,12 @@ class BlogController extends Controller
                     $blog->image_name = $imageNameUniqid;
                     $blog->save();
                 }
+            }
+
+            // save similar trips to the similar_trips table
+            if ($request->similar_blogs) {
+                $blog->similar_blogs()->detach();
+                $blog->similar_blogs()->attach($request->similar_blogs);
             }
 
             $status = 1;

@@ -5397,6 +5397,10 @@ footer .bottom {
   object-fit: cover;
 }
 
+.tour-details img {
+  border-radius:5px;
+}
+
 .tour-details .hero .overlay {
   background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
   bottom: 0;

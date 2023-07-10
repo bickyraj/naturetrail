@@ -43,9 +43,10 @@
 @endif
 
 <!-- Latest News -->
-<section class="news mb-5">
+<section class="news mb-5 mt-20 bg-gray">
     <div class="container">
-
+        <h2 class="relative pr-10 text-3xl font-bold uppercase lg:text-5xl text-gray-600 font-display pb-10 pt-10">Latest Travel Blogs</h2>
+        <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
         <div class="grid lg:grid-cols-3 gap-2 xl:gap-3">
             @forelse ($blogs as $blog)
                 <a href="{{ route('front.blogs.show', ['slug' => $blog->slug]) }}">
