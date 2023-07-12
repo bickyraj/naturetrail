@@ -14,6 +14,11 @@ use Carbon\Carbon;
 class TripController extends Controller
 {
     private $page_limit = 1;
+
+    public function index() {
+
+    }
+
 	public function show($slug)
 	{
 		$trip = Trip::where('slug', '=', $slug)->with([
@@ -133,6 +138,8 @@ class TripController extends Controller
 		$destination_id = $request->destination_id;
 		$activity_id = $request->activity_id;
         $sortBy = $request->sortBy;
+        $duration = explode(",", $request->duration);
+        $price = explode(",", $request->price);
         $region_id = $request->region_id;
 		$query = Trip::query();
 
@@ -140,30 +147,37 @@ class TripController extends Controller
 			$query->where([
 				['name', 'LIKE', "%" . $keyword . "%"]
 			]);
-		} else {
-
-            if (!empty($region_id)) {
-                $query->whereHas('region', function($q) use ($region_id) {
-                    $q->where('regions.id', '=', $region_id);
-                });
-            }
-
-			if ($destination_id) {
-				$query->whereHas('destination', function($q) use ($destination_id) {
-					$q->where('destinations.id', '=', $destination_id);
-				});
-			}
-
-			if ($activity_id) {
-				$query->whereHas('activities', function($q) use ($activity_id) {
-					$q->where('activities.id', '=', $activity_id);
-				});
-			}
-
-			if (isset($sortBy) && !empty($sortBy)) {
-                $query->orderBy('offer_price', $sortBy);
-			}
 		}
+
+        if (isset($duration) && !empty($duration)) {
+            $query->whereRaw('CAST(duration AS UNSIGNED) BETWEEN ? AND ?', [$duration[0], $duration[1]]);
+        }
+
+        if (isset($price) && !empty($price)) {
+            $query->whereBetween('cost', [$price[0], $price[1]]);
+        }
+
+        if (isset($region_id) && !empty($region_id)) {
+            $query->whereHas('region', function($q) use ($region_id) {
+                $q->where('regions.id', '=', $region_id);
+            });
+        }
+
+        if (isset($destination_id) && !empty($destination_id)) {
+            $query->whereHas('destination', function($q) use ($destination_id) {
+                $q->where('destinations.id', '=', $destination_id);
+            });
+        }
+
+        if (isset($activity_id) && !empty($activity_id)) {
+            $query->whereHas('activities', function($q) use ($activity_id) {
+                $q->where('activities.id', '=', $activity_id);
+            });
+        }
+
+        if (isset($sortBy) && !empty($sortBy)) {
+            $query->orderBy('offer_price', $sortBy);
+        }
 
 		$trips = $query->latest()->paginate($this->page_limit);
         $html = "";
