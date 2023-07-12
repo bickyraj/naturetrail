@@ -14,7 +14,7 @@ use DB;
 
 class TripController extends Controller
 {
-    private $page_limit = 1;
+    private $page_limit = 6;
 
     public function show($slug)
     {
