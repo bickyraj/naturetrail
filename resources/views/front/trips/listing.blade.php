@@ -18,6 +18,10 @@
     if (request()->has('duration')) {
         $get_duration = request('duration');
     }
+
+    if (request()->has('page')) {
+        $get_page = request('page');
+    }
 @endphp
 
 @extends('layouts.front_inner')
@@ -166,7 +170,7 @@
             const debounceTime = 500;
             let totalPage;
             let nextPage;
-            let currentPage = 1;
+            let currentPage = `{{ (isset($get_page) && !empty($get_page))? $get_page: 1  }}`;
 
             function initSlider() {
                 $("#duration-slider-range").slider({
@@ -297,7 +301,6 @@
             filter();
 
             function filter() {
-                currentPage = 1;
                 const keyword = $("#keyword").val();
                 const amount = $("#slider-range").slider("values");
                 const duration = $("#duration-slider-range").slider("values");

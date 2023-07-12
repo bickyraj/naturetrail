@@ -15,10 +15,6 @@ class TripController extends Controller
 {
     private $page_limit = 1;
 
-    public function index() {
-
-    }
-
 	public function show($slug)
 	{
 		$trip = Trip::where('slug', '=', $slug)->with([
