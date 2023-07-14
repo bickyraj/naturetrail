@@ -27,40 +27,7 @@
 @extends('layouts.front_inner')
 @push('styles')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <style>
-        .ui-slider-handle {
-            box-shadow: 0px 0px 3px 1px #c9c9c9;
-            border-radius: 50%;
-            border: 1px solid #ffffff;
-            background: #ffffff;
-            font-weight: normal;
-            color: #454545;
-        }
-
-        .ui-slider-range {
-            background-color: #0064ff;
-        }
-
-        input:focus {
-            border: none;
-        }
-
-        .price-range-input {
-            padding-left: 0 !important;
-        }
-
-        .price-range-input:focus {
-            --tw-ring-shadow: none;
-            outline: none !important;
-            outline-offset: unset;
-        }
-
-        .custom-slider-container {
-            padding-top: 12px;
-        }
-
-        .custom-slider {}
-    </style>
+    <link rel="stylesheet" href="{{ asset('assets/front/css/front-search-slider.css') }}">
 @endpush
 @section('content')
     <!-- Hero -->
@@ -145,8 +112,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Search Results -->
         </div>
         <div class="bg-light">
             <div class="container py-4">
@@ -182,7 +147,7 @@
                     max: 30,
                     values: [1, 30],
                     change: function(event, ui) {
-                        filter();
+                        performSearch();
                     },
                     slide: function(event, ui) {
                         $("#trip-days").val(ui.values[0] + " days - " + ui.values[1] + " days");
@@ -198,7 +163,7 @@
                     max: 100000,
                     values: [0, 100000],
                     change: function(event, ui) {
-                        filter();
+                        performSearch();
                     },
                     slide: function(event, ui) {
                         $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
@@ -224,7 +189,7 @@
 
             $("select").on('change', function(event) {
                 event.preventDefault();
-                filter();
+                performSearch();
             });
 
             $('html, body').animate({
@@ -247,6 +212,7 @@
             });
 
             function handleKeyDown() {
+                currentPage = 1;
                 clearTimeout(typingTimer);
                 typingTimer = setTimeout(performSearch, debounceTime);
             }
@@ -298,7 +264,7 @@
                 });
             }
 
-            filter();
+            performSearch();
 
             function filter() {
                 const keyword = $("#keyword").val();
@@ -309,7 +275,7 @@
                 var url_query =
                     `page=${currentPage}&keyword=${keyword}&destination_id=${destination_id}&activity_id=${activity_id}&price=${amount}&duration=${duration}`;
                 var url = "{{ url('trips/filter') }}" + `?${url_query}`;
-                $.ajax({
+                xhr = $.ajax({
                     url: url,
                     type: "GET",
                     dataType: "json",
