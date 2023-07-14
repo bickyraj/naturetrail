@@ -776,7 +776,14 @@ class TripController extends Controller
 
     public function tripList(Request $request)
     {
-        $trips = Trip::select('id', 'name', 'slug', 'block_1', 'block_2', 'block_3')->paginate(10, ['id', 'name', 'slug', 'block_1', 'block_2', 'block_3'], 'page', $request->pagination['page'])->toArray();
+        $query = Trip::query();
+        $keyword = $request['query']['generalSearch'];
+        if (isset($keyword) && !empty($keyword)) {
+            $query->where([
+                ['name', 'LIKE', "%" . $keyword . "%"]
+            ]);
+        }
+        $trips = $query->select('id', 'name', 'slug', 'block_1', 'block_2', 'block_3')->paginate(10, ['id', 'name', 'slug', 'block_1', 'block_2', 'block_3'], 'page', $request->pagination['page'])->toArray();
         return response()->json([
             'data' => $trips['data'],
             'meta' => [

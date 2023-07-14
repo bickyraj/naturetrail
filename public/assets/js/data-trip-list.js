@@ -19,16 +19,20 @@ var KTDatatableJsonRemoteDemo = function () {
                 source: {
                     read: {
                         url: '/admin/trips/list',
-                        method: 'GET'
+                        method: 'GET',
                     }
                 },
                 pageSize: 10,
                 saveState: true,
-                serverPaging: true
+                serverPaging: true,
+                serverFiltering: true,
             },
 
             // layout definition
             layout: {
+                pagination: {
+                    hide: false
+                },
                 scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
                 footer: false, // display/hide footer,
                 icons: {
@@ -46,7 +50,8 @@ var KTDatatableJsonRemoteDemo = function () {
             sortable: true,
             pagination: true,
             search: {
-                input: $('#generalSearch')
+                input: $('#generalSearch'),
+                delay: 400
             },
 
             // columns definition
