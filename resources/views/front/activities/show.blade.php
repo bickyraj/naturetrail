@@ -628,6 +628,7 @@
                 }
             });
         }
+
         if (document.getElementsByClassName('things-to-do-slider').length > 0) {
             const thingsToDoSlider = tns({
                 container: '.things-to-do-slider',
