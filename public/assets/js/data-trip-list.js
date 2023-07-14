@@ -31,7 +31,10 @@ var KTDatatableJsonRemoteDemo = function () {
             // layout definition
             layout: {
                 pagination: {
-                    hide: false
+                    toolbar: {
+                        pagination: true,
+                        pageSizeSelect: [10, 20, 30, 50, 100], // Available page sizes
+                    },
                 },
                 scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
                 footer: false, // display/hide footer,

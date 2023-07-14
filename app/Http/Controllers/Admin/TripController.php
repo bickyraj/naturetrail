@@ -777,7 +777,7 @@ class TripController extends Controller
     public function tripList(Request $request)
     {
         $query = Trip::query();
-        $keyword = $request['query']['generalSearch'];
+        $keyword = $request['query']['generalSearch'] ?? "";
         if (isset($keyword) && !empty($keyword)) {
             $query->where([
                 ['name', 'LIKE', "%" . $keyword . "%"]
