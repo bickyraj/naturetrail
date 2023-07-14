@@ -4669,6 +4669,15 @@ a.theme:hover svg {
   background: #e74500;
 }
 
+.btn-muted {
+  background: #9095a0;
+  color: white;
+}
+
+.btn-muted:hover {
+  background: #73758c;
+}
+
 .search-widget form {
   box-shadow: -0.5rem 0 1rem rgba(0, 0, 0, 0.05);
 }
