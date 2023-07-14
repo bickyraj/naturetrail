@@ -116,7 +116,7 @@
     <section class="pt-5">
         <div class="container">
             <div class="mb-4" id="searchDiv">
-                <div class="grid lg:grid-cols-5 gap-2">
+                <div class="grid lg:grid-cols-4 gap-2">
                     <div class="col-lg-2 col-md-2 col-sm-2">
                         <div class="form-group">
                             <label for="">Keywords</label>
