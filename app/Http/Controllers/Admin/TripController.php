@@ -774,11 +774,17 @@ class TripController extends Controller
         ]);
     }
 
-    public function tripList()
+    public function tripList(Request $request)
     {
-        $trips = Trip::all();
+        $trips = Trip::select('id', 'name', 'slug', 'block_1', 'block_2', 'block_3')->paginate(10, ['id', 'name', 'slug', 'block_1', 'block_2', 'block_3'], 'page', $request->pagination['page'])->toArray();
         return response()->json([
-            'data' => $trips
+            'data' => $trips['data'],
+            'meta' => [
+                "page" => $trips['current_page'],
+                "pages" => $trips['last_page'],
+                "perpage" => $trips['per_page'],
+                "total" => $trips['total']
+            ],
         ]);
     }
 
