@@ -1,3 +1,29 @@
+@php
+    if (request()->has('destination_id')) {
+        $get_destination_id = request('destination_id');
+    }
+
+    if (request()->has('keyword')) {
+        $get_keyword = request('keyword');
+    }
+
+    if (request()->has('activity_id')) {
+        $get_activity_id = request('activity_id');
+    }
+
+    if (request()->has('price')) {
+        $get_price = request('price');
+    }
+
+    if (request()->has('duration')) {
+        $get_duration = request('duration');
+    }
+
+    if (request()->has('page')) {
+        $get_page = request('page');
+    }
+@endphp
+
 @push('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -206,6 +232,7 @@
                         performSearch();
                     },
                     slide: function(event, ui) {
+                        currentPage = 1;
                         $("#trip-days").val(ui.values[0] + " days - " + ui.values[1] + " days");
                     }
                 });
@@ -222,6 +249,7 @@
                         performSearch();
                     },
                     slide: function(event, ui) {
+                        currentPage = 1;
                         $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
                     }
                 });
@@ -297,9 +325,9 @@
                         async: "false",
                         beforeSend: function(xhr) {
                             var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
-                                                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
-                                                                            Loading Trips...\
-                                                                            </button>';
+                                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                                                                Loading Trips...\
+                                                                                </button>';
                             $("#spinner-block").html(spinner);
                             $("#show-more").hide();
                         },
@@ -349,9 +377,9 @@
                     async: "false",
                     beforeSend: function(xhr) {
                         var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
-                                                              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
-                                                              Loading Trips...\
-                                                            </button>';
+                                                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                                                  Loading Trips...\
+                                                                </button>';
                         $("#spinner-block").html(spinner);
                         $("#show-more").hide();
                     },
@@ -378,5 +406,23 @@
                 });
             }
         });
+    </script>
+    <script>
+        const activitiesSlider = tns({
+            container: '.activities-slider',
+            nav: false,
+            controlsContainer: '.activities-slider-controls',
+            items: 2,
+            gutter: 16,
+            rewind: true,
+            responsive: {
+                768: {
+                    items: 3
+                },
+                992: {
+                    items: 5
+                }
+            }
+        })
     </script>
 @endpush

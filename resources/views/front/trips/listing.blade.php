@@ -150,6 +150,7 @@
                         performSearch();
                     },
                     slide: function(event, ui) {
+                        currentPage = 1;
                         $("#trip-days").val(ui.values[0] + " days - " + ui.values[1] + " days");
                     }
                 });
@@ -166,6 +167,7 @@
                         performSearch();
                     },
                     slide: function(event, ui) {
+                        currentPage = 1;
                         $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
                     }
                 });

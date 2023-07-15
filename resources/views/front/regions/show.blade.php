@@ -1,3 +1,28 @@
+@php
+    if (request()->has('destination_id')) {
+        $get_destination_id = request('destination_id');
+    }
+
+    if (request()->has('keyword')) {
+        $get_keyword = request('keyword');
+    }
+
+    if (request()->has('activity_id')) {
+        $get_activity_id = request('activity_id');
+    }
+
+    if (request()->has('price')) {
+        $get_price = request('price');
+    }
+
+    if (request()->has('duration')) {
+        $get_duration = request('duration');
+    }
+
+    if (request()->has('page')) {
+        $get_page = request('page');
+    }
+@endphp
 @extends('layouts.front_inner')
 @push('styles')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -126,6 +151,7 @@
                         performSearch();
                     },
                     slide: function(event, ui) {
+                        currentPage = 1;
                         $("#trip-days").val(ui.values[0] + " days - " + ui.values[1] + " days");
                     }
                 });
@@ -142,6 +168,7 @@
                         performSearch();
                     },
                     slide: function(event, ui) {
+                        currentPage = 1;
                         $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
                     }
                 });
