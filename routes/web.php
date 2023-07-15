@@ -274,4 +274,6 @@ Route::get('/regions/{slug}', 'Front\RegionController@show')->name('front.region
 Route::get('/blogs/{slug}', 'Front\BlogController@show')->name('front.blogs.show');
 Route::get('/teams', 'Front\TeamController@index')->name('front.teams.index');
 Route::get('/teams/{slug}', 'Front\TeamController@show')->name('front.teams.show');
+Route::get('plan-my-trip', 'Front\PlanTripController@index')->name('front.plantrip');
+Route::post('plan-my-trip/create', 'Front\PlanTripController@store')->name('front.plantrip.create');
 Route::get('{slug}', 'Front\PageController@show')->name('front.pages.show');

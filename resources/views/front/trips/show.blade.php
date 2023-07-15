@@ -517,7 +517,7 @@ if (session()->has('error_message')) {
                             <div>
                                 Not satisfied with this itinerary? <b class="text-primary">Make your own</b>.
                             </div>
-                            <a href="{{ route('front.trips.customize', $trip->slug) }}" class="btn btn-sm btn-primary">Customize</a>
+                            <a href="{{ route('front.plantrip.create') }}" class="btn btn-sm btn-primary">Plan My Trip</a>
                         </div>
                     </div>
 
@@ -677,11 +677,11 @@ if (session()->has('error_message')) {
                     <div class="flex flex-wrap justify-between mb-4">
                         <div class="flex mb-2">
                             <a href="{{ route('front.trips.booking', $trip->slug) }}" class="mr-2 btn btn-accent">Book Now</a>
-                            <a href="{{ route('front.trips.customize', $trip->slug) }}" class="btn btn-primary">
+                            <a href="{{ route('front.plantrip') }}" class="btn btn-primary">
                                 <svg class="w-6 h-6 mr-2">
                                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#adjustments" />
                                 </svg>
-                                Customize
+                                Plan My Trip
                             </a>
                         </div>
 

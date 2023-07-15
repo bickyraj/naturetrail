@@ -11,121 +11,157 @@ if (session()->has('error_message')) {
 ?>
 
 @push('styles')
-<style>
-    .step{
-        flex-basis: 1;
-    }
-    .step:not(:first-child)::before{
-        content: '';
-        position: absolute;
-        top: 1.3rem;
-        right: 50%;
-        width: 100%;
-        height: .5rem;
-        background-color: #f0f8ff;
-        z-index: -1;
-    }
-    .step.active:not(:first-child)::before{
-        background-color: #709bf0;
-    }
-    .step .step-bg{
-        display:flex;justify-content:center;align-items:center;width:3rem;height:3rem;background-color:#f0f8ff;border-radius:100%;
-    }
-    .step.active .step-bg{
-        background-color: #709bf0;
-    }
-    .step.active img{
-        filter: brightness(10);
-    }
-    
-    .radio-input, .radio-input-compact, .check-input{
-        opacity: 0;
-        position: absolute;
-    }
-    .radio-input + label{
-        position: relative;
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        padding: 2rem 1rem;
-        background-color: #f0f8ff;
-        cursor: pointer;
-    }
-    .radio-input + label.col{
-        gap: .5rem;
-        flex-direction: column;
-    }
-    .radio-input + label:hover{
-        background-color: #d6e0f5;
-    }
-    .radio-input:checked + label{
-        background-color: #709bf0;
-        color: white;
-    }
-    .radio-input:checked + label img{
-        filter: brightness(6);
-    }
-    
-    .radio-input-compact + label{
-        position: relative;
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        padding: 1rem;
-        background-color: #f0f8ff;
-        cursor: pointer;
-    }
-    .radio-input-compact + label svg{
-        color: #8080e0;
-    }
-    .radio-input-compact + label.col{
-        gap: .5rem;
-        flex-direction: column;
-    }
-    .radio-input-compact + label:hover{
-        background-color: #d6e0f5;
-    }
-    .radio-input-compact:checked + label{
-        background-color: #709bf0;
-        color: white;
-    }
-    .radio-input-compact + label .check{
-        fill: #8080e0;
-        opacity: 0;
-    }
-    .radio-input-compact:checked + label .check{
-        opacity: 1;
-    }
-    
-    .check-input + label{
-        position: relative;
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        padding: 1rem;
-        background-color: #f0f8ff;
-        cursor: pointer;
-    }
-    .check-input + label.col{
-        gap: .5rem;
-        flex-direction: column;
-    }
-    .check-input + label:hover{
-        background-color: #d6e0f5;
-    }
-    .check-input:checked + label{
-        background-color: #709bf0;
-        color: white;
-    }
-    .check-input + label .check{
-        fill: #8080e0;
-        opacity: 0;
-    }
-    .check-input:checked + label .check{
-        opacity: 1;
-    }
-    
-</style>
+    <style>
+        .step {
+            flex-basis: 1;
+        }
+
+        .step:not(:first-child)::before {
+            content: '';
+            position: absolute;
+            top: 1.3rem;
+            right: 50%;
+            width: 100%;
+            height: .5rem;
+            background-color: #f0f8ff;
+            z-index: -1;
+        }
+
+        .step.active:not(:first-child)::before {
+            background-color: #709bf0;
+        }
+
+        .step .step-bg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 3rem;
+            height: 3rem;
+            background-color: #f0f8ff;
+            border-radius: 100%;
+        }
+
+        .step.active .step-bg {
+            background-color: #709bf0;
+        }
+
+        .step.active img {
+            filter: brightness(10);
+        }
+
+        .radio-input,
+        .radio-input-compact,
+        .check-input {
+            opacity: 0;
+            position: absolute;
+        }
+
+        .radio-input+label {
+            position: relative;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding: 2rem 1rem;
+            background-color: #f0f8ff;
+            cursor: pointer;
+        }
+
+        .radio-input+label.col {
+            gap: .5rem;
+            flex-direction: column;
+        }
+
+        .radio-input+label:hover {
+            background-color: #d6e0f5;
+        }
+
+        .radio-input:checked+label {
+            background-color: #709bf0;
+            color: white;
+        }
+
+        .radio-input:checked+label img {
+            filter: brightness(6);
+        }
+
+        .radio-input-compact+label {
+            position: relative;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f0f8ff;
+            cursor: pointer;
+        }
+
+        .radio-input-compact+label svg {
+            color: #8080e0;
+        }
+
+        .radio-input-compact+label.col {
+            gap: .5rem;
+            flex-direction: column;
+        }
+
+        .radio-input-compact+label:hover {
+            background-color: #d6e0f5;
+        }
+
+        .radio-input-compact:checked+label {
+            background-color: #709bf0;
+            color: white;
+        }
+
+        .radio-input-compact+label .check {
+            fill: #8080e0;
+            opacity: 0;
+        }
+
+        .radio-input-compact:checked+label .check {
+            opacity: 1;
+        }
+
+        .check-input+label {
+            position: relative;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f0f8ff;
+            cursor: pointer;
+        }
+
+        .check-input+label.col {
+            gap: .5rem;
+            flex-direction: column;
+        }
+
+        .check-input+label:hover {
+            background-color: #d6e0f5;
+        }
+
+        .check-input:checked+label {
+            background-color: #709bf0;
+            color: white;
+        }
+
+        .check-input+label .check {
+            fill: #8080e0;
+            opacity: 0;
+        }
+
+        .check-input:checked+label .check {
+            opacity: 1;
+        }
+
+        #stepForm>div {
+            display: none;
+        }
+
+        #stepForm>div:first-of-type {
+            display: block;
+        }
+    </style>
 @endpush
 
 @extends('layouts.front_inner')
@@ -133,7 +169,7 @@ if (session()->has('error_message')) {
 @section('content')
     <!-- Hero -->
     <section class="relative hero-alt">
-        <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="" style="max-height: 400px;">
+        <img src="{{-- {{ asset('assets/front/img/hero.jpg') }} --}}" alt="" style="max-height: 400px;">
         <div class="absolute overlay">
             <div class="container ">
                 <h1>Plan My Trip</h1>
@@ -150,66 +186,83 @@ if (session()->has('error_message')) {
 
     <section class="py-20" x-data="">
         <div class="max-w-6xl mx-auto px-4 grid gap-20">
-        
+
             {{-- Progress --}}
             <div class="hidden lg:flex">
                 {{-- Mark each step as active if it is complete or current --}}
-                <button class="step active relative flex-grow flex gap-2 flex-col items-center"><div class="step-bg"><img src="{{ asset('assets/front/img/who.png') }}" class="w-8 h-8 object-contain"></div>Who</button>
-                <button class="step active relative flex-grow flex gap-2 flex-col items-center"><div class="step-bg"><img src="{{ asset('assets/front/img/when.svg') }}" class="w-8 h-8 object-contain"></div>When</button>
-                <button class="step relative flex-grow flex gap-2 flex-col items-center"><div class="step-bg"><img src="{{ asset('assets/front/img/where.svg') }}" class="w-8 h-8 object-contain"></div>Where</button>
-                <button class="step relative flex-grow flex gap-2 flex-col items-center"><div class="step-bg"><img src="{{ asset('assets/front/img/accomodation.png') }}" class="w-8 h-8 object-contain"></div>Accomodation</button>
-                <button class="step relative flex-grow flex gap-2 flex-col items-center"><div class="step-bg"><img src="{{ asset('assets/front/img/budget.svg') }}" class="w-8 h-8 object-contain"></div>Budget</button>
-                <button class="step relative flex-grow flex gap-2 flex-col items-center"><div class="step-bg"><img src="{{ asset('assets/front/img/tailor-made.svg') }}" class="w-8 h-8 object-contain"></div>Tailor-made tour</button>
+                <button class="step active relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/who.png') }} --}}" class="w-8 h-8 object-contain">
+                    </div>Who
+                </button>
+                <button class="step active relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/when.svg') }} --}}" class="w-8 h-8 object-contain">
+                    </div>When
+                </button>
+                <button class="step relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/where.svg') }} --}}" class="w-8 h-8 object-contain"></div>Where
+                </button>
+                <button class="step relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/accomodation.png') }} --}}" class="w-8 h-8 object-contain"></div>Accomodation
+                </button>
+                <button class="step relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/budget.svg') }} --}}" class="w-8 h-8 object-contain"></div>Budget
+                </button>
+                <button class="step relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/tailor-made.svg') }} --}}" class="w-8 h-8 object-contain"></div>Tailor-made
+                    tour
+                </button>
             </div>
-            
+
             {{-- Form --}}
-            <form>
-                
+            <form id="stepForm">
+
                 {{-- Who --}}
-                <div class="grid gap-8 py-10">
+                <div id="step1" class="grid gap-8 py-10">
                     <fieldset>
-                        <legend class="mb-8 text-lg lg:text-3xl text-center">How are you travelling? <span class="text-red">*</span></legend>
+                        <legend class="mb-8 text-lg lg:text-3xl text-center">How are you travelling? <span
+                                class="text-red">*</span></legend>
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
                             <div>
                                 <input type="radio" id="solo" name="who" value="solo" class="radio-input">
                                 <label class="col" for="solo">
-                                    <img src="{{ asset('assets/front/img/solo.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{-- {{ asset('assets/front/img/solo.svg') }} --}}" class="h-12 lg:h-24">
                                     Solo
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
                                 <input type="radio" id="couple" name="who" value="couple" class="radio-input">
                                 <label class="col" for="couple">
-                                    <img src="{{ asset('assets/front/img/couple.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{-- {{ asset('assets/front/img/couple.svg') }} --}}" class="h-12 lg:h-24">
                                     Couple
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
                                 <input type="radio" id="family" name="who" value="family" class="radio-input">
                                 <label class="col" for="family">
-                                    <img src="{{ asset('assets/front/img/family.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{-- {{ asset('assets/front/img/family.svg') }} --}}" class="h-12 lg:h-24">
                                     Family
-                              </label>
+                                </label>
                             </div>
-                            
+
                             <div>
                                 <input type="radio" id="group" name="who" value="group" class="radio-input">
                                 <label class="col" for="group">
-                                    <img src="{{ asset('assets/front/img/group.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{-- {{ asset('assets/front/img/group.svg') }} --}}" class="h-12 lg:h-24">
                                     Group
-                              </label>
+                                </label>
                             </div>
                         </div>
+                        <div id="who-error"></div>
                     </fieldset>
-                    
+
                     <div class="flex flex-wrap gap-8">
                         <div class="form-group">
                             <label for="adults">
                                 No. of adults <span class="text-red">*</span>
                             </label>
-                            <select id="adults" class="form-control">
+                            <select id="adults" name="no_of_adults" class="form-control">
                                 <option selected>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -226,7 +279,7 @@ if (session()->has('error_message')) {
                             <label for="children">
                                 No. of children <span class="text-red">*</span>
                             </label>
-                            <select id="children" class="form-control">
+                            <select id="children" name="no_of_children" class="form-control">
                                 <option selected>0</option>
                                 <option>1</option>
                                 <option>2</option>
@@ -241,342 +294,429 @@ if (session()->has('error_message')) {
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="flex justify-center gap-8">
-                        <button type="button" class="btn btn-accent">Next</button>
+                        <button type="button" class="btn btn-accent next">Next</button>
                     </div>
                 </div>
-                
+
                 {{-- When --}}
-                <div class="grid gap-8 py-10">
+                <div id="step2" class="grid gap-8 py-10">
                     <fieldset>
-                        <legend class="mb-8 text-lg lg:text-3xl text-center">Arrival date <span class="text-red">*</span></legend>
+                        <legend class="mb-8 text-lg lg:text-3xl text-center">Arrival date <span class="text-red">*</span>
+                        </legend>
                         <div class="grid lg:grid-cols-3 gap-8">
                             <div>
-                                <input type="radio" id="exact-date" name="when" value="solo" class="radio-input">
+                                <input type="radio" id="exact-date" name="when" value="solo"
+                                    class="radio-input">
                                 <label for="exact-date">
-                                    <img src="{{ asset('assets/front/img/exact-date.svg') }}" class="h-12">
+                                    <img src="{{-- {{ asset('assets/front/img/exact-date.svg') }} --}}" class="h-12">
                                     I have exact travel dates.
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="radio" id="approx-date" name="when" value="couple" class="radio-input">
+                                <input type="radio" id="approx-date" name="when" value="couple"
+                                    class="radio-input">
                                 <label for="approx-date">
-                                    <img src="{{ asset('assets/front/img/approx-date.svg') }}" class="h-12">
+                                    <img src="{{-- {{ asset('assets/front/img/approx-date.svg') }} --}}" class="h-12">
                                     I have approximate travel dates.
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="radio" id="decide-later" name="when" value="family" class="radio-input">
+                                <input type="radio" id="decide-later" name="when" value="family"
+                                    class="radio-input">
                                 <label for="decide-later">
-                                    <img src="{{ asset('assets/front/img/decide-later.svg') }}" class="h-12">
+                                    <img src="{{-- {{ asset('assets/front/img/decide-later.svg') }} --}}" class="h-12">
                                     I will decide later.
-                              </label>
+                                </label>
                             </div>
                         </div>
+                        <div id="when-error"></div>
                     </fieldset>
-                    
+
                     <div class="flex flex-wrap gap-8">
                         <div class="form-group">
                             <label for="arrival-date">
                                 Arrival date <span class="text-red">*</span>
                             </label>
-                            <input type="date" id="arrival-date">
+                            <input type="date" name="arrival_date" id="arrival-date">
                         </div>
                         <div class="form-group">
                             <label for="departure-date">
                                 Departure date <span class="text-red">*</span>
                             </label>
-                            <input type="date" id="departure-date">
+                            <input type="date" name="departure_date" id="departure-date">
                         </div>
                         <div class="form-group">
                             <label for="approx-month">
                                 Select month <span class="text-red">*</span>
                             </label>
-                            <input type="month" id="approx-month">
+                            <input type="month" name="month" id="approx-month">
                         </div>
                     </div>
-                    
+
                     <div class="flex justify-center gap-8">
-                        <button type="button" class="btn btn-muted">Back</button>
-                        <button type="button" class="btn btn-accent">Next</button>
+                        <button type="button" class="btn btn-muted back">Back</button>
+                        <button type="button" class="btn btn-accent next">Next</button>
                     </div>
                 </div>
-                
+
                 {{-- Where --}}
-                <div class="grid gap-8 py-10">
+                <div id="step3" class="grid gap-8 py-10">
                     <fieldset>
-                        <legend class="mb-8 text-lg lg:text-3xl text-center">Choose your destination <span class="text-red">*</span></legend>
+                        <legend class="mb-8 text-lg lg:text-3xl text-center">Choose your destination <span
+                                class="text-red">*</span></legend>
                         <div class="grid lg:grid-cols-4 gap-8 mb-8">
                             <div>
-                                <input type="checkbox" id="nepal" class="check-input">
+                                <input type="checkbox" id="nepal" name="destination[]" value="nepal"
+                                    class="check-input">
                                 <label for="nepal">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor"/>
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"></path>
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <rect x="0" y="0" width="20" height="20"
+                                            fill="white" stroke="currentColor" />
+                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
+                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
+                                        </path>
                                     </svg>
                                     Nepal
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="checkbox" id="tibet" class="check-input">
+                                <input type="checkbox" id="tibet" name="destination[]" value="tibet"
+                                    class="check-input">
                                 <label for="tibet">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor"/>
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"></path>
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <rect x="0" y="0" width="20" height="20"
+                                            fill="white" stroke="currentColor" />
+                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
+                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
+                                        </path>
                                     </svg>
                                     Tibet
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="checkbox" id="bhutan" class="check-input">
+                                <input type="checkbox" id="bhutan" name="destination[]" value="bhutan"
+                                    class="check-input">
                                 <label for="bhutan">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor"/>
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"></path>
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <rect x="0" y="0" width="20" height="20"
+                                            fill="white" stroke="currentColor" />
+                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
+                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
+                                        </path>
                                     </svg>
                                     Bhutan
-                              </label>
+                                </label>
                             </div>
-                            
+
                             <div>
-                                <input type="checkbox" id="india" class="check-input">
+                                <input type="checkbox" id="india" name="destination[]" value="india"
+                                    class="check-input">
                                 <label for="india">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor"/>
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"></path>
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <rect x="0" y="0" width="20" height="20"
+                                            fill="white" stroke="currentColor" />
+                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
+                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
+                                        </path>
                                     </svg>
                                     India
-                              </label>
+                                </label>
                             </div>
                         </div>
-                        
+
                         <div>
-                            <input type="checkbox" id="not-sure" class="check-input">
+                            <input type="checkbox" id="not-sure" name="destination[]" value="not-sure"
+                                class="check-input">
                             <label for="not-sure">
-                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                    <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor"/>
-                                    <path class="check" clip-rule="evenodd" fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"></path>
+                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                    aria-hidden="true" class="w-6 h-6">
+                                    <rect x="0" y="0" width="20" height="20" fill="white"
+                                        stroke="currentColor" />
+                                    <path class="check" clip-rule="evenodd" fill-rule="evenodd"
+                                        d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
+                                    </path>
                                 </svg>
                                 I am not sure!
                             </label>
                         </div>
+                        <div id="destination-error"></div>
                     </fieldset>
-                    
+
                     <fieldset>
                         <div class="flex flex-wrap justify-between mb-4">
-                            <legend class="text-lg text-center">Choose the trip(s) you are interested in <span class="text-red">*</span></legend>
+                            <legend class="text-lg text-center">Choose the trip(s) you are interested in <span
+                                    class="text-red">*</span></legend>
                         </div>
                         <div class="grid lg:grid-cols-4 gap-8 ">
                             <div>
-                                <input type="checkbox" id="nepal" class="check-input">
-                                <label for="nepal">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor"/>
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"></path>
+                                <input type="checkbox" id="trip1" name="trip_interested[]" value="1"
+                                    class="check-input">
+                                <label for="trip1">
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <rect x="0" y="0" width="20" height="20"
+                                            fill="white" stroke="currentColor" />
+                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
+                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
+                                        </path>
                                     </svg>
                                     Everest Base Camp Trek
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="checkbox" id="tibet" class="check-input">
-                                <label for="tibet">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor"/>
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"></path>
+                                <input type="checkbox" id="trip2" name="trip_interested[]" value="2"
+                                    class="check-input">
+                                <label for="trip2">
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <rect x="0" y="0" width="20" height="20"
+                                            fill="white" stroke="currentColor" />
+                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
+                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
+                                        </path>
                                     </svg>
                                     Annapurna Base Camp Trek
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="checkbox" id="bhutan" class="check-input">
-                                <label for="bhutan">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor"/>
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"></path>
+                                <input type="checkbox" id="trip3" name="trip_interested[]" value="3"
+                                    class="check-input">
+                                <label for="trip3">
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <rect x="0" y="0" width="20" height="20"
+                                            fill="white" stroke="currentColor" />
+                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
+                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
+                                        </path>
                                     </svg>
                                     Mardi Himal Trek
-                              </label>
+                                </label>
                             </div>
-                            
+
                             <div>
-                                <input type="checkbox" id="india" class="check-input">
-                                <label for="india">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor"/>
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"></path>
+                                <input type="checkbox" id="trip4" name="trip_interested[]" value="4"
+                                    class="check-input">
+                                <label for="trip4">
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <rect x="0" y="0" width="20" height="20"
+                                            fill="white" stroke="currentColor" />
+                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
+                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
+                                        </path>
                                     </svg>
                                     Langtang Valley Trek
-                              </label>
+                                </label>
                             </div>
                         </div>
+                        <div id="trip-interested-error"></div>
                     </fieldset>
-                    
+
                     <div class="flex justify-center gap-8">
-                        <button type="button" class="btn btn-muted">Back</button>
-                        <button type="button" class="btn btn-accent">Next</button>
+                        <button type="button" class="btn btn-muted back">Back</button>
+                        <button type="button" class="btn btn-accent next">Next</button>
                     </div>
                 </div>
-                
+
                 {{-- Accomodation --}}
-                <div class="grid gap-8 py-10">
+                <div id="step4" class="grid gap-8 py-10">
                     <fieldset>
-                        <legend class="mb-8 text-lg lg:text-3xl text-center">Preferred accomodation standard <span class="text-red">*</span></legend>
+                        <legend class="mb-8 text-lg lg:text-3xl text-center">Preferred accomodation standard <span
+                                class="text-red">*</span></legend>
                         <div class="grid lg:grid-cols-5 gap-8">
                             <div>
-                                <input type="radio" id="basic" name="accomodation" value="solo" class="radio-input">
+                                <input type="radio" id="basic" name="accomodation" value="solo"
+                                    class="radio-input">
                                 <label class="col" for="basic">
-                                    <img src="{{ asset('assets/front/img/basic.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{-- {{ asset('assets/front/img/basic.svg') }} --}}" class="h-12 lg:h-24">
                                     Basic
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="radio" id="comfortable" name="accomodation" value="couple" class="radio-input">
+                                <input type="radio" id="comfortable" name="accomodation" value="couple"
+                                    class="radio-input">
                                 <label class="col" for="comfortable">
-                                    <img src="{{ asset('assets/front/img/comfortable.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{-- {{ asset('assets/front/img/comfortable.svg') }} --}}" class="h-12 lg:h-24">
                                     Comfortable
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="radio" id="luxury" name="accomodation" value="family" class="radio-input">
-                                <label class="col" for="luxury"><img src="{{ asset('assets/front/img/luxury.svg') }}" class="h-12 lg:h-24">
+                                <input type="radio" id="luxury" name="accomodation" value="family"
+                                    class="radio-input">
+                                <label class="col" for="luxury"><img
+                                        src="{{ asset('assets/front/img/luxury.svg') }}" class="h-12 lg:h-24">
                                     Luxury
-                              </label>
+                                </label>
                             </div>
-                              
+
                             <div>
-                                <input type="radio" id="camping" name="accomodation" value="family" class="radio-input">
+                                <input type="radio" id="camping" name="accomodation" value="family"
+                                    class="radio-input">
                                 <label class="col" for="camping">
-                                    <img src="{{ asset('assets/front/img/camping.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{-- {{ asset('assets/front/img/camping.svg') }} --}}" class="h-12 lg:h-24">
                                     Camping
-                              </label>
+                                </label>
                             </div>
-                            
+
                             <div>
-                                <input type="radio" id="self-booking" name="accomodation" value="family" class="radio-input">
+                                <input type="radio" id="self-booking" name="accomodation" value="family"
+                                    class="radio-input">
                                 <label class="col" for="self-booking">
-                                    <img src="{{ asset('assets/front/img/self-booking.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{-- {{ asset('assets/front/img/self-booking.svg') }} --}}" class="h-12 lg:h-24">
                                     Self booking
-                              </label>
+                                </label>
                             </div>
                         </div>
+                        <div id="accomodation-error"></div>
                     </fieldset>
-                    
+
                     <div class="flex justify-center gap-8">
-                        <button type="button" class="btn btn-muted">Back</button>
-                        <button type="button" class="btn btn-accent">Next</button>
+                        <button type="button" class="btn btn-muted back">Back</button>
+                        <button type="button" class="btn btn-accent next">Next</button>
                     </div>
                 </div>
-                
+
                 {{-- Budget --}}
-                <div class="grid gap-8 py-10">
+                <div id="step5" class="grid gap-8 py-10">
                     <fieldset>
-                        <legend class="mb-4 text-lg lg:text-3xl text-center">Budget range (per person) <span class="text-red">*</span></legend>
+                        <legend class="mb-4 text-lg lg:text-3xl text-center">Budget range (per person) <span
+                                class="text-red">*</span></legend>
                         Budget range slider
                     </fieldset>
-                    
+
                     <fieldset>
-                        <legend class="mb-4 text-lg lg:text-2xl text-center">Are you flexible with a change in budget? <span class="text-red">*</span></legend>
+                        <legend class="mb-4 text-lg lg:text-2xl text-center">Are you flexible with a change in budget?
+                            <span class="text-red">*</span>
+                        </legend>
                         <div class="grid lg:grid-cols-2 gap-8">
                             <div>
-                                <input type="radio" id="flexible" name="flexible" value="solo" class="radio-input">
+                                <input type="radio" id="flexible" name="flexible" value="solo"
+                                    class="radio-input">
                                 <label for="flexible">
-                                    <img src="{{ asset('assets/front/img/flexible-budget.svg') }}" class="h-12">
+                                    <img src="{{-- {{ asset('assets/front/img/flexible-budget.svg') }} --}}" class="h-12">
                                     Yes, I am flexible. Plan the best trip for me.
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="radio" id="not-flexible" name="flexible" value="couple" class="radio-input">
+                                <input type="radio" id="not-flexible" name="flexible" value="couple"
+                                    class="radio-input">
                                 <label for="not-flexible">
-                                    <img src="{{ asset('assets/front/img/fixed-budget.svg') }}" class="h-12">
+                                    <img src="{{-- {{ asset('assets/front/img/fixed-budget.svg') }} --}}" class="h-12">
                                     No, that is my maximum and minimum budget.
-                              </label>
+                                </label>
                             </div>
                         </div>
+                        <div id="flexible-error"></div>
                     </fieldset>
-                    
+
                     <div class="flex justify-center gap-8">
-                        <button type="button" class="btn btn-muted">Back</button>
-                        <button type="button" class="btn btn-accent">Next</button>
+                        <button type="button" class="btn btn-muted back">Back</button>
+                        <button type="button" class="btn btn-accent next">Next</button>
                     </div>
                 </div>
-                
+
                 {{-- Tailor-made tour --}}
-                <div class="grid gap-8 py-10">
+                <div id="step6" class="grid gap-8 py-10">
                     <fieldset>
-                        <legend class="mb-4 lg:text-lg">Trip type you are looking for<span class="text-red">*</span></legend>
+                        <legend class="mb-4 lg:text-lg">Trip type you are looking for<span class="text-red">*</span>
+                        </legend>
                         <div class="flex gap-1">
                             <div>
-                                <input type="radio" id="tailor-made" name="trip-type" value="tailor-made" class="radio-input-compact">
+                                <input type="radio" id="tailor-made" name="trip_type" value="tailor-made"
+                                    class="radio-input-compact">
                                 <label for="tailor-made">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor"/>
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <circle cx="10" cy="10" r="9" fill="white"
+                                            stroke="currentColor" />
                                         <circle cx="10" cy="10" r="6" class="check" />
                                     </svg>
                                     Tailor-made
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="radio" id="type-group" name="trip-type" value="group" class="radio-input-compact">
+                                <input type="radio" id="type-group" name="trip_type" value="group"
+                                    class="radio-input-compact">
                                 <label for="type-group">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor"/>
-                                        <circle cx="10" cy="10" r="6" class="check"/>
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <circle cx="10" cy="10" r="9" fill="white"
+                                            stroke="currentColor" />
+                                        <circle cx="10" cy="10" r="6" class="check" />
                                     </svg>
                                     Group
-                              </label>
+                                </label>
                             </div>
                         </div>
+                        <div id="trip-type-error"></div>
                     </fieldset>
-                    
+
                     <fieldset>
-                        <legend class="mb-4 lg:text-lg">Current phase of trip planning<span class="text-red">*</span></legend>
+                        <legend class="mb-4 lg:text-lg">Current phase of trip planning<span class="text-red">*</span>
+                        </legend>
                         <div class="flex flex-wrap gap-1">
                             <div>
-                                <input type="radio" id="planning" name="plan-phase" value="planning" class="radio-input-compact">
+                                <input type="radio" id="planning" name="plan_phase" value="planning"
+                                    class="radio-input-compact">
                                 <label for="planning">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor"/>
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <circle cx="10" cy="10" r="9" fill="white"
+                                            stroke="currentColor" />
                                         <circle cx="10" cy="10" r="6" class="check" />
                                     </svg>
                                     I am still planning on my trip.
-                              </label>
+                                </label>
                             </div>
-                        
+
                             <div>
-                                <input type="radio" id="ready" name="plan-phase" value="ready" class="radio-input-compact">
+                                <input type="radio" id="ready" name="plan_phase" value="ready"
+                                    class="radio-input-compact">
                                 <label for="ready">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor"/>
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <circle cx="10" cy="10" r="9" fill="white"
+                                            stroke="currentColor" />
                                         <circle cx="10" cy="10" r="6" class="check" />
                                     </svg>
                                     I am ready to start.
-                              </label>
+                                </label>
                             </div>
-                            
+
                             <div>
-                                <input type="radio" id="book" name="plan-phase" value="book" class="radio-input-compact">
+                                <input type="radio" id="book" name="plan_phase" value="book"
+                                    class="radio-input-compact">
                                 <label for="book">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor"/>
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true" class="w-6 h-6">
+                                        <circle cx="10" cy="10" r="9" fill="white"
+                                            stroke="currentColor" />
                                         <circle cx="10" cy="10" r="6" class="check" />
                                     </svg>
                                     I want to book.
-                              </label>
+                                </label>
                             </div>
                         </div>
+                        <div id="plan-phase-error"></div>
                     </fieldset>
-                    
+
                     <div class="grid lg:grid-cols-2 gap-8">
                         <div class="form-group">
                             <label for="arrival-date">
@@ -588,8 +728,8 @@ if (session()->has('error_message')) {
                             <label for="departure-date">
                                 How did you hear about us? <span class="text-red">*</span>
                             </label>
-                            <select id="departure-date" class="form-control">
-                                <option value="0">Select One</option>
+                            <select id="departure-date" name="reached_by" class="form-control">
+                                <option value="">Select One</option>
                                 <option value="Blog">Blog</option>
                                 <option value="Club/Association">Club/Association</option>
                                 <option value="Facebook">Facebook</option>
@@ -611,89 +751,102 @@ if (session()->has('error_message')) {
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="flex justify-center gap-8">
-                        <button type="button" class="btn btn-muted">Back</button>
-                        <button type="button" class="btn btn-accent">Next</button>
+                        <button type="button" class="btn btn-muted back">Back</button>
+                        <button type="button" class="btn btn-accent next">Next</button>
                     </div>
                 </div>
-                
+
                 {{-- Personal Information --}}
-                <div class="grid gap-8 py-10">
+                <div id="step7" class="grid gap-8 py-10">
                     <h2 class="text-lg lg:text-2xl">PERSONAL INFORMATION</h2>
                     <p>Please fill in the form below. Our customer support will get back to you as soon as possible.</p>
                     <div class="grid lg:grid-cols-2 gap-8">
                         <div class="form-group">
                             <label for="first-name">First Name <span class="text-red">*</span></label>
-                            <input type="text" id="first-name" class="form-control">
+                            <input type="text" id="first-name" name="first_name" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="last-name">Last Name <span class="text-red">*</span></label>
-                            <input type="text" id="last-name" class="form-control">
+                            <input type="text" id="last-name" name="last_name" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="contact-no">Contact number <span class="text-red">*</span></label>
-                            <input type="tel" id="contact-no" class="form-control">
+                            <input type="tel" id="contact-no" name="contact_number" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="email">Email <span class="text-red">*</span></label>
-                            <input type="email" id="email" class="form-control">
+                            <input type="email" id="email" name="email" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="nationality">Nationality <span class="text-red">*</span></label>
-                            <select id="nationality" class="form-control">
-                                <option></option>
+                            <select id="nationality" name="nationality" class="form-control">
+                                <option value="">--Select a Country--</option>
+                                <option value="1">Nepal</option>
                             </select>
                         </div>
                         <fieldset>
                             <legend>Preferred method of contact<span class="text-red">*</span></legend>
                             <div class="flex flex-wrap gap-1">
                                 <div>
-                                    <input type="radio" id="method-email" name="contact_method" value="email" class="radio-input-compact">
+                                    <input type="radio" id="method-email" name="contact_method" value="email"
+                                        class="radio-input-compact">
                                     <label for="method-email">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor"/>
-                                        <circle cx="10" cy="10" r="6" class="check" />
-                                    </svg>
+                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                            aria-hidden="true" class="w-6 h-6">
+                                            <circle cx="10" cy="10" r="9" fill="white"
+                                                stroke="currentColor" />
+                                            <circle cx="10" cy="10" r="6" class="check" />
+                                        </svg>
                                         Email
-                                  </label>
+                                    </label>
                                 </div>
-                            
+
                                 <div>
-                                    <input type="radio" id="method-phone" name="contact_method" value="phone" class="radio-input-compact">
+                                    <input type="radio" id="method-phone" name="contact_method" value="phone"
+                                        class="radio-input-compact">
                                     <label for="method-phone">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor"/>
-                                        <circle cx="10" cy="10" r="6" class="check" />
-                                    </svg>
+                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                            aria-hidden="true" class="w-6 h-6">
+                                            <circle cx="10" cy="10" r="9" fill="white"
+                                                stroke="currentColor" />
+                                            <circle cx="10" cy="10" r="6" class="check" />
+                                        </svg>
                                         Phone
-                                  </label>
+                                    </label>
                                 </div>
-                                
+
                                 <div>
-                                    <input type="radio" id="method-both" name="contact_method" value="both" class="radio-input-compact">
+                                    <input type="radio" id="method-both" name="contact_method" value="both"
+                                        class="radio-input-compact">
                                     <label for="method-both">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor"/>
-                                        <circle cx="10" cy="10" r="6" class="check" />
-                                    </svg>
+                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                            aria-hidden="true" class="w-6 h-6">
+                                            <circle cx="10" cy="10" r="9" fill="white"
+                                                stroke="currentColor" />
+                                            <circle cx="10" cy="10" r="6" class="check" />
+                                        </svg>
                                         Both
-                                  </label>
+                                    </label>
                                 </div>
                             </div>
+                            <div id="contact-method-error"></div>
                         </fieldset>
                     </div>
-                    
+
                     <div>
                         <input type="checkbox" id="privacy-policy" name="privacy_policy">
                         <label for="privacy-policy">
-                            I have read and accept the <a href="{{ url('/privacy-policy')}}">Privacy Policy</a>. <span class="text-red">*</span>
-                      </label>
+                            I have read and accept the <a href="{{ url('/privacy-policy') }}">Privacy Policy</a>. <span
+                                class="text-red">*</span>
+                        </label>
+                        <div id="privacy-policy-error"></div>
                     </div>
-                    
+
                     <div class="flex justify-center gap-8">
-                        <button type="button" class="btn btn-muted">Back</button>
-                        <button type="button" class="btn btn-accent">Finish</button>
+                        <button type="button" class="btn btn-muted back">Back</button>
+                        <button id="finish-btn" type="button" class="btn btn-accent finish">Finish</button>
                     </div>
                 </div>
             </form>
@@ -702,6 +855,9 @@ if (session()->has('error_message')) {
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('assets/vendors/jquery-validation/dist/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-validation/dist/additional-methods.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plan-my-trip-step-form.js') }}"></script>
     <script type="text/javascript">
         $(function() {
             var session_success_message = '{{ $session_success_message ?? '' }}';
@@ -723,6 +879,206 @@ if (session()->has('error_message')) {
                     $("#captcha-form").submit();
                 }, 1000);
             });
+        });
+    </script>
+    <script>
+        $(function() {
+            var currentStep = 1;
+            var form = $("#stepForm");
+            var validator = form.validate();
+            var formSteps = $("#stepForm>div");
+            var validationRules = {
+                step1: {
+                    who: {
+                        required: true
+                    },
+                    no_of_adults: {
+                        required: true
+                    },
+                    no_of_children: {
+                        required: true
+                    }
+                },
+                step2: {
+                    when: {
+                        required: true
+                    },
+                    arrival_date: {
+                        required: true
+                    },
+                    departure_date: {
+                        required: true
+                    },
+                    month: {
+                        required: true
+                    }
+                },
+                step3: {
+                    "destination[]": {
+                        required: true
+                    },
+                    "trip_interested[]": {
+                        required: true
+                    }
+                },
+                step4: {
+                    accomodation: {
+                        required: true
+                    }
+                },
+                step5: {
+                    flexible: {
+                        required: true
+                    }
+                },
+                step6: {
+                    trip_type: {
+                        required: true
+                    },
+                    plan_phase: {
+                        required: true
+                    },
+                    reached_by: {
+                        required: true
+                    }
+                },
+                step7: {
+                    first_name: {
+                        required: true
+                    },
+                    last_name: {
+                        required: true
+                    },
+                    contact_number: {
+                        required: true
+                    },
+                    email: {
+                        required: true
+                    },
+                    nationality: {
+                        required: true
+                    },
+                    contact_method: {
+                        required: true
+                    },
+                    privacy_policy: {
+                        required: true
+                    },
+                }
+            };
+
+            function nextStep() {
+                var currentFieldset = formSteps.eq(currentStep - 1);
+                const validationGroup = validationRules["step" + 7];
+                validator.destroy();
+                form.validate({
+                    rules: validationGroup,
+                    errorPlacement: function(error, element) {
+                        if (element.attr("name") == "who") {
+                            $("#who-error").html(error);
+                            // error.insertAfter("#lastname");
+                        } else if (element.attr("name") == "when") {
+                            $("#when-error").html(error);
+                        } else if (element.attr("name") == "destination[]") {
+                            $("#destination-error").html(error);
+                        } else if (element.attr("name") == "trip_interested[]") {
+                            $("#trip-interested-error").html(error);
+                        } else if (element.attr("name") == "accomodation") {
+                            $("#accomodation-error").html(error);
+                        } else if (element.attr("name") == "flexible") {
+                            $("#flexible-error").html(error);
+                        } else if (element.attr("name") == "trip_type") {
+                            $("#trip-type-error").html(error);
+                        } else if (element.attr("name") == "plan_phase") {
+                            $("#plan-phase-error").html(error);
+                        } else if (element.attr("name") == "contact_method") {
+                            $("#contact-method-error").html(error);
+                        } else if (element.attr("name") == "privacy_policy") {
+                            $("#privacy-policy-error").html(error);
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function(form) {
+                        // console.log();
+                        var formData = new FormData($(form)[0]);
+                        // var formData = $(form).serialize();
+                        $.ajax({
+                            url: "{{ route('front.plantrip.create') }}",
+                            type: 'POST',
+                            data: formData,
+                            dataType: 'json',
+                            processData: false,
+                            contentType: false,
+                            async: false,
+                            success: function(res) {
+                                // if (res.status === 1) {
+                                //     // location.href = "{{ route('admin.blogs.index') }}";
+                                //     // form[0].reset();
+                                //     // $('#cropper-image').attr('src', '{{ asset('img/default.gif') }}');
+                                //     // if (cropped) {
+                                //     //   cropper.destroy();
+                                //     // }
+                                //     // $('#summernote-description').summernote('reset');
+                                // }
+                            }
+                        });
+                    }
+                });
+                // var validationMessagesGroup = validationMessages["step" + currentStep];
+
+                if (form.valid()) {
+                    if (currentStep === 7) {
+                        form.submit();
+                        return;
+                    }
+                    currentFieldset.hide();
+                    formSteps.eq(currentStep).show();
+                    currentStep++;
+                } else {
+                    // Display error messages for the current step
+                    form.validate().focusInvalid();
+                }
+            }
+
+            function prevStep() {
+                if (currentStep > 1) {
+                    formSteps.eq(currentStep - 1).hide();
+                    formSteps.eq(currentStep - 2).show();
+                    currentStep--;
+                }
+            }
+
+            formSteps.each(function(index) {
+                $(this).find("button.next").on("click", function(e) {
+                    e.preventDefault();
+                    nextStep();
+                });
+
+                if (index > 0) {
+                    $(this).find("button.back").on("click", function(e) {
+                        e.preventDefault();
+                        prevStep();
+                    });
+                }
+            });
+
+            $("#finish-btn").on('click', function(event) {
+                event.preventDefault();
+                nextStep();
+            });
+
+            // Apply validation rules and messages for each step
+            // formSteps.each(function(index) {
+            //     var fieldsetID = $(this).attr("id");
+            //     var validationGroup = validationRules["step1"];
+            //     // var validationMessagesGroup = validationMessages[fieldsetID];
+
+            //     form.validate({
+            //         rules: validationGroup,
+            //         // messages: validationMessagesGroup
+            //     });
+            // });
         });
     </script>
 @endpush
