@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Destination;
+use App\Trip;
 
 class DestinationController extends Controller
 {
@@ -92,4 +93,16 @@ class DestinationController extends Controller
         })->get();
 		return view('front.destinations.show', compact('destination', 'destinations', 'activities', 'seo'));
 	}
+
+    public function getTrips($id)
+    {
+        $trips = Trip::select('id', 'name', 'slug')->whereHas('destination', function($q) use ($id) {
+            $q->where('destination_id', $id);
+        })->get();
+        return response()->json([
+            'data' => $trips,
+            'success' => true,
+            'message' => 'List fetched'
+        ]);
+    }
 }

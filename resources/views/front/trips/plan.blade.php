@@ -11,6 +11,8 @@ if (session()->has('error_message')) {
 ?>
 
 @push('styles')
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{ asset('assets/front/css/front-search-slider.css') }}">
     <style>
         .step {
             flex-basis: 1;
@@ -169,7 +171,7 @@ if (session()->has('error_message')) {
 @section('content')
     <!-- Hero -->
     <section class="relative hero-alt">
-        <img src="{{-- {{ asset('assets/front/img/hero.jpg') }} --}}" alt="" style="max-height: 400px;">
+        <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="" style="max-height: 400px;">
         <div class="absolute overlay">
             <div class="container ">
                 <h1>Plan My Trip</h1>
@@ -188,27 +190,31 @@ if (session()->has('error_message')) {
         <div class="max-w-6xl mx-auto px-4 grid gap-20">
 
             {{-- Progress --}}
-            <div class="hidden lg:flex">
+            <div id="step-block" class="hidden lg:flex">
                 {{-- Mark each step as active if it is complete or current --}}
-                <button class="step active relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/who.png') }} --}}" class="w-8 h-8 object-contain">
+                <button id="step-who" class="step active relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/who.png') }}" class="w-8 h-8 object-contain">
                     </div>Who
                 </button>
-                <button class="step active relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/when.svg') }} --}}" class="w-8 h-8 object-contain">
+                <button id="step-when" class="step relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/when.svg') }}" class="w-8 h-8 object-contain">
                     </div>When
                 </button>
-                <button class="step relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/where.svg') }} --}}" class="w-8 h-8 object-contain"></div>Where
+                <button id="step-where" class="step relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/where.svg') }}"
+                            class="w-8 h-8 object-contain"></div>Where
                 </button>
-                <button class="step relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/accomodation.png') }} --}}" class="w-8 h-8 object-contain"></div>Accomodation
+                <button id="step-accomodation" class="step relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/accomodation.png') }}"
+                            class="w-8 h-8 object-contain"></div>Accomodation
                 </button>
-                <button class="step relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/budget.svg') }} --}}" class="w-8 h-8 object-contain"></div>Budget
+                <button id="step-budget" class="step relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/budget.svg') }}"
+                            class="w-8 h-8 object-contain"></div>Budget
                 </button>
-                <button class="step relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{-- {{ asset('assets/front/img/tailor-made.svg') }} --}}" class="w-8 h-8 object-contain"></div>Tailor-made
+                <button id="step-tailor-made" class="step relative flex-grow flex gap-2 flex-col items-center">
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/tailor-made.svg') }}"
+                            class="w-8 h-8 object-contain"></div>Tailor-made
                     tour
                 </button>
             </div>
@@ -225,7 +231,7 @@ if (session()->has('error_message')) {
                             <div>
                                 <input type="radio" id="solo" name="who" value="solo" class="radio-input">
                                 <label class="col" for="solo">
-                                    <img src="{{-- {{ asset('assets/front/img/solo.svg') }} --}}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/solo.svg') }}" class="h-12 lg:h-24">
                                     Solo
                                 </label>
                             </div>
@@ -233,7 +239,7 @@ if (session()->has('error_message')) {
                             <div>
                                 <input type="radio" id="couple" name="who" value="couple" class="radio-input">
                                 <label class="col" for="couple">
-                                    <img src="{{-- {{ asset('assets/front/img/couple.svg') }} --}}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/couple.svg') }}" class="h-12 lg:h-24">
                                     Couple
                                 </label>
                             </div>
@@ -241,7 +247,7 @@ if (session()->has('error_message')) {
                             <div>
                                 <input type="radio" id="family" name="who" value="family" class="radio-input">
                                 <label class="col" for="family">
-                                    <img src="{{-- {{ asset('assets/front/img/family.svg') }} --}}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/family.svg') }}" class="h-12 lg:h-24">
                                     Family
                                 </label>
                             </div>
@@ -249,7 +255,7 @@ if (session()->has('error_message')) {
                             <div>
                                 <input type="radio" id="group" name="who" value="group" class="radio-input">
                                 <label class="col" for="group">
-                                    <img src="{{-- {{ asset('assets/front/img/group.svg') }} --}}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/group.svg') }}" class="h-12 lg:h-24">
                                     Group
                                 </label>
                             </div>
@@ -310,7 +316,7 @@ if (session()->has('error_message')) {
                                 <input type="radio" id="exact-date" name="when" value="solo"
                                     class="radio-input">
                                 <label for="exact-date">
-                                    <img src="{{-- {{ asset('assets/front/img/exact-date.svg') }} --}}" class="h-12">
+                                    <img src="{{ asset('assets/front/img/exact-date.svg') }}" class="h-12">
                                     I have exact travel dates.
                                 </label>
                             </div>
@@ -319,7 +325,7 @@ if (session()->has('error_message')) {
                                 <input type="radio" id="approx-date" name="when" value="couple"
                                     class="radio-input">
                                 <label for="approx-date">
-                                    <img src="{{-- {{ asset('assets/front/img/approx-date.svg') }} --}}" class="h-12">
+                                    <img src="{{ asset('assets/front/img/approx-date.svg') }}" class="h-12">
                                     I have approximate travel dates.
                                 </label>
                             </div>
@@ -328,7 +334,7 @@ if (session()->has('error_message')) {
                                 <input type="radio" id="decide-later" name="when" value="family"
                                     class="radio-input">
                                 <label for="decide-later">
-                                    <img src="{{-- {{ asset('assets/front/img/decide-later.svg') }} --}}" class="h-12">
+                                    <img src="{{ asset('assets/front/img/decide-later.svg') }}" class="h-12">
                                     I will decide later.
                                 </label>
                             </div>
@@ -369,10 +375,11 @@ if (session()->has('error_message')) {
                         <legend class="mb-8 text-lg lg:text-3xl text-center">Choose your destination <span
                                 class="text-red">*</span></legend>
                         <div class="grid lg:grid-cols-4 gap-8 mb-8">
+                            @forelse ($destinations as $destination)
                             <div>
-                                <input type="checkbox" id="nepal" name="destination[]" value="nepal"
-                                    class="check-input">
-                                <label for="nepal">
+                                <input type="checkbox" id="{{ $destination->name }}" name="destination[]" value="{{ $destination->id }}"
+                                    class="check-input destination-checkbox">
+                                <label for="{{ $destination->name }}">
                                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
                                         aria-hidden="true" class="w-6 h-6">
                                         <rect x="0" y="0" width="20" height="20"
@@ -381,57 +388,12 @@ if (session()->has('error_message')) {
                                             d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
                                         </path>
                                     </svg>
-                                    Nepal
+                                    {{ $destination->name }}
                                 </label>
                             </div>
+                            @empty
 
-                            <div>
-                                <input type="checkbox" id="tibet" name="destination[]" value="tibet"
-                                    class="check-input">
-                                <label for="tibet">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20"
-                                            fill="white" stroke="currentColor" />
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
-                                        </path>
-                                    </svg>
-                                    Tibet
-                                </label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="bhutan" name="destination[]" value="bhutan"
-                                    class="check-input">
-                                <label for="bhutan">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20"
-                                            fill="white" stroke="currentColor" />
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
-                                        </path>
-                                    </svg>
-                                    Bhutan
-                                </label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="india" name="destination[]" value="india"
-                                    class="check-input">
-                                <label for="india">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20"
-                                            fill="white" stroke="currentColor" />
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
-                                        </path>
-                                    </svg>
-                                    India
-                                </label>
-                            </div>
+                            @endforelse
                         </div>
 
                         <div>
@@ -457,70 +419,7 @@ if (session()->has('error_message')) {
                             <legend class="text-lg text-center">Choose the trip(s) you are interested in <span
                                     class="text-red">*</span></legend>
                         </div>
-                        <div class="grid lg:grid-cols-4 gap-8 ">
-                            <div>
-                                <input type="checkbox" id="trip1" name="trip_interested[]" value="1"
-                                    class="check-input">
-                                <label for="trip1">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20"
-                                            fill="white" stroke="currentColor" />
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
-                                        </path>
-                                    </svg>
-                                    Everest Base Camp Trek
-                                </label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="trip2" name="trip_interested[]" value="2"
-                                    class="check-input">
-                                <label for="trip2">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20"
-                                            fill="white" stroke="currentColor" />
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
-                                        </path>
-                                    </svg>
-                                    Annapurna Base Camp Trek
-                                </label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="trip3" name="trip_interested[]" value="3"
-                                    class="check-input">
-                                <label for="trip3">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20"
-                                            fill="white" stroke="currentColor" />
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
-                                        </path>
-                                    </svg>
-                                    Mardi Himal Trek
-                                </label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="trip4" name="trip_interested[]" value="4"
-                                    class="check-input">
-                                <label for="trip4">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20"
-                                            fill="white" stroke="currentColor" />
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
-                                        </path>
-                                    </svg>
-                                    Langtang Valley Trek
-                                </label>
-                            </div>
+                        <div id="trips-block" class="grid lg:grid-cols-4 gap-8 ">
                         </div>
                         <div id="trip-interested-error"></div>
                     </fieldset>
@@ -541,7 +440,7 @@ if (session()->has('error_message')) {
                                 <input type="radio" id="basic" name="accomodation" value="solo"
                                     class="radio-input">
                                 <label class="col" for="basic">
-                                    <img src="{{-- {{ asset('assets/front/img/basic.svg') }} --}}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/basic.svg') }}" class="h-12 lg:h-24">
                                     Basic
                                 </label>
                             </div>
@@ -550,7 +449,7 @@ if (session()->has('error_message')) {
                                 <input type="radio" id="comfortable" name="accomodation" value="couple"
                                     class="radio-input">
                                 <label class="col" for="comfortable">
-                                    <img src="{{-- {{ asset('assets/front/img/comfortable.svg') }} --}}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/comfortable.svg') }}" class="h-12 lg:h-24">
                                     Comfortable
                                 </label>
                             </div>
@@ -568,7 +467,7 @@ if (session()->has('error_message')) {
                                 <input type="radio" id="camping" name="accomodation" value="family"
                                     class="radio-input">
                                 <label class="col" for="camping">
-                                    <img src="{{-- {{ asset('assets/front/img/camping.svg') }} --}}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/camping.svg') }}" class="h-12 lg:h-24">
                                     Camping
                                 </label>
                             </div>
@@ -577,7 +476,7 @@ if (session()->has('error_message')) {
                                 <input type="radio" id="self-booking" name="accomodation" value="family"
                                     class="radio-input">
                                 <label class="col" for="self-booking">
-                                    <img src="{{-- {{ asset('assets/front/img/self-booking.svg') }} --}}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/self-booking.svg') }}" class="h-12 lg:h-24">
                                     Self booking
                                 </label>
                             </div>
@@ -597,6 +496,11 @@ if (session()->has('error_message')) {
                         <legend class="mb-4 text-lg lg:text-3xl text-center">Budget range (per person) <span
                                 class="text-red">*</span></legend>
                         Budget range slider
+                        <div class="custom-slider-container">
+                            <div id="slider-range"></div>
+                            <input class="price-range-input" type="text" id="amount" name="amount" readonly
+                                style="border:0; color:black; font-size:16px;" value="$0 - $10000">
+                        </div>
                     </fieldset>
 
                     <fieldset>
@@ -608,7 +512,7 @@ if (session()->has('error_message')) {
                                 <input type="radio" id="flexible" name="flexible" value="solo"
                                     class="radio-input">
                                 <label for="flexible">
-                                    <img src="{{-- {{ asset('assets/front/img/flexible-budget.svg') }} --}}" class="h-12">
+                                    <img src="{{ asset('assets/front/img/flexible-budget.svg') }}" class="h-12">
                                     Yes, I am flexible. Plan the best trip for me.
                                 </label>
                             </div>
@@ -617,7 +521,7 @@ if (session()->has('error_message')) {
                                 <input type="radio" id="not-flexible" name="flexible" value="couple"
                                     class="radio-input">
                                 <label for="not-flexible">
-                                    <img src="{{-- {{ asset('assets/front/img/fixed-budget.svg') }} --}}" class="h-12">
+                                    <img src="{{ asset('assets/front/img/fixed-budget.svg') }}" class="h-12">
                                     No, that is my maximum and minimum budget.
                                 </label>
                             </div>
@@ -857,7 +761,7 @@ if (session()->has('error_message')) {
 @push('scripts')
     <script src="{{ asset('assets/vendors/jquery-validation/dist/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/jquery-validation/dist/additional-methods.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plan-my-trip-step-form.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script type="text/javascript">
         $(function() {
             var session_success_message = '{{ $session_success_message ?? '' }}';
@@ -887,6 +791,93 @@ if (session()->has('error_message')) {
             var form = $("#stepForm");
             var validator = form.validate();
             var formSteps = $("#stepForm>div");
+
+            $("#slider-range").slider({
+                classes: {
+                    "ui-slider": "custom-slider"
+                },
+                range: true,
+                min: 0,
+                max: 10000,
+                values: [0, 0],
+                change: function(event, ui) {
+                    performSearch();
+                },
+                slide: function(event, ui) {
+                    currentPage = 1;
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                }
+            });
+
+            $(".destination-checkbox").on('change', async function(event) {
+                const destination_id = $(this).val();
+                if ($(this).is(":checked")) {
+                    const trips = await getTripsByDestinationID(destination_id);
+                    let html = "";
+                    for (const trip of trips) {
+                        console.log(trip);
+                        html += `<div class="destination-trip" data-trip-id="${destination_id}">\
+                                <input type="checkbox" id="trip${trip.id}" name="trip_interested[]" value="${trip.id}"\
+                                    class="check-input">\
+                                <label for="trip${trip.id}">\
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"\
+                                        aria-hidden="true" class="w-6 h-6">\
+                                        <rect x="0" y="0" width="20" height="20"\
+                                            fill="white" stroke="currentColor" />\
+                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"\
+                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">\
+                                        </path>\
+                                    </svg>\
+                                    ${trip.name}\
+                                </label>\
+                            </div>`;
+                    }
+                    $("#trips-block").append(html);
+                } else {
+                    let removableTrips = $(".destination-trip");
+                    removableTrips.each(function(i, v) {
+                        if ($(v).data("trip-id") == destination_id) {
+                            $(v).remove();
+                        }
+                    });
+                }
+            });
+
+            $(".destination-checkbox:first").click();
+
+            function getTripsByDestinationID(destinationId) {
+                return new Promise((resolve, reject) => {
+                    let url = '{!! route("front.destinations.gettrips", ":ID") !!}';
+                    url = url.replace(":ID", destinationId);
+                    let result = [];
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        dataType: "json",
+                        async: "false",
+                        beforeSend: function(xhr) {
+                        },
+                        success: function(res) {
+                            if (res.success) {
+                                result = res.data;
+                            }
+                        }
+                    }).done(function(data) {
+                        resolve(result);
+                    });
+                });
+            }
+
+            const stepBlock = {
+                step1: "step-who",
+                step2: "step-when",
+                step3: "step-where",
+                step4: "step-accomodation",
+                step5: "step-budget",
+                step6: "step-tailor-made",
+                step7: "step-tailor-made"
+            }
+
             var validationRules = {
                 step1: {
                     who: {
@@ -967,9 +958,22 @@ if (session()->has('error_message')) {
                 }
             };
 
+            function selectStep(name) {
+                const step = $("#step-block>button");
+                const index = $(`#${name}`).index();
+                step.each(function(i, v) {
+                    const el = $(v);
+                    if (i <= index) {
+                        el.addClass('active');
+                    } else {
+                        el.removeClass('active');
+                    }
+                });
+            }
+
             function nextStep() {
                 var currentFieldset = formSteps.eq(currentStep - 1);
-                const validationGroup = validationRules["step" + 7];
+                const validationGroup = validationRules["step" + currentStep];
                 validator.destroy();
                 form.validate({
                     rules: validationGroup,
@@ -1002,6 +1006,7 @@ if (session()->has('error_message')) {
                     submitHandler: function(form) {
                         // console.log();
                         var formData = new FormData($(form)[0]);
+                        formData.append('amount', $("#slider-range").slider("values"));
                         // var formData = $(form).serialize();
                         $.ajax({
                             url: "{{ route('front.plantrip.create') }}",
@@ -1039,14 +1044,20 @@ if (session()->has('error_message')) {
                     // Display error messages for the current step
                     form.validate().focusInvalid();
                 }
+
+                const currentStepName = `step${currentStep}`;
+                selectStep(stepBlock[currentStepName]);
             }
 
             function prevStep() {
+
                 if (currentStep > 1) {
                     formSteps.eq(currentStep - 1).hide();
                     formSteps.eq(currentStep - 2).show();
                     currentStep--;
                 }
+                const currentStepName = `step${currentStep}`;
+                selectStep(stepBlock[currentStepName]);
             }
 
             formSteps.each(function(index) {
