@@ -517,7 +517,7 @@ if (session()->has('error_message')) {
                             <div>
                                 Not satisfied with this itinerary? <b class="text-primary">Make your own</b>.
                             </div>
-                            <a href="{{ route('front.plantrip') }}" class="btn btn-sm btn-primary">Plan My Trip</a>
+                            <a href="{{ route('front.plantrip.createfortrip', $trip->slug) }}" class="btn btn-sm btn-primary">Plan My Trip</a>
                         </div>
                     </div>
 

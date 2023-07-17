@@ -8,7 +8,7 @@ if (session()->has('error_message')) {
     $session_error_message = session('error_message');
     session()->forget('error_message');
 }
-$all_selected_destinations = [];
+$all_selected_destinations = "";
 
 if (isset($selected_destinations) && !empty($selected_destinations)) {
     $all_selected_destinations = $selected_destinations;
