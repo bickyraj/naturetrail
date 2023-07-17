@@ -24,7 +24,7 @@
                 <svg class="w-6 h-6 flex-shrink-0 mr-2">
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#adjustments" />
                 </svg>
-                Customize
+                Plan My Trip
             </a>
         </div>
         <div class="actions p-1">

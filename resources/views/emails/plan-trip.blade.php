@@ -31,8 +31,7 @@
     last name: {{ $body['last_name'] }} <br/>
     contact number: {{ $body['contact_number'] }} <br/>
     email: {{ $body['email'] }} <br/>
-    nationality: {{ $body['nationality'] }} <br/>
+    nationality: {{ $body['country'] }} <br/>
     contact method: {{ $body['contact_method'] }} <br/>
-    privacy policy: {{ $body['privacy_policy'] }} <br/>
 </body>
 </html>

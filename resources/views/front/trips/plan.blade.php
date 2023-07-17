@@ -685,10 +685,7 @@ if (session()->has('error_message')) {
                         </div>
                         <div class="form-group">
                             <label for="nationality">Nationality <span class="text-red">*</span></label>
-                            <select id="nationality" name="nationality" class="form-control">
-                                <option value="">--Select a Country--</option>
-                                <option value="1">Nepal</option>
-                            </select>
+                            @include('front.elements.country')
                         </div>
                         <fieldset>
                             <legend>Preferred method of contact<span class="text-red">*</span></legend>
@@ -946,7 +943,7 @@ if (session()->has('error_message')) {
                     email: {
                         required: true
                     },
-                    nationality: {
+                    country: {
                         required: true
                     },
                     contact_method: {
