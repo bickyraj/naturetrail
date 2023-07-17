@@ -30,4 +30,12 @@ class PlanTripController extends Controller
         });
 
     }
+
+    public function createForTrip($slug)
+    {
+        $trip = Trip::where('slug', $slug)->with('destination')->first();
+        $selected_destinations = $trip->destination->pluck('id');
+        $destinations = Destination::all();
+        return view('front.trips.plan', compact('trip', 'destinations', 'selected_destinations'));
+    }
 }

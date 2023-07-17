@@ -9,7 +9,7 @@
     who: {{ $body['who'] }} <br/>
     no of adults: {{ $body['no_of_adults'] }} <br/>
     no of children: {{ $body['no_of_children'] }} <br/>
-    when: {{ $body['when'] }} <br/>
+    when: <br/>
     arrival date: {{ $body['arrival_date'] }} <br/>
     departure date: {{ $body['departure_date'] }} <br/>
     month: {{ $body['month'] }} <br/>

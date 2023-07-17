@@ -19,7 +19,7 @@
         @endif
         <div class="mb-2 text-center">
             <a href="{{ route('front.trips.booking', $trip->slug) }}" class="mb-2 btn btn-accent w-full">Book Now</a>
-            <a href="{{ route('front.trips.customize', $trip->slug) }}" class="btn btn-accent">
+            <a href="{{ route('front.plantrip') }}" class="btn btn-accent">
 
                 <svg class="w-6 h-6 flex-shrink-0 mr-2">
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#adjustments" />

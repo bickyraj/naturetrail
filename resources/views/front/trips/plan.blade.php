@@ -8,6 +8,16 @@ if (session()->has('error_message')) {
     $session_error_message = session('error_message');
     session()->forget('error_message');
 }
+$all_selected_destinations = [];
+
+if (isset($selected_destinations) && !empty($selected_destinations)) {
+    $all_selected_destinations = $selected_destinations;
+}
+
+$selected_trip = "";
+if (isset($trip) && !empty($trip)) {
+    $selected_trip = $trip->id;
+}
 ?>
 
 @push('styles')
@@ -811,10 +821,10 @@ if (session()->has('error_message')) {
                 if ($(this).is(":checked")) {
                     const trips = await getTripsByDestinationID(destination_id);
                     let html = "";
+                    const selected_trip_id = "{!! $selected_trip !!}";
                     for (const trip of trips) {
-                        console.log(trip);
                         html += `<div class="destination-trip" data-trip-id="${destination_id}">\
-                                <input type="checkbox" id="trip${trip.id}" name="trip_interested[]" value="${trip.id}"\
+                                <input type="checkbox" id="trip${trip.id}" ${(trip.id == selected_trip_id)?"checked": ""} name="trip_interested[]" value="${trip.id}"\
                                     class="check-input">\
                                 <label for="trip${trip.id}">\
                                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"\
@@ -840,7 +850,22 @@ if (session()->has('error_message')) {
                 }
             });
 
-            $(".destination-checkbox:first").click();
+
+            initDestination();
+            function initDestination() {
+                const selected_destinations = "{!! $all_selected_destinations !!}";
+                if (selected_destinations.length > 0) {
+                    const boxes = $(".destination-checkbox");
+                    boxes.each(function(i, v) {
+                        const dest_id = $(v).val();
+                        if (selected_destinations.includes(dest_id)) {
+                           $(v).click();
+                        }
+                    });
+                } else {
+                    $(".destination-checkbox:first").click();
+                }
+            }
 
             function getTripsByDestinationID(destinationId) {
                 return new Promise((resolve, reject) => {
