@@ -14,9 +14,11 @@ if (isset($selected_destinations) && !empty($selected_destinations)) {
     $all_selected_destinations = $selected_destinations;
 }
 
+$selected_trip_id = "";
 $selected_trip = "";
 if (isset($trip) && !empty($trip)) {
-    $selected_trip = $trip->id;
+    $selected_trip_id = $trip->id;
+    $selected_trip = $trip;
 }
 ?>
 
@@ -432,6 +434,11 @@ if (isset($trip) && !empty($trip)) {
                         <div id="trips-block" class="grid lg:grid-cols-4 gap-8 ">
                         </div>
                         <div id="trip-interested-error"></div>
+                        <div class="flex items-center" style="justify-content: center; margin-top: 50px;">
+                            <div id="spinner-block"></div>
+                            <button id="show-more" class="btn btn-accent" style="display: none; margin-bottom: 50px;">show
+                                more</button>
+                        </div>
                     </fieldset>
 
                     <div class="flex justify-center gap-8">
@@ -794,6 +801,9 @@ if (isset($trip) && !empty($trip)) {
     </script>
     <script>
         $(function() {
+            let currentPage = 1;
+            let totalPage;
+            let nextPage;
             var currentStep = 1;
             var form = $("#stepForm");
             var validator = form.validate();
@@ -811,20 +821,23 @@ if (isset($trip) && !empty($trip)) {
                     performSearch();
                 },
                 slide: function(event, ui) {
-                    currentPage = 1;
                     $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
                 }
             });
 
             $(".destination-checkbox").on('change', async function(event) {
-                const destination_id = $(this).val();
-                if ($(this).is(":checked")) {
-                    const trips = await getTripsByDestinationID(destination_id);
-                    let html = "";
-                    const selected_trip_id = "{!! $selected_trip !!}";
+                currentPage = 1;
+                $("#trips-block").html("");
+                const trips = await getTripsByDestinationID();
+                addTripsToDiv(trips);
+            });
+
+            function addTripsToDiv(trips) {
+                let html = "";
+                    const selected_trip_id = "{!! $selected_trip_id !!}";
                     for (const trip of trips) {
-                        html += `<div class="destination-trip" data-trip-id="${destination_id}">\
-                                <input type="checkbox" id="trip${trip.id}" ${(trip.id == selected_trip_id)?"checked": ""} name="trip_interested[]" value="${trip.id}"\
+                        html += `<div class="destination-trip">\
+                                <input type="checkbox" id="trip${trip.id}" name="trip_interested[]" value="${trip.id}"\
                                     class="check-input">\
                                 <label for="trip${trip.id}">\
                                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"\
@@ -840,16 +853,7 @@ if (isset($trip) && !empty($trip)) {
                             </div>`;
                     }
                     $("#trips-block").append(html);
-                } else {
-                    let removableTrips = $(".destination-trip");
-                    removableTrips.each(function(i, v) {
-                        if ($(v).data("trip-id") == destination_id) {
-                            $(v).remove();
-                        }
-                    });
-                }
-            });
-
+            }
 
             initDestination();
             function initDestination() {
@@ -859,18 +863,53 @@ if (isset($trip) && !empty($trip)) {
                     boxes.each(function(i, v) {
                         const dest_id = $(v).val();
                         if (selected_destinations.includes(dest_id)) {
-                           $(v).click();
+                           $(v).prop('checked', true);
                         }
                     });
+                    // get the selected trips and make it selected
+                    const selected_trip_id = "{!! $selected_trip_id !!}";
+                    const trip = JSON.parse(`{!! $selected_trip !!}`);
+                    const html = `<div class="destination-trip">\
+                                <input type="checkbox" id="trip${trip.id}" checked name="trip_interested[]" value="${trip.id}"\
+                                    class="check-input">\
+                                <label for="trip${trip.id}">\
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"\
+                                        aria-hidden="true" class="w-6 h-6">\
+                                        <rect x="0" y="0" width="20" height="20"\
+                                            fill="white" stroke="currentColor" />\
+                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"\
+                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">\
+                                        </path>\
+                                    </svg>\
+                                    ${trip.name}\
+                                </label>\
+                            </div>`;
+                    $("#trips-block").append(html);
                 } else {
                     $(".destination-checkbox:first").click();
                 }
             }
 
-            function getTripsByDestinationID(destinationId) {
+            $("#show-more").on('click', async function(event) {
+                event.preventDefault();
+                if (nextPage) {
+                    currentPage++;
+                    const trips = await getTripsByDestinationID(currentPage);
+                    addTripsToDiv(trips);
+                    if (!nextPage) {
+                        $("#show-more").hide();
+                    }
+                }
+            });
+
+            function getTripsByDestinationID() {
                 return new Promise((resolve, reject) => {
-                    let url = '{!! route("front.destinations.gettrips", ":ID") !!}';
-                    url = url.replace(":ID", destinationId);
+                    // get all the selected destination
+                    const selectedDestinationArr = [];
+                    $('.destination-checkbox:checked').each(function() {
+                        selectedDestinationArr.push($(this).val());
+                    });
+                    let url = '{!! route("front.destinations.gettrips") !!}' + `?ids=${selectedDestinationArr.join(',')}&page=${currentPage}`;
                     let result = [];
                     $.ajax({
                         url: url,
@@ -878,13 +917,28 @@ if (isset($trip) && !empty($trip)) {
                         dataType: "json",
                         async: "false",
                         beforeSend: function(xhr) {
+                            var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
+                                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                                                                Loading Trips...\
+                                                                                </button>';
+                            $("#spinner-block").html(spinner);
+                            $("#show-more").hide();
                         },
                         success: function(res) {
                             if (res.success) {
-                                result = res.data;
+                                result = res.data.data;
+                                totalPage = res.data.total;
+                                currentPage = res.data.current_page;
+                                nextPage = (res.data.next_page_url)? true: false;
                             }
                         }
                     }).done(function(data) {
+                        $("#spinner-block").html('');
+                        if (!nextPage) {
+                            $("#show-more").hide();
+                        } else {
+                            $("#show-more").show();
+                        }
                         resolve(result);
                     });
                 });

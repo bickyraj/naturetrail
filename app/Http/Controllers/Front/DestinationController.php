@@ -94,11 +94,13 @@ class DestinationController extends Controller
 		return view('front.destinations.show', compact('destination', 'destinations', 'activities', 'seo'));
 	}
 
-    public function getTrips($id)
+    public function getTrips(Request $request)
     {
-        $trips = Trip::select('id', 'name', 'slug')->whereHas('destination', function($q) use ($id) {
-            $q->where('destination_id', $id);
-        })->get();
+        $ids = $request->ids;
+        // get list of ids
+        $trips = Trip::select('id', 'name', 'slug')->whereHas('destination', function($q) use ($ids) {
+            $q->whereIn('destination_id', explode(",", $ids));
+        })->latest()->paginate(16);
         return response()->json([
             'data' => $trips,
             'success' => true,
