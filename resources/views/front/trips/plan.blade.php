@@ -15,10 +15,10 @@ if (isset($selected_destinations) && !empty($selected_destinations)) {
 }
 
 $selected_trip_id = "";
-$selected_trip = "";
+$selected_trip_name = "";
 if (isset($trip) && !empty($trip)) {
     $selected_trip_id = $trip->id;
-    $selected_trip = $trip;
+    $selected_trip_name = $trip->name;
 }
 ?>
 
@@ -868,11 +868,11 @@ if (isset($trip) && !empty($trip)) {
                     });
                     // get the selected trips and make it selected
                     const selected_trip_id = "{!! $selected_trip_id !!}";
-                    const trip = JSON.parse(`{!! $selected_trip !!}`);
+                    const trip_name = "{!! $selected_trip_name !!}";
                     const html = `<div class="destination-trip">\
-                                <input type="checkbox" id="trip${trip.id}" checked name="trip_interested[]" value="${trip.id}"\
+                                <input type="checkbox" id="trip${selected_trip_id}" checked name="trip_interested[]" value="${selected_trip_id}"\
                                     class="check-input">\
-                                <label for="trip${trip.id}">\
+                                <label for="trip${selected_trip_id}">\
                                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"\
                                         aria-hidden="true" class="w-6 h-6">\
                                         <rect x="0" y="0" width="20" height="20"\
@@ -881,7 +881,7 @@ if (isset($trip) && !empty($trip)) {
                                             d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">\
                                         </path>\
                                     </svg>\
-                                    ${trip.name}\
+                                    ${trip_name}\
                                 </label>\
                             </div>`;
                     $("#trips-block").append(html);
