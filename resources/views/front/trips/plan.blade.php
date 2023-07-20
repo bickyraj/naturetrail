@@ -235,13 +235,13 @@ if (isset($trip) && !empty($trip)) {
             <form id="stepForm">
 
                 {{-- Who --}}
-                <div id="step1" class="grid gap-8 py-10">
+                <div id="step1" class="grid gap-8 py-10" x-data="{who: null}">
                     <fieldset>
                         <legend class="mb-8 text-lg lg:text-3xl text-center">How are you travelling? <span
                                 class="text-red">*</span></legend>
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
                             <div>
-                                <input type="radio" id="solo" name="who" value="solo" class="radio-input">
+                                <input type="radio" id="solo" x-model="who" name="who" value="solo" class="radio-input">
                                 <label class="col" for="solo">
                                     <img src="{{ asset('assets/front/img/solo.svg') }}" class="h-12 lg:h-24">
                                     Solo
@@ -249,7 +249,7 @@ if (isset($trip) && !empty($trip)) {
                             </div>
 
                             <div>
-                                <input type="radio" id="couple" name="who" value="couple" class="radio-input">
+                                <input type="radio" id="couple" x-model="who" name="who" value="couple" class="radio-input">
                                 <label class="col" for="couple">
                                     <img src="{{ asset('assets/front/img/couple.svg') }}" class="h-12 lg:h-24">
                                     Couple
@@ -257,7 +257,7 @@ if (isset($trip) && !empty($trip)) {
                             </div>
 
                             <div>
-                                <input type="radio" id="family" name="who" value="family" class="radio-input">
+                                <input type="radio" id="family" x-model="who" name="who" value="family" class="radio-input">
                                 <label class="col" for="family">
                                     <img src="{{ asset('assets/front/img/family.svg') }}" class="h-12 lg:h-24">
                                     Family
@@ -265,7 +265,7 @@ if (isset($trip) && !empty($trip)) {
                             </div>
 
                             <div>
-                                <input type="radio" id="group" name="who" value="group" class="radio-input">
+                                <input type="radio" id="group" x-model="who" name="who" value="group" class="radio-input">
                                 <label class="col" for="group">
                                     <img src="{{ asset('assets/front/img/group.svg') }}" class="h-12 lg:h-24">
                                     Group
@@ -275,7 +275,7 @@ if (isset($trip) && !empty($trip)) {
                         <div id="who-error"></div>
                     </fieldset>
 
-                    <div class="flex flex-wrap gap-8">
+                    <div class="flex flex-wrap gap-8" x-cloak x-show="who==='family' || who ==='group'">
                         <div class="form-group">
                             <label for="adults">
                                 No. of adults <span class="text-red">*</span>
@@ -313,19 +313,19 @@ if (isset($trip) && !empty($trip)) {
                         </div>
                     </div>
 
-                    <div class="flex justify-center gap-8">
+                    <div class="flex justify-center gap-8 p-10">
                         <button type="button" class="btn btn-accent next">Next</button>
                     </div>
                 </div>
 
                 {{-- When --}}
-                <div id="step2" class="grid gap-8 py-10">
+                <div id="step2" class="grid gap-8 py-10" x-data="{when: null}">
                     <fieldset>
                         <legend class="mb-8 text-lg lg:text-3xl text-center">Arrival date <span class="text-red">*</span>
                         </legend>
                         <div class="grid lg:grid-cols-3 gap-8">
                             <div>
-                                <input type="radio" id="exact-date" name="when" value="solo"
+                                <input type="radio" id="exact-date" x-model="when" name="when" value="exact"
                                     class="radio-input">
                                 <label for="exact-date">
                                     <img src="{{ asset('assets/front/img/exact-date.svg') }}" class="h-12">
@@ -334,7 +334,7 @@ if (isset($trip) && !empty($trip)) {
                             </div>
 
                             <div>
-                                <input type="radio" id="approx-date" name="when" value="couple"
+                                <input type="radio" id="approx-date" x-model="when" name="when" value="approx"
                                     class="radio-input">
                                 <label for="approx-date">
                                     <img src="{{ asset('assets/front/img/approx-date.svg') }}" class="h-12">
@@ -343,7 +343,7 @@ if (isset($trip) && !empty($trip)) {
                             </div>
 
                             <div>
-                                <input type="radio" id="decide-later" name="when" value="family"
+                                <input type="radio" id="decide-later" x-model="when" name="when" value="later"
                                     class="radio-input">
                                 <label for="decide-later">
                                     <img src="{{ asset('assets/front/img/decide-later.svg') }}" class="h-12">
@@ -355,19 +355,19 @@ if (isset($trip) && !empty($trip)) {
                     </fieldset>
 
                     <div class="flex flex-wrap gap-8">
-                        <div class="form-group">
+                        <div class="form-group" x-cloak x-show="when==='exact'">
                             <label for="arrival-date">
                                 Arrival date <span class="text-red">*</span>
                             </label>
                             <input type="date" name="arrival_date" id="arrival-date">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" x-cloak x-show="when ==='exact'">
                             <label for="departure-date">
                                 Departure date <span class="text-red">*</span>
                             </label>
                             <input type="date" name="departure_date" id="departure-date">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" x-cloak x-show="when ==='approx'">
                             <label for="approx-month">
                                 Select month <span class="text-red">*</span>
                             </label>
@@ -375,7 +375,7 @@ if (isset($trip) && !empty($trip)) {
                         </div>
                     </div>
 
-                    <div class="flex justify-center gap-8">
+                    <div class="flex justify-center gap-8 p-10">
                         <button type="button" class="btn btn-muted back">Back</button>
                         <button type="button" class="btn btn-accent next">Next</button>
                     </div>
@@ -441,7 +441,7 @@ if (isset($trip) && !empty($trip)) {
                         </div>
                     </fieldset>
 
-                    <div class="flex justify-center gap-8">
+                    <div class="flex justify-center gap-8 p-10">
                         <button type="button" class="btn btn-muted back">Back</button>
                         <button type="button" class="btn btn-accent next">Next</button>
                     </div>
@@ -501,7 +501,7 @@ if (isset($trip) && !empty($trip)) {
                         <div id="accomodation-error"></div>
                     </fieldset>
 
-                    <div class="flex justify-center gap-8">
+                    <div class="flex justify-center gap-8 p-10">
                         <button type="button" class="btn btn-muted back">Back</button>
                         <button type="button" class="btn btn-accent next">Next</button>
                     </div>
@@ -546,7 +546,7 @@ if (isset($trip) && !empty($trip)) {
                         <div id="flexible-error"></div>
                     </fieldset>
 
-                    <div class="flex justify-center gap-8">
+                    <div class="flex justify-center gap-8 p-10">
                         <button type="button" class="btn btn-muted back">Back</button>
                         <button type="button" class="btn btn-accent next">Next</button>
                     </div>
@@ -655,8 +655,7 @@ if (isset($trip) && !empty($trip)) {
                                 <option value="Club/Association">Club/Association</option>
                                 <option value="Facebook">Facebook</option>
                                 <option value="Friend Recommendation">Friend Recommendation</option>
-                                <option value="HGT Brochures/Flyers">HGT Brochures/Flyers</option>
-                                <option value="Instagram">Instagram</option>
+                               <option value="Instagram">Instagram</option>
                                 <option value="Internet Search">Internet Search</option>
                                 <option value="Lonely Planet Guides">Lonely Planet Guides</option>
                                 <option value="New York Times">New York Times</option>
@@ -673,7 +672,7 @@ if (isset($trip) && !empty($trip)) {
                         </div>
                     </div>
 
-                    <div class="flex justify-center gap-8">
+                    <div class="flex justify-center gap-8 p-10">
                         <button type="button" class="btn btn-muted back">Back</button>
                         <button type="button" class="btn btn-accent next">Next</button>
                     </div>
@@ -1093,15 +1092,15 @@ if (isset($trip) && !empty($trip)) {
                             contentType: false,
                             async: false,
                             success: function(res) {
-                                // if (res.status === 1) {
-                                //     // location.href = "{{ route('admin.blogs.index') }}";
-                                //     // form[0].reset();
-                                //     // $('#cropper-image').attr('src', '{{ asset('img/default.gif') }}');
-                                //     // if (cropped) {
-                                //     //   cropper.destroy();
-                                //     // }
-                                //     // $('#summernote-description').summernote('reset');
-                                // }
+                                if (res.status === 1) {
+                                    location.href = "{{ route('front.plantrip.thank-you') }}";
+                                    // form[0].reset();
+                                    // $('#cropper-image').attr('src', '{{ asset('img/default.gif') }}');
+                                    // if (cropped) {
+                                    //   cropper.destroy();
+                                    // }
+                                    // $('#summernote-description').summernote('reset');
+                                }
                             }
                         });
                     }

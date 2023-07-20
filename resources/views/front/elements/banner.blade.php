@@ -57,9 +57,9 @@
         
         <div class="absolute left-0 bottom-8 w-full">
             <div class="container">
-                <form action="">
+                <form action="{{ route('front.trips.search') }}" id="banner-search-from">
                     <div class="flex">
-                        <input class="px-10 py-2 text-gray-700 placeholder-gray-500 bg-white border-0 focus:placeholder-transparent lg:text-lg" type="text" name="q" placeholder="Search Keywords" aria-label="Search site" style="min-width:0;">
+                        <input id="banner-search" class="px-10 py-2 text-gray-700 placeholder-gray-500 bg-white border-0 focus:placeholder-transparent lg:text-lg" type="text" name="keyword" placeholder="Search Keywords" aria-label="Search site" style="min-width:0;">
                         <button class="px-4 py-3 lg:text-xl font-medium tracking-wider text-gray-100 rounded-md bg-accent hover:bg-blue-600 focus:bg-blue-600 focus:outline-none">
                             Search
                         </button>

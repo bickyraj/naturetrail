@@ -20,10 +20,10 @@
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#search"></use>
                 </svg>
             </button>
-            <div x-show="searchboxOpen" class="absolute right-0 top-full" @click.away="searchboxOpen=false">
-                <form action="">
+            <div x-show="searchboxOpen" x-cloak class="absolute left-1/2 w-full max-w-5xl top-full" @click.away="searchboxOpen=false" style="transform: translateX(-50%)">
+                <form action="{{ route('front.trips.search') }}" id="header-search-from">
                     <div class="flex border-2 rounded-lg bg-white">
-                        <input x-ref="searchInput" class="px-6 py-2 text-gray-700 placeholder-gray-500 bg-white border-0 focus:placeholder-transparent" type="text" name="email" placeholder="Search site" aria-label="Search site" style="box-shadow: none">
+                        <input id="header-search" x-ref="searchInput" class="flex-grow px-6 py-2 text-gray-700 placeholder-gray-500 bg-white border-0 focus:placeholder-transparent" type="text" name="keyword" placeholder="Search site" aria-label="Search site" style="box-shadow: none">
                         <button class="px-4 py-3 text-sm font-medium tracking-wider text-gray-100 rounded-md bg-primary hover:bg-blue-600">
                             <svg class="w-6 h-6 text-white">
                                 <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#arrownarrowright"></use>
@@ -75,5 +75,5 @@
 </header>{{-- Header --}}
 @push('scripts')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    {{--<script src="{{ asset('assets/js/search-trips.js') }}"></script>--}}
+    <script src="{{ asset('assets/js/search-trips.js') }}"></script>
 @endpush

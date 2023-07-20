@@ -103,8 +103,14 @@
 .autocomlete-highlight {
 	z-index: 9;
 	background-color: #f9f9f9;
-	width: 1225px !important;
+	width: 328px !important;
 	padding: 0px;
+}
+
+@media (min-width:992px){
+   .autocomlete-highlight {
+    	width: 420px !important;
+    } 
 }
 
 .autocomlete-highlight li {

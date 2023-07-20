@@ -335,8 +335,17 @@
     --}}{{-- Why Travel with us --}}
 
     <!-- Blog -->
-    <div class="py-20 blog">
+    <div class="py-20 blog bg-gray">
         <div class="container">
+            
+            <div class="flex justify-center">
+                <h2 class="relative px-10 mb-16 text-3xl font-bold text-center text-gray-600 uppercase lg:text-5xl font-display">
+                        Latest travel blog
+                    <div class="absolute left-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                    <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                </h2>
+            </div>
+            
             <div class="grid gap-2 lg:grid-cols-3 lg:gap-6">
                 @forelse ($blogs as $blog)
                     <a href="{{ route('front.blogs.show', $blog->slug) }}">
@@ -369,6 +378,10 @@
             </a>
         </div>
     </div><!-- Blog -->
+    
+    
+    
+    @include('front.elements.plan_trip')
 
    {{-- @include('front.elements.search_widget') --}}
 @endsection

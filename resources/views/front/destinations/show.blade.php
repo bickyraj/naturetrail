@@ -52,8 +52,8 @@
                         </ol>
                     </nav>
                 </div>
-
             </div>
+        </div>
     </section>
 
     <section class="pt-5">
@@ -172,7 +172,7 @@
                             <div class="custom-slider-container">
                                 <div id="duration-slider-range"></div>
                                 <input class="price-range-input" type="text" id="trip-days" readonly
-                                    style="border:0; color:black; font-size:16px;" value="1 days - 30 days">
+                                    style="border:0; color:black; font-size:16px;" value="1 days - 60 days">
                             </div>
                         </div>
                     </div>
@@ -183,7 +183,7 @@
                             <div class="custom-slider-container">
                                 <div id="slider-range"></div>
                                 <input class="price-range-input" type="text" id="amount" readonly
-                                    style="border:0; color:black; font-size:16px;" value="$0 - $100000">
+                                    style="border:0; color:black; font-size:16px;" value="$0 - $5000">
                             </div>
                         </div>
                     </div>
@@ -226,8 +226,8 @@
                     },
                     range: true,
                     min: 1,
-                    max: 30,
-                    values: [1, 30],
+                    max: 60,
+                    values: [1, 60],
                     change: function(event, ui) {
                         performSearch();
                     },
@@ -243,8 +243,8 @@
                     },
                     range: true,
                     min: 0,
-                    max: 100000,
-                    values: [0, 100000],
+                    max: 5000,
+                    values: [0, 5000],
                     change: function(event, ui) {
                         performSearch();
                     },
@@ -403,6 +403,12 @@
                     let newUrl = "{!! route('front.destinations.show', ':SLUG') !!}";
                     newUrl = newUrl.replace(":SLUG", slug);
                     window.history.pushState({}, "", newUrl + "?" + url_query);
+                    
+                    
+                    
+                    
+                    
+                    
                 });
             }
         });
