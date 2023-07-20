@@ -195,9 +195,9 @@
                 performSearch();
             });
 
-            $('html, body').animate({
-                scrollTop: $("#searchDiv").offset().top
-            }, "fast");
+            // $('html, body').animate({
+            //     scrollTop: $("#searchDiv").offset().top
+            // }, "fast");
 
             $("#show-more").on('click', async function(event) {
                 event.preventDefault();
