@@ -325,9 +325,9 @@
                         async: "false",
                         beforeSend: function(xhr) {
                             var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
-                                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
-                                                                                Loading Trips...\
-                                                                                </button>';
+                                                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                                                                    Loading Trips...\
+                                                                                    </button>';
                             $("#spinner-block").html(spinner);
                             $("#show-more").hide();
                         },
@@ -377,9 +377,9 @@
                     async: "false",
                     beforeSend: function(xhr) {
                         var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
-                                                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
-                                                                  Loading Trips...\
-                                                                </button>';
+                                                                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                                                      Loading Trips...\
+                                                                    </button>';
                         $("#spinner-block").html(spinner);
                         $("#show-more").hide();
                     },
@@ -403,12 +403,6 @@
                     let newUrl = "{!! route('front.destinations.show', ':SLUG') !!}";
                     newUrl = newUrl.replace(":SLUG", slug);
                     window.history.pushState({}, "", newUrl + "?" + url_query);
-
-
-
-
-
-
                 });
             }
         });
