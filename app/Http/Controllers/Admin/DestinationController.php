@@ -125,8 +125,14 @@ class DestinationController extends Controller
 
                 Storage::put($path . $destination['id'] . '/' . $imageName, (string) $image->encode('jpg', $image_quality));
 
+                // medium image
+                $image->fit(630, 375, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                Storage::put($path . $destination['id'] . '/medium_' . $imageName, (string) $image->encode('jpg', $image_quality));
+                
                 // thumbnail image
-                $image->fit(300, 100, function ($constraint) {
+                $image->fit(360, 270, function ($constraint) {
                     $constraint->aspectRatio();
                 });
 
@@ -273,6 +279,12 @@ class DestinationController extends Controller
                 $image->crop(round($cropped_data['width']), round($cropped_data['height']), round($cropped_data['x']), round($cropped_data['y']));
 
                 Storage::put($path . $destination['id'] . '/' . $imageName, (string) $image->encode('jpg', $image_quality));
+                
+                // medium image
+                $image->fit(630, 375, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                Storage::put($path . $destination['id'] . '/medium_' . $imageName, (string) $image->encode('jpg', $image_quality));
 
                 // thumbnail image
                 $image->fit(300, 100, function ($constraint) {
@@ -298,6 +310,12 @@ class DestinationController extends Controller
                     $imageNameUniqid = md5($destination->image_name . microtime()) . '.' . $ext;
 
                     Storage::put($path . $destination['id'] . '/' . $imageNameUniqid, (string) $image->encode('jpg', 100));
+                    
+                    // medium image
+                    $image->fit(630, 375, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    Storage::put($path . $destination['id'] . '/medium_' . $imageName, (string) $image->encode('jpg', $image_quality));
 
                     // thumbnail image
                     $image->fit(300, 100, function ($constraint) {

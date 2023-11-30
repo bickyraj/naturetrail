@@ -28,7 +28,9 @@ class PlanTripController extends Controller
             $message->from($request->email);
             $message->subject('Enquiry');
         });
-
+        return response()->json([
+            'status' => 1
+        ]);
     }
 
     public function createForTrip($slug)
@@ -37,5 +39,10 @@ class PlanTripController extends Controller
         $selected_destinations = $trip->destination()->get()->pluck('id');
         $destinations = Destination::all();
         return view('front.trips.plan', compact('trip', 'destinations', 'selected_destinations'));
+    }
+    
+    public function thankYou()
+    {
+        return view('front.trips.plan-thanks');
     }
 }

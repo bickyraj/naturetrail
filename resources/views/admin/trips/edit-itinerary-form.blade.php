@@ -18,7 +18,7 @@
                 <input type="hidden" id="input-trip-itinerary-id" name="itinerary_id" value="{{ $itinerary->id }}">
                 <input type="text" name="trip_itineraries[][name]" id="input-trip-name" value="{{ $itinerary->name }}" class="form-control mb-3 form-control-sm" placeholder="Title">
                 {{-- max_altitude --}}
-                <input type="text" id="input-trip-max-altitude" value="{{ $itinerary->max_altitude }}" class="form-control mb-3 form-control-sm" placeholder="Max altitude">
+                <input type="number" min="0" id="input-trip-max-altitude" value="{{ $itinerary->max_altitude }}" class="form-control mb-3 form-control-sm" placeholder="Max altitude">
                 {{-- accomodation --}}
                 <input type="text" id="input-trip-accomodation" value="{{ $itinerary->accomodation }}" class="form-control mb-3 form-control-sm" placeholder="Accomodation">
                 {{-- meals --}}

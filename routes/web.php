@@ -201,6 +201,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::post('description-images/save', 'DescriptionImageController@saveDescImage')->name('description.save.image');
     Route::post('description-images/delete', 'DescriptionImageController@deleteDescImage')->name('description.delete.image');
+
+    // REDIRECTION MANAGER ROUTES
+    Route::get('redirection-managers', 'UrlRedirectController@index')->name('redirection-managers');
+    Route::get('redirection-managers/edit/{id}', 'UrlRedirectController@edit')->name('redirection-managers.edit');
+    Route::post('redirection-managers/update', 'UrlRedirectController@update')->name('redirection-managers.update');
+    Route::get('redirection-managers/add', 'UrlRedirectController@create')->name('redirection-managers.add');
+    Route::get('redirection-managers/list', 'UrlRedirectController@faqList');
+    Route::post('redirection-managers', 'UrlRedirectController@store')->name('redirection-managers.store');
+    Route::delete('redirection-managers/delete/{id}', 'UrlRedirectController@destroy')->name('redirection-managers.delete');
 });
 
 // front routes
@@ -224,7 +233,7 @@ Route::post('/payment', 'Front\HomeController@storePayment')->name('front.store_
 Route::post('/custom-payment', 'Front\HomeController@storePaymentFromFooter')->name('front.store_payment_from_footer');
 Route::post('/payment/callback', 'Front\HomeController@callbackPayment')->name('front.home.payment.callback');
 Route::get('/redeem-payment/{id}', 'Front\HomeController@redeemPayment')->name('front.redeem_payment');
-Route::get('/trips/filter/{region?}/{destination_id?}/{activity_id?}/{srotBy?}', 'Front\TripController@filter')->name('front.trips.filter');
+Route::post('/trips/filter/{region?}/{destination_id?}/{activity_id?}/{srotBy?}', 'Front\TripController@filter')->name('front.trips.filter');
 
 Route::get('/hbl', 'Front\HomeController@index')->name('hbl.index');
 Route::post('/hbl/payment-request', 'Front\HomeController@paymentRequest')->name('hbl.paymentrequest');
@@ -277,5 +286,6 @@ Route::get('/teams', 'Front\TeamController@index')->name('front.teams.index');
 Route::get('/teams/{slug}', 'Front\TeamController@show')->name('front.teams.show');
 Route::get('plan-my-trip', 'Front\PlanTripController@index')->name('front.plantrip');
 Route::post('plan-my-trip/create', 'Front\PlanTripController@store')->name('front.plantrip.create');
+Route::get('plan-my-trip/thank-you', 'Front\PlanTripController@thankYou')->name('front.plantrip.thank-you');
 Route::get('plan-my-trip/{slug}', 'Front\PlanTripController@createForTrip')->name('front.plantrip.createfortrip');
 Route::get('{slug}', 'Front\PageController@show')->name('front.pages.show');

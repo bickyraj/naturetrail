@@ -90,7 +90,7 @@ class DestinationController extends Controller
 		$destinations = \App\Destination::select('id', 'name')->get();
 		$activities = \App\Activity::whereHas('destinations', function($q) use ($destination) {
             $q->where('destination_id', $destination->id);
-        })->get();
+        })->take(8)->get();
 		return view('front.destinations.show', compact('destination', 'destinations', 'activities', 'seo'));
 	}
 
@@ -98,9 +98,21 @@ class DestinationController extends Controller
     {
         $ids = $request->ids;
         // get list of ids
-        $trips = Trip::select('id', 'name', 'slug')->whereHas('destination', function($q) use ($ids) {
-            $q->whereIn('destination_id', explode(",", $ids));
-        })->latest()->paginate(16);
+        
+        $keyword = $request->keyword;
+        
+        if (isset($keyword) && !empty($keyword)) {
+            $trips = Trip::select('id', 'name', 'slug')->where(
+                ['name', 'LIKE', "%" . $keyword . "%"]
+            )->whereHas('destination', function($q) use ($ids) {
+                
+                $q->whereIn('destination_id', explode(",", $ids));
+            })->paginate(16);
+        } else {
+            $trips = Trip::select('id', 'name', 'slug')->whereHas('destination', function($q) use ($ids) {
+                $q->whereIn('destination_id', explode(",", $ids));
+            })->paginate(16);
+        }
         return response()->json([
             'data' => $trips,
             'success' => true,

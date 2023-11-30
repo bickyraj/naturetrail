@@ -18,6 +18,14 @@ class Activity extends Model
 	    }
         return asset('assets/front/') . config('constants.default_hero_banner');
     }
+    public function getmediumImageUrlAttribute()
+	{
+	    if (isset($this->attributes['image_name']) && !empty($this->attributes['image_name'])) {
+	        $image_url = url('/storage/activities');
+	    	return $image_url . '/' . $this->attributes['id'] . '/medium_' . $this->attributes['image_name'];
+	    }
+	    return config('constants.default_image_url');
+	}
 
 	public function getThumbImageUrlAttribute()
 	{

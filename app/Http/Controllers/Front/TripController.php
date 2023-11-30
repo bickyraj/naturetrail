@@ -38,9 +38,17 @@ class TripController extends Controller
             }
         ])->first();
 
+        $canMakeChart = true;
+        $elevations = $trip->trip_itineraries->map(function ($day) use (&$canMakeChart) {
+            if (!is_numeric($day->max_altitude)) {
+                $canMakeChart = false;
+            }
+            return $day->max_altitude;
+        })->toArray();
+
         $why_choose_us = \App\WhyChoose::select('id', 'title')->latest()->get();
         $blogs = \App\Blog::select('id', 'name', 'slug')->latest()->limit(5)->get();
-        return view('front.trips.show', compact('trip', 'blogs', 'why_choose_us'));
+        return view('front.trips.show', compact('trip', 'blogs', 'canMakeChart', 'elevations', 'why_choose_us'));
     }
 
     public function booking($slug)
@@ -165,7 +173,6 @@ class TripController extends Controller
                         }
                     });
             });
-
         }
 
         if (isset($region_id) && !empty($region_id)) {
@@ -260,6 +267,7 @@ class TripController extends Controller
 
         $trip = Trip::select('id', 'name', 'slug')->find($request->id);
         $departure = \App\TripDeparture::find($request->departure_id);
+
 
         $request->merge([
             'trip_name' => $trip->name,

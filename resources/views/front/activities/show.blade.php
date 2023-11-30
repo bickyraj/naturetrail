@@ -61,10 +61,8 @@
                 @if (strip_tags($activity->description) != '')
                     <div class="mb-4 relative" x-data="{ expanded: false }">
                         <div x-show="expanded" class="pb-20" x-collapse.min.200px><?= $activity->description ?></div>
-                        <div class="flex justify-center absolute bottom-0 w-full py-4"
-                            style="background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));"><button
-                                class="text-xs bg-light rounded-full px-4 py-2" x-on:click="expanded=!expanded"
-                                x-text="expanded?'Show less':'Show more'">Show more</button></div>
+                        <div class="flex justify-center absolute bottom-0 w-full py-4" style="background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));"><button
+                                class="text-xs bg-light rounded-full px-4 py-2" x-on:click="expanded=!expanded" x-text="expanded?'Show less':'Show more'">Show more</button></div>
                     </div>
                 @endif
             </div>
@@ -79,43 +77,40 @@
                             <div>
                                 {{-- <p class="mb-2 text-2xl font-handwriting text-primary">Choose your region</p> --}}
                                 <div class="flex">
-                                    <h2
-                                        class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
+                                    <h2 class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
                                         Things To Do
                                         <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
                                     </h2>
                                 </div>
                             </div>
-                            <div class="flex gap-10 things-to-do-slider-controls">
-                                <button>
-                                    <svg class="w-6 h-6 text-accent">
-                                        <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
-                                    </svg>
-                                </button>
-                                <button>
-                                    <svg class="w-6 h-6 text-accent">
-                                        <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
-                                    </svg>
-                                </button>
-                            </div>
+                            {{-- <div class="flex gap-10 things-to-do-slider-controls">
+                                    <button>
+                                        <svg class="w-6 h-6 text-accent">
+                                            <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
+                                        </svg>
+                                    </button>
+                                    <button>
+                                        <svg class="w-6 h-6 text-accent">
+                                            <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
+                                        </svg>
+                                    </button>
+                                </div> --}}
                         </div>
-                        <div class="things-to-do-slider">
+                        <!--<div class="things-to-do-slider">-->
+                        <div class="flex flex-wrap justify-center gap-10">
                             @forelse ($sub_activities as $sub_activity)
-                                <div>
-                                    <a href="{{ $sub_activity->link }}" class="activity">
-                                        <div class="relative">
-                                            <img src="{{ $sub_activity->imageUrl }}" alt="{{ $sub_activity->name }}"
-                                                class="block w-full">
-                                            <div class="text absolute text-white px-2 py-4">
-                                                <h2 class="font-display uppercase">{{ $sub_activity->name }}</h2>
-                                                <div class="tours">
-                                                    <span class="fs-xl bold">{{ $sub_activity->trips->count() }}</span>
-                                                    <span class="fs-sm">tours</span>
-                                                </div>
+                                <a href="{{ $sub_activity->link }}" class="activity">
+                                    <div class="relative">
+                                        <img src="{{ $sub_activity->imageUrl }}" alt="{{ $sub_activity->name }}" class="block w-full">
+                                        <div class="text absolute text-white px-2 py-4">
+                                            <h2 class="font-display uppercase">{{ $sub_activity->name }}</h2>
+                                            <div class="tours">
+                                                <span class="fs-xl bold">{{ $sub_activity->trips->count() }}</span>
+                                                <span class="fs-sm">tours</span>
                                             </div>
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
                             @empty
                             @endforelse
                         </div>
@@ -134,14 +129,13 @@
                             <div>
                                 {{-- <p class="mb-2 text-2xl font-handwriting text-primary">Choose your region</p> --}}
                                 <div class="flex">
-                                    <h2
-                                        class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
+                                    <h2 class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
                                         Find Climbing & Expeditions By Level
                                         <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
                                     </h2>
                                 </div>
                             </div>
-                            <div class="flex gap-10 sub-activities-slider-controls">
+                            {{-- <div class="flex gap-10 sub-activities-slider-controls">
                                 <button>
                                     <svg class="w-6 h-6 text-accent">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
@@ -152,25 +146,23 @@
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
                                     </svg>
                                 </button>
-                            </div>
+                            </div> --}}
                         </div>
-                        <div class="sub-activities-slider">
+                        <!--<div class="sub-activities-slider">-->
+                        <div class="flex flex-wrap justify-center gap-10">
                             @forelse ($sub_activities as $sub_activity)
-                                <div>
-                                    <a href="{{ $sub_activity->link }}" class="activity">
-                                        <div class="relative">
-                                            <img src="{{ $sub_activity->imageUrl }}" alt="{{ $sub_activity->name }}"
-                                                class="block w-full">
-                                            <div class="text absolute text-white px-2 py-4">
-                                                <h2 class="font-display uppercase">{{ $sub_activity->name }}</h2>
-                                                <div class="tours">
-                                                    <span class="fs-xl bold">{{ $sub_activity->trips->count() }}</span>
-                                                    <span class="fs-sm">tours</span>
-                                                </div>
+                                <a href="{{ $sub_activity->link }}" class="activity">
+                                    <div class="relative">
+                                        <img src="{{ $sub_activity->imageUrl }}" alt="{{ $sub_activity->name }}" class="block w-full">
+                                        <div class="text absolute text-white px-2 py-4">
+                                            <h2 class="font-display uppercase">{{ $sub_activity->name }}</h2>
+                                            <div class="tours">
+                                                <span class="fs-xl bold">{{ $sub_activity->trips->count() }}</span>
+                                                <span class="fs-sm">tours</span>
                                             </div>
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
                             @empty
                             @endforelse
                         </div>
@@ -182,7 +174,7 @@
 
         {{-- Climbing & Expeditions only --}}
         @if ($activity->id == 3)
-            <div class="py-20 bg-gradient">
+            <div class="py-20 bg-white">
                 <div class="container">
                     <div class="grid lg:grid-cols-2 gap-10">
                         <div class="flex flex-col justify-center w-full h-full">
@@ -212,7 +204,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center w-full h-full">
-                            <img src="{{ asset('assets/front/img/mountaineering-gear.png') }}">
+                            <img src="{{ asset('assets/front/img/mountaineering-gear.webp') }}" alt="Various gears necessary for mountaineering">
                         </div>
                     </div>
                 </div>
@@ -223,20 +215,19 @@
         {{-- Find Climbing & Expeditions By Regions --}}
         @if ($activity->id == 3)
             @if (isset($find_climbing_expedition_regions) && !empty($find_climbing_expedition_regions))
-                <div class="py-10 activities bg-white">
+                <div class="py-10 activities bg-gray">
                     <div class="container">
                         <div class="items-center justify-between gap-20 mb-4 lg:flex">
                             <div>
                                 {{-- <p class="mb-2 text-2xl font-handwriting text-primary">Choose your region</p> --}}
                                 <div class="flex">
-                                    <h2
-                                        class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
+                                    <h2 class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
                                         Find Climbing & Expeditions By Regions
                                         <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
                                     </h2>
                                 </div>
                             </div>
-                            <div class="flex gap-10 expedition-slider-controls">
+                            {{-- <div class="flex gap-10 expedition-slider-controls">
                                 <button>
                                     <svg class="w-6 h-6 text-accent">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
@@ -247,26 +238,23 @@
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
                                     </svg>
                                 </button>
-                            </div>
+                            </div> --}}
                         </div>
-                        <div class="expedition-slider">
+                        <!--<div class="expedition-slider">-->
+                        <div class="flex flex-wrap justify-center gap-10">
                             @forelse ($find_climbing_expedition_regions as $expedition_region)
-                                <div>
-                                    <a href="{{ $expedition_region->link }}" class="activity">
-                                        <div class="relative">
-                                            <img src="{{ $expedition_region->imageUrl }}"
-                                                alt="{{ $expedition_region->name }}" class="block w-full">
-                                            <div class="text absolute text-white px-2 py-4">
-                                                <h2 class="font-display uppercase">{{ $expedition_region->name }}</h2>
-                                                <div class="tours">
-                                                    <span
-                                                        class="fs-xl bold">{{ $expedition_region->trips->count() }}</span>
-                                                    <span class="fs-sm">tours</span>
-                                                </div>
+                                <a href="{{ $expedition_region->link }}" class="activity">
+                                    <div class="relative">
+                                        <img src="{{ $expedition_region->imageUrl }}" alt="{{ $expedition_region->name }}" class="block w-full">
+                                        <div class="text absolute text-white px-2 py-4">
+                                            <h2 class="font-display uppercase">{{ $expedition_region->name }}</h2>
+                                            <div class="tours">
+                                                <span class="fs-xl bold">{{ $expedition_region->trips->count() }}</span>
+                                                <span class="fs-sm">tours</span>
                                             </div>
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
                             @empty
                             @endforelse
                         </div>
@@ -284,8 +272,7 @@
                         <div>
                             {{-- <p class="mb-2 text-2xl font-handwriting text-primary">Choose your region</p> --}}
                             <div class="flex">
-                                <h2
-                                    class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
+                                <h2 class="relative pr-10 mb-8 text-3xl font-bold text-gray-600 uppercase lg:text-5xl font-display">
                                     Regions
                                     <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
                                 </h2>
@@ -304,13 +291,13 @@
                             </button>
                         </div>
                     </div>
-                    <div class="activities-slider">
+                    {{-- <div class="activities-slider"> --}}
+                    <div class="grid grid-cols-2 gap-8 lg:grid-cols-4">
                         @forelse ($regions as $region)
                             <div>
                                 <a href="{{ $region->link }}" class="activity">
                                     <div class="relative">
-                                        <img src="{{ $region->imageUrl }}" alt="{{ $region->name }}"
-                                            class="block w-full">
+                                        <img src="{{ $region->imageUrl }}" alt="{{ $region->name }}" class="block w-full">
                                         <div class="text absolute text-white px-2 py-4">
                                             <h2 class="font-display uppercase">{{ $region->name }}</h2>
                                             <div class="tours">
@@ -336,8 +323,7 @@
                     <div class="col-lg-2 col-md-2 col-sm-2">
                         <div class="form-group">
                             <label for="">Keywords</label>
-                            <input type="text" id="keyword" class="form-control" value="{{ $get_keyword ?? '' }}"
-                                name="keyword" />
+                            <input type="text" id="keyword" class="form-control" value="{{ $get_keyword ?? '' }}" name="keyword" />
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -347,8 +333,7 @@
                                 <option value="" selected>All Destinations</option>
                                 @if ($destinations)
                                     @foreach ($destinations as $destination)
-                                        <option value="{{ $destination->id }}"
-                                            {{ isset($get_destination_id) && $get_destination_id == $destination->id ? 'selected' : '' }}>
+                                        <option value="{{ $destination->id }}" {{ isset($get_destination_id) && $get_destination_id == $destination->id ? 'selected' : '' }}>
                                             {{ $destination->name }}</option>
                                     @endforeach
                                 @endif
@@ -356,24 +341,20 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="form-group"
-                            style="border-left: 1px solid #ededed; padding-left: 19px; margin-left: 12px;">
+                        <div class="form-group" style="border-left: 1px solid #ededed; padding-left: 19px; margin-left: 12px;">
                             <label for="">Duration</label>
                             <div class="custom-slider-container">
                                 <div id="duration-slider-range"></div>
-                                <input class="price-range-input" type="text" id="trip-days" readonly
-                                    style="border:0; color:black; font-size:16px;" value="1 days - 60 days">
+                                <input class="price-range-input" type="text" id="trip-days" readonly style="border:0; color:black; font-size:16px;" value="1 days - 60 days">
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="form-group"
-                            style="border-left: 1px solid #ededed; padding-left: 19px; margin-left: 12px;">
+                        <div class="form-group" style="border-left: 1px solid #ededed; padding-left: 19px; margin-left: 12px;">
                             <label for="">Price Range</label>
                             <div class="custom-slider-container">
                                 <div id="slider-range"></div>
-                                <input class="price-range-input" type="text" id="amount" readonly
-                                    style="border:0; color:black; font-size:16px;" value="$0 - $5000">
+                                <input class="price-range-input" type="text" id="amount" readonly style="border:0; color:black; font-size:16px;" value="$0 - $65000">
                             </div>
                         </div>
                     </div>
@@ -433,8 +414,8 @@
                     },
                     range: true,
                     min: 0,
-                    max: 5000,
-                    values: [0, 5000],
+                    max: 65000,
+                    values: [0, 65000],
                     change: function(event, ui) {
                         performSearch();
                     },
@@ -515,9 +496,9 @@
                         async: "false",
                         beforeSend: function(xhr) {
                             var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
-                                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
-                                                                                Loading Trips...\
-                                                                                </button>';
+                                                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                                                                    Loading Trips...\
+                                                                                    </button>';
                             $("#spinner-block").html(spinner);
                             $("#show-more").hide();
                         },
@@ -567,9 +548,9 @@
                     async: "false",
                     beforeSend: function(xhr) {
                         var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
-                                                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
-                                                                  Loading Trips...\
-                                                                </button>';
+                                                                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                                                      Loading Trips...\
+                                                                    </button>';
                         $("#spinner-block").html(spinner);
                         $("#show-more").hide();
                     },
@@ -618,61 +599,61 @@
             });
         }
 
-        if (document.getElementsByClassName('sub-activities-slider').length > 0) {
-            const subactivitiesSlider = tns({
-                container: '.sub-activities-slider',
-                nav: false,
-                controlsContainer: '.sub-activities-slider-controls',
-                items: 2,
-                gutter: 16,
-                rewind: true,
-                responsive: {
-                    768: {
-                        items: 3
-                    },
-                    992: {
-                        items: 5
-                    }
-                }
-            });
-        }
+        // if (document.getElementsByClassName('sub-activities-slider').length > 0) {
+        //     const subactivitiesSlider = tns({
+        //         container: '.sub-activities-slider',
+        //         nav: false,
+        //         controlsContainer: '.sub-activities-slider-controls',
+        //         items: 2,
+        //         gutter: 16,
+        //         rewind: true,
+        //         responsive: {
+        //             768: {
+        //                 items: 3
+        //             },
+        //             992: {
+        //                 items: 5
+        //             }
+        //         }
+        //     });
+        // }
 
-        if (document.getElementsByClassName('expedition-slider').length > 0) {
-            const subactivitiesSlider = tns({
-                container: '.expedition-slider',
-                nav: false,
-                controlsContainer: '.expedition-slider-controls',
-                items: 2,
-                gutter: 16,
-                rewind: true,
-                responsive: {
-                    768: {
-                        items: 3
-                    },
-                    992: {
-                        items: 5
-                    }
-                }
-            });
-        }
+        // if (document.getElementsByClassName('expedition-slider').length > 0) {
+        //     const subactivitiesSlider = tns({
+        //         container: '.expedition-slider',
+        //         nav: false,
+        //         controlsContainer: '.expedition-slider-controls',
+        //         items: 2,
+        //         gutter: 16,
+        //         rewind: true,
+        //         responsive: {
+        //             768: {
+        //                 items: 3
+        //             },
+        //             992: {
+        //                 items: 5
+        //             }
+        //         }
+        //     });
+        // }
 
-        if (document.getElementsByClassName('things-to-do-slider').length > 0) {
-            const thingsToDoSlider = tns({
-                container: '.things-to-do-slider',
-                nav: false,
-                controlsContainer: '.things-to-do-slider-controls',
-                items: 2,
-                gutter: 16,
-                rewind: true,
-                responsive: {
-                    768: {
-                        items: 3
-                    },
-                    992: {
-                        items: 5
-                    }
-                }
-            });
-        }
+        // if (document.getElementsByClassName('things-to-do-slider').length > 0) {
+        //     const thingsToDoSlider = tns({
+        //         container: '.things-to-do-slider',
+        //         nav: false,
+        //         controlsContainer: '.things-to-do-slider-controls',
+        //         items: 2,
+        //         gutter: 16,
+        //         rewind: true,
+        //         responsive: {
+        //             768: {
+        //                 items: 3
+        //             },
+        //             992: {
+        //                 items: 5
+        //             }
+        //         }
+        //     });
+        // }
     </script>
 @endpush

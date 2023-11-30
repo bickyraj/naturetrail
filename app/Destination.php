@@ -26,6 +26,15 @@ class Destination extends Model
         }
 	    return asset('assets/front/') . config('constants.default_hero_banner');
     }
+    
+    public function getMediumImageUrlAttribute()
+    {
+        if (isset($this->attributes['image_name']) && !empty($this->attributes['image_name'])) {
+            $image_url = url('/storage/destinations');
+        	return $image_url . '/' . $this->attributes['id'] . '/medium_' . $this->attributes['image_name'];
+        }
+	    return asset('assets/front/') . config('constants.default_hero_banner');
+    }
 
     public function getTourGuideImageUrlAttribute()
     {

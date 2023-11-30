@@ -2,23 +2,23 @@
     if (request()->has('destination_id')) {
         $get_destination_id = request('destination_id');
     }
-
+    
     if (request()->has('keyword')) {
         $get_keyword = request('keyword');
     }
-
+    
     if (request()->has('activity_id')) {
         $get_activity_id = request('activity_id');
     }
-
+    
     if (request()->has('price')) {
         $get_price = request('price');
     }
-
+    
     if (request()->has('duration')) {
         $get_duration = request('duration');
     }
-
+    
     if (request()->has('page')) {
         $get_page = request('page');
     }
@@ -47,84 +47,91 @@
         </div>
     </section>
 
-    <section class="pt-5">
+    <section class="py-20">
         <div class="container">
-            <div class="mb-4" id="searchDiv">
-                <div class="grid lg:grid-cols-5 gap-2">
-                    <div class="col-lg-2 col-md-2 col-sm-2">
+            @if (strip_tags($region->description) != '')
+                <div class="tour-details-section mb-4 relative" x-data="{ expanded: false, showControls: true }" x-init="if ($refs.description.scrollHeight < 427) {
+                    expanded = true;
+                    showControls = false
+                }">
+                    <div x-show="expanded" :class="{ 'pb-20': showControls }" x-collapse.min.427px x-ref="description">
+                        <div class="mx-auto prose text-center">{!! $region->description !!}</div>
+                    </div>
+                    <div class="flex justify-center absolute bottom-0 w-full py-4" style="background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));" x-show="showControls"><button
+                            class="text-xs bg-light rounded-full px-4 py-2" x-on:click="expanded=!expanded" x-text="expanded?'Show less':'Show more'">Show more</button></div>
+                </div>
+            @endif
+        </div>
+    </section>
+
+    <section>
+        <div class="pt-5 bg-light border-b">
+            <div class="container">
+                <div class="mb-4" id="searchDiv">
+                    <div class="grid lg:grid-cols-5 gap-6">
                         <div class="form-group">
                             <label for="">Keywords</label>
-                            <input type="text" id="keyword" class="form-control" value="{{ $get_keyword ?? '' }}"
-                                name="keyword" />
+                            <input type="text" id="keyword" class="form-control" value="{{ $get_keyword ?? '' }}" name="keyword" />
                         </div>
-                    </div>
-                    <div class="col-lg-4">
                         <div class="form-group">
                             <label for="">Destinations</label>
                             <select name="" id="select-destination" class="custom-select">
                                 <option value="" selected>All Destinations</option>
                                 @if ($destinations)
                                     @foreach ($destinations as $destination)
-                                        <option value="{{ $destination->id }}"
-                                            {{ isset($get_destination_id) && $get_destination_id == $destination->id ? 'selected' : '' }}>
+                                        <option value="{{ $destination->id }}" {{ isset($get_destination_id) && $get_destination_id == $destination->id ? 'selected' : '' }}>
                                             {{ $destination->name }}</option>
                                     @endforeach
                                 @endif
                             </select>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
                         <div class="form-group">
                             <label for="">Activities</label>
                             <select name="" id="select-activity" class="custom-select">
                                 <option value="" selected>All activities</option>
                                 @if ($activities)
                                     @foreach ($activities as $activity)
-                                        <option value="{{ $activity->id }}"
-                                            {{ isset($get_activity_id) && $get_activity_id == $activity->id ? 'selected' : '' }}>
+                                        <option value="{{ $activity->id }}" {{ isset($get_activity_id) && $get_activity_id == $activity->id ? 'selected' : '' }}>
                                             {{ $activity->name }}</option>
                                     @endforeach
                                 @endif
                             </select>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group"
-                            style="border-left: 1px solid #ededed; padding-left: 19px; margin-left: 12px;">
+                        <div class="form-group" style="border-left: 1px solid #ededed; padding-left: 19px; margin-left: 12px;">
                             <label for="">Duration</label>
                             <div class="custom-slider-container">
                                 <div id="duration-slider-range"></div>
-                                <input class="price-range-input" type="text" id="trip-days" readonly
-                                    style="border:0; color:black; font-size:16px;" value="1 days - 30 days">
+                                <input class="price-range-input bg-transparent w-full text-center mt-2" type="text" id="trip-days" readonly style="border:0; color:black; font-size:16px;"
+                                    value="1 days - 30 days">
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group"
-                            style="border-left: 1px solid #ededed; padding-left: 19px; margin-left: 12px;">
+                        <div class="form-group" style="border-left: 1px solid #ededed; padding-left: 19px; margin-left: 12px;">
                             <label for="">Price Range</label>
                             <div class="custom-slider-container">
                                 <div id="slider-range"></div>
-                                <input class="price-range-input" type="text" id="amount" readonly
-                                    style="border:0; color:black; font-size:16px;" value="$0 - $100000">
+                                <input class="price-range-input bg-transparent w-full text-center mt-2" type="text" id="amount" readonly style="border:0; color:black; font-size:16px;"
+                                    value="$0 - $100000">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="bg-light">
-            <div class="container py-4">
-                <div id="tirps-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-8">
+        <div class="bg-gray">
+            <div class="container py-20">
+                <div id="tirps-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-10">
                 </div>
             </div>
-            <div class="flex items-center" style="justify-content: center; margin-top: 50px;">
+            <div class="flex items-center justify-center">
                 <div id="spinner-block"></div>
                 <button id="show-more" class="btn btn-accent" style="display: block; margin-bottom: 50px;">show
                     more</button>
             </div>
         </div>
     </section>
+
+    @include('front.elements.plan_trip')
+
 @endsection
 @push('scripts')
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -245,9 +252,9 @@
                         async: "false",
                         beforeSend: function(xhr) {
                             var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
-                                                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
-                                                                            Loading Trips...\
-                                                                            </button>';
+                                                                                                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                                                                                                                    Loading Trips...\
+                                                                                                                                    </button>';
                             $("#spinner-block").html(spinner);
                             $("#show-more").hide();
                         },
@@ -297,9 +304,9 @@
                     async: "false",
                     beforeSend: function(xhr) {
                         var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
-                                                              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
-                                                              Loading Trips...\
-                                                            </button>';
+                                                                                                                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                                                                                                      Loading Trips...\
+                                                                                                                    </button>';
                         $("#spinner-block").html(spinner);
                         $("#show-more").hide();
                     },

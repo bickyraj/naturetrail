@@ -3,22 +3,25 @@
 use Illuminate\Support\Str;
 
 if (!function_exists('truncate')) {
-    function truncate ($data) {
-    	return Str::limit($data, 150, '...');
+    function truncate($data, $limit = 150)
+    {
+        return Str::limit($data, $limit, '...');
     }
 }
 
 if (!function_exists('formatDate')) {
-    function formatDate($date) {
-    	return date('jS M, Y', strtotime($date));
+    function formatDate($date)
+    {
+        return date('jS M, Y', strtotime($date));
     }
 }
 
 if (!function_exists('breadCrumbTitle')) {
-    function breadCrumbTitle($title) {
-    	$temp = ucwords(str_replace('-', ' ', $title));
+    function breadCrumbTitle($title)
+    {
+        $temp = ucwords(str_replace('-', ' ', $title));
 
-    	return $temp;
+        return $temp;
     }
 }
 

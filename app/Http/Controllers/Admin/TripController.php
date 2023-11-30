@@ -35,7 +35,7 @@ class TripController extends Controller
      */
     public function create()
     {
-    	$destinations = \App\Destination::orderBy('name')->get();
+        $destinations = \App\Destination::orderBy('name')->get();
         $activities = \App\Activity::orderBy('name')->get();
         $regions = \App\Region::orderBy('name')->get();
         $trips = Trip::orderBy('name')->get();
@@ -136,7 +136,7 @@ class TripController extends Controller
 
                 $image_quality = 100;
 
-                if (($mapFileSize/1000000) > 1) {
+                if (($mapFileSize / 1000000) > 1) {
                     $image_quality = 75;
                 }
 
@@ -146,7 +146,7 @@ class TripController extends Controller
 
                 Storage::put($path . $trip['id'] . '/' . $mapName, (string) $image->encode('jpg', $image_quality));
 
-                $file = $path . $trip['id'].'/'. $mapName;
+                $file = $path . $trip['id'] . '/' . $mapName;
                 if (!Storage::exists($file)) {
                     $trip->map_file_name = "";
                     $trip->map_original_file_name = "";
@@ -159,7 +159,7 @@ class TripController extends Controller
 
                 $image_quality = 100;
 
-                if (($pdfFileSize/1000000) > 1) {
+                if (($pdfFileSize / 1000000) > 1) {
                     $image_quality = 75;
                 }
 
@@ -167,7 +167,7 @@ class TripController extends Controller
 
                 Storage::putFileAs($path . $trip['id'], $request->pdf_file_name, $pdfName);
 
-                $file = $path . $trip['id'].'/'. $pdfName;
+                $file = $path . $trip['id'] . '/' . $pdfName;
                 if (!Storage::exists($file)) {
                     $trip->pdf_file_name = "";
                     $trip->pdf_original_file_name = "";
@@ -267,7 +267,7 @@ class TripController extends Controller
     public function edit($id)
     {
         $trip = Trip::with([
-            'destination' => function($q) {
+            'destination' => function ($q) {
                 $q->pluck('destination_id');
             },
             'region' => function ($q) {
@@ -338,9 +338,7 @@ class TripController extends Controller
         $trip->slug = $this->create_slug_title($trip->name);
         $trip->status = 1;
         $trip->show_status = 0;
-        if ($request->show_status == "on") {
-            $trip->show_status = 1;
-        }
+
 
         if ($request->hasFile('map_file_name')) {
             $mapName = $request->map_file_name->getClientOriginalName();
@@ -365,6 +363,9 @@ class TripController extends Controller
 
         if ($trip->save()) {
             // save region to the trip_region table
+            if ($request->region_id == 0) {
+                $trip->region()->detach();
+            }
             if ($request->region_id) {
                 $trip->region()->detach();
                 $trip->region()->attach($request->region_id);
@@ -399,7 +400,7 @@ class TripController extends Controller
 
                 $image_quality = 100;
 
-                if (($mapFileSize/1000000) > 1) {
+                if (($mapFileSize / 1000000) > 1) {
                     $image_quality = 75;
                 }
 
@@ -412,19 +413,19 @@ class TripController extends Controller
                 Storage::put($path . $trip['id'] . '/' . $mapName, (string) $image->encode('jpg', $image_quality));
 
                 // delete old image
-                Storage::delete($path . $trip['id'] . '/'. $old_map_file_name);
+                Storage::delete($path . $trip['id'] . '/' . $old_map_file_name);
 
-                $file = $path . $trip['id'].'/'. $mapName;
+                $file = $path . $trip['id'] . '/' . $mapName;
                 if (!Storage::exists($file)) {
                     $trip->map_file_name = "";
                     $trip->map_original_file_name = "";
                     $trip->save();
                 }
             } else {
-                // check if trip has pdf file
+                // check if trip has map file
                 if ($request->has_map_file == 0) {
                     $path = 'public/trips/';
-                    Storage::delete($path . $trip['id'] . '/'. $trip['map_file_name']);
+                    Storage::delete($path . $trip['id'] . '/' . $trip['map_file_name']);
                     $trip->map_file_name = "";
                     $trip->map_original_file_name = "";
                     $trip->save();
@@ -440,9 +441,9 @@ class TripController extends Controller
                 Storage::putFileAs($path . $trip['id'], $request->pdf_file_name, $pdfName);
 
                 // delete old pdf.
-                Storage::delete($path . $trip['id'] . '/'. $old_pdf_file_name);
+                Storage::delete($path . $trip['id'] . '/' . $old_pdf_file_name);
 
-                $pdf_file = $path . $trip['id'].'/'. $pdfName;
+                $pdf_file = $path . $trip['id'] . '/' . $pdfName;
                 if (!Storage::exists($pdf_file)) {
                     $trip->pdf_file_name = "";
                     $trip->pdf_original_file_name = "";
@@ -452,7 +453,7 @@ class TripController extends Controller
                 // check if trip has pdf file
                 if ($request->has_pdf_file == 0) {
                     $path = 'public/trips/';
-                    Storage::delete($path . $trip['id'] . '/'. $trip['pdf_file_name']);
+                    Storage::delete($path . $trip['id'] . '/' . $trip['pdf_file_name']);
                     $trip->pdf_file_name = "";
                     $trip->pdf_original_file_name = "";
                     $trip->save();
@@ -552,7 +553,7 @@ class TripController extends Controller
 
                 $image_quality = 100;
 
-                if (($ogFileSize/1000000) > 1) {
+                if (($ogFileSize / 1000000) > 1) {
                     $image_quality = 75;
                 }
 
@@ -564,9 +565,9 @@ class TripController extends Controller
                 // store new image
                 Storage::put($path . $trip_seo->trip_id . '/' . $ogName, (string) $image->encode('jpg', $image_quality));
                 // delete old image
-                Storage::delete($path . $trip_seo->trip_id . '/'. $old_og_file_name);
+                Storage::delete($path . $trip_seo->trip_id . '/' . $old_og_file_name);
 
-                $file = $path . $trip_seo->trip_id.'/'. $ogName;
+                $file = $path . $trip_seo->trip_id . '/' . $ogName;
                 if (!Storage::exists($file)) {
                     $trip_seo->og_image = "";
                     $trip_seo->save();
@@ -643,7 +644,7 @@ class TripController extends Controller
         // to be deleted itineraries
         $difference = array_diff($existing_trip_itineraries, $updated_trip_itineraries);
         $difference = array_values($difference);
-        for ($i=0; $i < count($difference); $i++) {
+        for ($i = 0; $i < count($difference); $i++) {
             // delete the images from the itineraries first.
             $diff_trip_itinerary = TripItinerary::find($difference[$i]);
             if (!empty($diff_trip_itinerary->image_name)) {
@@ -700,7 +701,7 @@ class TripController extends Controller
 
                 $image_quality = 100;
 
-                if (($gallery->image_size/1000000) > 1) {
+                if (($gallery->image_size / 1000000) > 1) {
                     $image_quality = 75;
                 }
 
@@ -714,14 +715,20 @@ class TripController extends Controller
 
                 Storage::put($path . $gallery['trip_id'] . '/' . $imageName, (string) $image->encode('jpg', $image_quality));
 
+                // large image
+                $image->fit(1440, 658, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                Storage::put($path . $gallery['trip_id'] . '/large_' . $imageName, (string) $image->encode('jpg', $image_quality));
+
                 // medium image
-                $image->fit(400, 200, function ($constraint) {
+                $image->fit(630, 375, function ($constraint) {
                     $constraint->aspectRatio();
                 });
                 Storage::put($path . $gallery['trip_id'] . '/medium_' . $imageName, (string) $image->encode('jpg', $image_quality));
 
                 // thumbnail image
-                $image->fit(200, 100, function ($constraint) {
+                $image->fit(360, 270, function ($constraint) {
                     $constraint->aspectRatio();
                 });
                 Storage::put($path . $gallery['trip_id'] . '/thumb_' . $imageName, (string) $image->encode('jpg', $image_quality));
@@ -840,7 +847,6 @@ class TripController extends Controller
                 $message = "Trip has been featured.";
                 $success = true;
             }
-
         } else {
             $message = __('alerts.not_found_error');
         }
@@ -870,7 +876,6 @@ class TripController extends Controller
                 $message = "Trip has been featured.";
                 $success = true;
             }
-
         } else {
             $message = __('alerts.not_found_error');
         }
@@ -900,7 +905,6 @@ class TripController extends Controller
                 $message = "Trip has been featured.";
                 $success = true;
             }
-
         } else {
             $message = __('alerts.not_found_error');
         }
@@ -930,7 +934,6 @@ class TripController extends Controller
                 $message = "Trip has been featured.";
                 $success = true;
             }
-
         } else {
             $message = __('alerts.not_found_error');
         }
@@ -989,12 +992,24 @@ class TripController extends Controller
 
                 Storage::put($path . $slider['trip_id'] . '/' . $imageName, (string) $image->encode('jpg', $image_quality));
 
+                // large image
+                $image->fit(1440, 658, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                Storage::put($path . $slider['trip_id'] . '/large_' . $imageName, (string) $image->encode('jpg', $image_quality));
+
+                // medium image
+                $image->fit(630, 375, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                Storage::put($path . $slider['trip_id'] . '/medium_' . $imageName, (string) $image->encode('jpg', $image_quality));
+
                 // thumbnail image
                 $image->fit(400, 200, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-
                 Storage::put($path . $slider['trip_id'] . '/thumb_' . $imageName, (string) $image->encode('jpg', $image_quality));
+
                 $status = 1;
             } else {
                 if (isset($request->cropped_data) && !empty($request->cropped_data)) {
@@ -1014,11 +1029,22 @@ class TripController extends Controller
 
                     Storage::put($path . $slider['trip_id'] . '/' . $imageNameUniqid, (string) $image->encode('jpg', 100));
 
-                    // thumbnail image
-                    $image->fit(400, 200, function ($constraint) {
+                    // large image
+                    $image->fit(1440, 658, function ($constraint) {
                         $constraint->aspectRatio();
                     });
+                    Storage::put($path . $slider['trip_id'] . '/large_' . $imageNameUniqid, (string) $image->encode('jpg', 100));
 
+                    // medium image
+                    $image->fit(630, 375, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    Storage::put($path . $slider['trip_id'] . '/medium_' . $imageNameUniqid, (string) $image->encode('jpg', 100));
+
+                    // thumbnail image
+                    $image->fit(360, 270, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
                     Storage::put($path . $slider['trip_id'] . '/thumb_' . $imageNameUniqid, (string) $image->encode('jpg', 100));
 
                     $slider->image_name = $imageNameUniqid;

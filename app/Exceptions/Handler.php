@@ -38,7 +38,7 @@ class Handler extends ExceptionHandler
     {
         Log::info($exception->getMessage());
         if ($exception instanceof ViewException) {
-            abort(404);
+            // abort(404);
         }
         parent::report($exception);
     }

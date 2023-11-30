@@ -8,14 +8,14 @@ if (session()->has('error_message')) {
     $session_error_message = session('error_message');
     session()->forget('error_message');
 }
-$all_selected_destinations = "";
+$all_selected_destinations = '';
 
 if (isset($selected_destinations) && !empty($selected_destinations)) {
     $all_selected_destinations = $selected_destinations;
 }
 
-$selected_trip_id = "";
-$selected_trip_name = "";
+$selected_trip_id = '';
+$selected_trip_name = '';
 if (isset($trip) && !empty($trip)) {
     $selected_trip_id = $trip->id;
     $selected_trip_name = $trip->name;
@@ -27,7 +27,7 @@ if (isset($trip) && !empty($trip)) {
     <link rel="stylesheet" href="{{ asset('assets/front/css/front-search-slider.css') }}">
     <style>
         .step {
-            flex-basis: 1;
+            flex-basis: 120px;
         }
 
         .step:not(:first-child)::before {
@@ -182,7 +182,7 @@ if (isset($trip) && !empty($trip)) {
 
 @section('content')
     <!-- Hero -->
-    <section class="relative hero-alt">
+    <section class="relative hero-alt" style="min-height: 200px;">
         <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="" style="max-height: 400px;">
         <div class="absolute overlay">
             <div class="container ">
@@ -205,28 +205,24 @@ if (isset($trip) && !empty($trip)) {
             <div id="step-block" class="hidden lg:flex">
                 {{-- Mark each step as active if it is complete or current --}}
                 <button id="step-who" class="step active relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{ asset('assets/front/img/who.png') }}" class="w-8 h-8 object-contain">
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/who.png') }}" class="w-8 h-8 object-contain" alt="">
                     </div>Who
                 </button>
                 <button id="step-when" class="step relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{ asset('assets/front/img/when.svg') }}" class="w-8 h-8 object-contain">
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/when.svg') }}" class="w-8 h-8 object-contain" alt="">
                     </div>When
                 </button>
                 <button id="step-where" class="step relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{ asset('assets/front/img/where.svg') }}"
-                            class="w-8 h-8 object-contain"></div>Where
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/where.svg') }}" alt="" class="w-8 h-8 object-contain"></div>Where
                 </button>
                 <button id="step-accomodation" class="step relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{ asset('assets/front/img/accomodation.png') }}"
-                            class="w-8 h-8 object-contain"></div>Accomodation
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/accomodation.png') }}" alt="" class="w-8 h-8 object-contain"></div>Accomodation
                 </button>
                 <button id="step-budget" class="step relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{ asset('assets/front/img/budget.svg') }}"
-                            class="w-8 h-8 object-contain"></div>Budget
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/budget.svg') }}" alt="" class="w-8 h-8 object-contain"></div>Budget
                 </button>
                 <button id="step-tailor-made" class="step relative flex-grow flex gap-2 flex-col items-center">
-                    <div class="step-bg"><img src="{{ asset('assets/front/img/tailor-made.svg') }}"
-                            class="w-8 h-8 object-contain"></div>Tailor-made
+                    <div class="step-bg"><img src="{{ asset('assets/front/img/tailor-made.svg') }}" alt="" class="w-8 h-8 object-contain"></div>Tailor-made
                     tour
                 </button>
             </div>
@@ -235,15 +231,14 @@ if (isset($trip) && !empty($trip)) {
             <form id="stepForm">
 
                 {{-- Who --}}
-                <div id="step1" class="grid gap-8 py-10" x-data="{who: null}">
+                <div id="step1" class="grid gap-8 py-10" x-data="{ who: null }">
                     <fieldset>
-                        <legend class="mb-8 text-lg lg:text-3xl text-center">How are you travelling? <span
-                                class="text-red">*</span></legend>
+                        <legend class="mb-8 text-lg lg:text-3xl text-center">How are you travelling? <span class="text-red">*</span></legend>
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
                             <div>
                                 <input type="radio" id="solo" x-model="who" name="who" value="solo" class="radio-input">
                                 <label class="col" for="solo">
-                                    <img src="{{ asset('assets/front/img/solo.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/solo.svg') }}" class="h-12 lg:h-24" alt="">
                                     Solo
                                 </label>
                             </div>
@@ -251,7 +246,7 @@ if (isset($trip) && !empty($trip)) {
                             <div>
                                 <input type="radio" id="couple" x-model="who" name="who" value="couple" class="radio-input">
                                 <label class="col" for="couple">
-                                    <img src="{{ asset('assets/front/img/couple.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/couple.svg') }}" class="h-12 lg:h-24" alt="">
                                     Couple
                                 </label>
                             </div>
@@ -259,7 +254,7 @@ if (isset($trip) && !empty($trip)) {
                             <div>
                                 <input type="radio" id="family" x-model="who" name="who" value="family" class="radio-input">
                                 <label class="col" for="family">
-                                    <img src="{{ asset('assets/front/img/family.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/family.svg') }}" class="h-12 lg:h-24" alt="">
                                     Family
                                 </label>
                             </div>
@@ -267,7 +262,7 @@ if (isset($trip) && !empty($trip)) {
                             <div>
                                 <input type="radio" id="group" x-model="who" name="who" value="group" class="radio-input">
                                 <label class="col" for="group">
-                                    <img src="{{ asset('assets/front/img/group.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/group.svg') }}" class="h-12 lg:h-24" alt="">
                                     Group
                                 </label>
                             </div>
@@ -319,34 +314,31 @@ if (isset($trip) && !empty($trip)) {
                 </div>
 
                 {{-- When --}}
-                <div id="step2" class="grid gap-8 py-10" x-data="{when: null}">
+                <div id="step2" class="grid gap-8 py-10" x-data="{ when: null }">
                     <fieldset>
                         <legend class="mb-8 text-lg lg:text-3xl text-center">Arrival date <span class="text-red">*</span>
                         </legend>
                         <div class="grid lg:grid-cols-3 gap-8">
                             <div>
-                                <input type="radio" id="exact-date" x-model="when" name="when" value="exact"
-                                    class="radio-input">
+                                <input type="radio" id="exact-date" x-model="when" name="when" value="exact" class="radio-input">
                                 <label for="exact-date">
-                                    <img src="{{ asset('assets/front/img/exact-date.svg') }}" class="h-12">
+                                    <img src="{{ asset('assets/front/img/exact-date.svg') }}" class="h-12" alt="">
                                     I have exact travel dates.
                                 </label>
                             </div>
 
                             <div>
-                                <input type="radio" id="approx-date" x-model="when" name="when" value="approx"
-                                    class="radio-input">
+                                <input type="radio" id="approx-date" x-model="when" name="when" value="approx" class="radio-input">
                                 <label for="approx-date">
-                                    <img src="{{ asset('assets/front/img/approx-date.svg') }}" class="h-12">
+                                    <img src="{{ asset('assets/front/img/approx-date.svg') }}" class="h-12" alt="">
                                     I have approximate travel dates.
                                 </label>
                             </div>
 
                             <div>
-                                <input type="radio" id="decide-later" x-model="when" name="when" value="later"
-                                    class="radio-input">
+                                <input type="radio" id="decide-later" x-model="when" name="when" value="later" class="radio-input">
                                 <label for="decide-later">
-                                    <img src="{{ asset('assets/front/img/decide-later.svg') }}" class="h-12">
+                                    <img src="{{ asset('assets/front/img/decide-later.svg') }}" class="h-12" alt="">
                                     I will decide later.
                                 </label>
                             </div>
@@ -384,38 +376,30 @@ if (isset($trip) && !empty($trip)) {
                 {{-- Where --}}
                 <div id="step3" class="grid gap-8 py-10">
                     <fieldset>
-                        <legend class="mb-8 text-lg lg:text-3xl text-center">Choose your destination <span
-                                class="text-red">*</span></legend>
+                        <legend class="mb-8 text-lg lg:text-3xl text-center">Choose your destination <span class="text-red">*</span></legend>
                         <div class="grid lg:grid-cols-4 gap-8 mb-8">
                             @forelse ($destinations as $destination)
-                            <div>
-                                <input type="checkbox" id="{{ $destination->name }}" name="destination[]" value="{{ $destination->id }}"
-                                    class="check-input destination-checkbox">
-                                <label for="{{ $destination->name }}">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <rect x="0" y="0" width="20" height="20"
-                                            fill="white" stroke="currentColor" />
-                                        <path class="check" clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
-                                        </path>
-                                    </svg>
-                                    {{ $destination->name }}
-                                </label>
-                            </div>
+                                <div>
+                                    <input type="checkbox" id="{{ $destination->name }}" name="destination[]" value="{{ $destination->id }}" class="check-input destination-checkbox">
+                                    <label for="{{ $destination->name }}">
+                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                                            <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor" />
+                                            <path class="check" clip-rule="evenodd" fill-rule="evenodd"
+                                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
+                                            </path>
+                                        </svg>
+                                        {{ $destination->name }}
+                                    </label>
+                                </div>
                             @empty
-
                             @endforelse
                         </div>
 
                         <div>
-                            <input type="checkbox" id="not-sure" name="destination[]" value="not-sure"
-                                class="check-input">
+                            <input type="checkbox" id="not-sure" name="destination[]" value="not-sure" class="check-input">
                             <label for="not-sure">
-                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                    aria-hidden="true" class="w-6 h-6">
-                                    <rect x="0" y="0" width="20" height="20" fill="white"
-                                        stroke="currentColor" />
+                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                                    <rect x="0" y="0" width="20" height="20" fill="white" stroke="currentColor" />
                                     <path class="check" clip-rule="evenodd" fill-rule="evenodd"
                                         d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z">
                                     </path>
@@ -428,15 +412,14 @@ if (isset($trip) && !empty($trip)) {
 
                     <fieldset>
                         <div class="flex flex-wrap justify-between mb-4">
-                            <legend class="text-lg text-center">Choose the trip(s) you are interested in <span
-                                    class="text-red">*</span></legend>
+                            <legend class="text-lg text-center">Choose the trip(s) you are interested in <span class="text-red">*</span></legend>
                         </div>
                         <div id="trips-block" class="grid lg:grid-cols-4 gap-8 ">
                         </div>
                         <div id="trip-interested-error"></div>
                         <div class="flex items-center" style="justify-content: center; margin-top: 50px;">
                             <div id="spinner-block"></div>
-                            <button id="show-more" class="btn btn-accent" style="display: none; margin-bottom: 50px;">show
+                            <button id="show-more" class="btn btn-accent btn-sm" style="display: none; margin-bottom: 50px;">show
                                 more</button>
                         </div>
                     </fieldset>
@@ -450,50 +433,43 @@ if (isset($trip) && !empty($trip)) {
                 {{-- Accomodation --}}
                 <div id="step4" class="grid gap-8 py-10">
                     <fieldset>
-                        <legend class="mb-8 text-lg lg:text-3xl text-center">Preferred accomodation standard <span
-                                class="text-red">*</span></legend>
+                        <legend class="mb-8 text-lg lg:text-3xl text-center">Preferred accomodation standard <span class="text-red">*</span></legend>
                         <div class="grid lg:grid-cols-5 gap-8">
                             <div>
-                                <input type="radio" id="basic" name="accomodation" value="solo"
-                                    class="radio-input">
+                                <input type="radio" id="basic" name="accomodation" value="solo" class="radio-input">
                                 <label class="col" for="basic">
-                                    <img src="{{ asset('assets/front/img/basic.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/basic.svg') }}" class="h-12 lg:h-24" alt="">
                                     Basic
                                 </label>
                             </div>
 
                             <div>
-                                <input type="radio" id="comfortable" name="accomodation" value="couple"
-                                    class="radio-input">
+                                <input type="radio" id="comfortable" name="accomodation" value="couple" class="radio-input">
                                 <label class="col" for="comfortable">
-                                    <img src="{{ asset('assets/front/img/comfortable.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/comfortable.svg') }}" class="h-12 lg:h-24" alt="">
                                     Comfortable
                                 </label>
                             </div>
 
                             <div>
-                                <input type="radio" id="luxury" name="accomodation" value="family"
-                                    class="radio-input">
-                                <label class="col" for="luxury"><img
-                                        src="{{ asset('assets/front/img/luxury.svg') }}" class="h-12 lg:h-24">
+                                <input type="radio" id="luxury" name="accomodation" value="family" class="radio-input">
+                                <label class="col" for="luxury"><img src="{{ asset('assets/front/img/luxury.svg') }}" class="h-12 lg:h-24" alt="">
                                     Luxury
                                 </label>
                             </div>
 
                             <div>
-                                <input type="radio" id="camping" name="accomodation" value="family"
-                                    class="radio-input">
+                                <input type="radio" id="camping" name="accomodation" value="family" class="radio-input">
                                 <label class="col" for="camping">
-                                    <img src="{{ asset('assets/front/img/camping.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/camping.svg') }}" class="h-12 lg:h-24" alt="">
                                     Camping
                                 </label>
                             </div>
 
                             <div>
-                                <input type="radio" id="self-booking" name="accomodation" value="family"
-                                    class="radio-input">
+                                <input type="radio" id="self-booking" name="accomodation" value="family" class="radio-input">
                                 <label class="col" for="self-booking">
-                                    <img src="{{ asset('assets/front/img/self-booking.svg') }}" class="h-12 lg:h-24">
+                                    <img src="{{ asset('assets/front/img/self-booking.svg') }}" class="h-12 lg:h-24" alt="">
                                     Self booking
                                 </label>
                             </div>
@@ -510,13 +486,11 @@ if (isset($trip) && !empty($trip)) {
                 {{-- Budget --}}
                 <div id="step5" class="grid gap-8 py-10">
                     <fieldset>
-                        <legend class="mb-4 text-lg lg:text-3xl text-center">Budget range (per person) <span
-                                class="text-red">*</span></legend>
+                        <legend class="mb-4 text-lg lg:text-3xl text-center">Budget range (per person) <span class="text-red">*</span></legend>
                         Budget range slider
                         <div class="custom-slider-container">
                             <div id="slider-range"></div>
-                            <input class="price-range-input" type="text" id="amount" name="amount" readonly
-                                style="border:0; color:black; font-size:16px;" value="$0 - $10000">
+                            <input class="price-range-input" type="text" id="amount" name="amount" readonly style="border:0; color:black; font-size:16px;" value="$0 - $10000">
                         </div>
                     </fieldset>
 
@@ -526,19 +500,17 @@ if (isset($trip) && !empty($trip)) {
                         </legend>
                         <div class="grid lg:grid-cols-2 gap-8">
                             <div>
-                                <input type="radio" id="flexible" name="flexible" value="solo"
-                                    class="radio-input">
+                                <input type="radio" id="flexible" name="flexible" value="solo" class="radio-input">
                                 <label for="flexible">
-                                    <img src="{{ asset('assets/front/img/flexible-budget.svg') }}" class="h-12">
+                                    <img src="{{ asset('assets/front/img/flexible-budget.svg') }}" class="h-12" alt="">
                                     Yes, I am flexible. Plan the best trip for me.
                                 </label>
                             </div>
 
                             <div>
-                                <input type="radio" id="not-flexible" name="flexible" value="couple"
-                                    class="radio-input">
+                                <input type="radio" id="not-flexible" name="flexible" value="couple" class="radio-input">
                                 <label for="not-flexible">
-                                    <img src="{{ asset('assets/front/img/fixed-budget.svg') }}" class="h-12">
+                                    <img src="{{ asset('assets/front/img/fixed-budget.svg') }}" class="h-12" alt="">
                                     No, that is my maximum and minimum budget.
                                 </label>
                             </div>
@@ -555,17 +527,14 @@ if (isset($trip) && !empty($trip)) {
                 {{-- Tailor-made tour --}}
                 <div id="step6" class="grid gap-8 py-10">
                     <fieldset>
-                        <legend class="mb-4 lg:text-lg">Trip type you are looking for<span class="text-red">*</span>
+                        <legend class="mb-2">Trip type you are looking for<span class="text-red">*</span>
                         </legend>
                         <div class="flex gap-1">
                             <div>
-                                <input type="radio" id="tailor-made" name="trip_type" value="tailor-made"
-                                    class="radio-input-compact">
+                                <input type="radio" id="tailor-made" name="trip_type" value="tailor-made" class="radio-input-compact">
                                 <label for="tailor-made">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white"
-                                            stroke="currentColor" />
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor" />
                                         <circle cx="10" cy="10" r="6" class="check" />
                                     </svg>
                                     Tailor-made
@@ -573,13 +542,10 @@ if (isset($trip) && !empty($trip)) {
                             </div>
 
                             <div>
-                                <input type="radio" id="type-group" name="trip_type" value="group"
-                                    class="radio-input-compact">
+                                <input type="radio" id="type-group" name="trip_type" value="group" class="radio-input-compact">
                                 <label for="type-group">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white"
-                                            stroke="currentColor" />
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor" />
                                         <circle cx="10" cy="10" r="6" class="check" />
                                     </svg>
                                     Group
@@ -590,17 +556,14 @@ if (isset($trip) && !empty($trip)) {
                     </fieldset>
 
                     <fieldset>
-                        <legend class="mb-4 lg:text-lg">Current phase of trip planning<span class="text-red">*</span>
+                        <legend class="mb-2">Current phase of trip planning<span class="text-red">*</span>
                         </legend>
                         <div class="flex flex-wrap gap-1">
                             <div>
-                                <input type="radio" id="planning" name="plan_phase" value="planning"
-                                    class="radio-input-compact">
+                                <input type="radio" id="planning" name="plan_phase" value="planning" class="radio-input-compact">
                                 <label for="planning">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white"
-                                            stroke="currentColor" />
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor" />
                                         <circle cx="10" cy="10" r="6" class="check" />
                                     </svg>
                                     I am still planning on my trip.
@@ -608,13 +571,10 @@ if (isset($trip) && !empty($trip)) {
                             </div>
 
                             <div>
-                                <input type="radio" id="ready" name="plan_phase" value="ready"
-                                    class="radio-input-compact">
+                                <input type="radio" id="ready" name="plan_phase" value="ready" class="radio-input-compact">
                                 <label for="ready">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white"
-                                            stroke="currentColor" />
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor" />
                                         <circle cx="10" cy="10" r="6" class="check" />
                                     </svg>
                                     I am ready to start.
@@ -622,13 +582,10 @@ if (isset($trip) && !empty($trip)) {
                             </div>
 
                             <div>
-                                <input type="radio" id="book" name="plan_phase" value="book"
-                                    class="radio-input-compact">
+                                <input type="radio" id="book" name="plan_phase" value="book" class="radio-input-compact">
                                 <label for="book">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true" class="w-6 h-6">
-                                        <circle cx="10" cy="10" r="9" fill="white"
-                                            stroke="currentColor" />
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                                        <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor" />
                                         <circle cx="10" cy="10" r="6" class="check" />
                                     </svg>
                                     I want to book.
@@ -639,36 +596,40 @@ if (isset($trip) && !empty($trip)) {
                     </fieldset>
 
                     <div class="grid lg:grid-cols-2 gap-8">
-                        <div class="form-group">
-                            <label for="arrival-date">
+                        <div>
+                            <label for="additional-queries" class="mb-2">
                                 Any additional queries?
                             </label>
-                            <textarea name="additional_queries" class="form-control"></textarea>
+                            <div class="form-group">
+                                <textarea id="additional-queries" name="additional_queries" class="form-control"></textarea>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="departure-date">
+                        <div>
+                            <label for="departure-date" class="mb-2">
                                 How did you hear about us? <span class="text-red">*</span>
                             </label>
-                            <select id="departure-date" name="reached_by" class="form-control">
-                                <option value="">Select One</option>
-                                <option value="Blog">Blog</option>
-                                <option value="Club/Association">Club/Association</option>
-                                <option value="Facebook">Facebook</option>
-                                <option value="Friend Recommendation">Friend Recommendation</option>
-                               <option value="Instagram">Instagram</option>
-                                <option value="Internet Search">Internet Search</option>
-                                <option value="Lonely Planet Guides">Lonely Planet Guides</option>
-                                <option value="New York Times">New York Times</option>
-                                <option value="Newspaper Article">Newspaper Article</option>
-                                <option value="Online Advertising">Online Advertising</option>
-                                <option value="Past Client">Past Client</option>
-                                <option value="Trade Partners">Trade Partners</option>
-                                <option value="Trade Show">Trade Show</option>
-                                <option value="Trek Leader/Staff Recommended">Trek Leader/Staff Recommended</option>
-                                <option value="Trip Advisor">Trip Advisor</option>
-                                <option value="Twitter">Twitter</option>
-                                <option value="Others">Others</option>
-                            </select>
+                            <div class="form-group">
+                                <select id="departure-date" name="reached_by" class="form-control">
+                                    <option value="">Select One</option>
+                                    <option value="Blog">Blog</option>
+                                    <option value="Club/Association">Club/Association</option>
+                                    <option value="Facebook">Facebook</option>
+                                    <option value="Friend Recommendation">Friend Recommendation</option>
+                                    <option value="Instagram">Instagram</option>
+                                    <option value="Internet Search">Internet Search</option>
+                                    <option value="Lonely Planet Guides">Lonely Planet Guides</option>
+                                    <option value="New York Times">New York Times</option>
+                                    <option value="Newspaper Article">Newspaper Article</option>
+                                    <option value="Online Advertising">Online Advertising</option>
+                                    <option value="Past Client">Past Client</option>
+                                    <option value="Trade Partners">Trade Partners</option>
+                                    <option value="Trade Show">Trade Show</option>
+                                    <option value="Trek Leader/Staff Recommended">Trek Leader/Staff Recommended</option>
+                                    <option value="Trip Advisor">Trip Advisor</option>
+                                    <option value="Twitter">Twitter</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -683,37 +644,44 @@ if (isset($trip) && !empty($trip)) {
                     <h2 class="text-lg lg:text-2xl">PERSONAL INFORMATION</h2>
                     <p>Please fill in the form below. Our customer support will get back to you as soon as possible.</p>
                     <div class="grid lg:grid-cols-2 gap-8">
-                        <div class="form-group">
+                        <div>
                             <label for="first-name">First Name <span class="text-red">*</span></label>
-                            <input type="text" id="first-name" name="first_name" class="form-control">
+                            <div class="form-group">
+                                <input type="text" id="first-name" name="first_name" class="form-control">
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div>
                             <label for="last-name">Last Name <span class="text-red">*</span></label>
-                            <input type="text" id="last-name" name="last_name" class="form-control">
+                            <div class="form-group">
+                                <input type="text" id="last-name" name="last_name" class="form-control">
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div>
                             <label for="contact-no">Contact number <span class="text-red">*</span></label>
-                            <input type="tel" id="contact-no" name="contact_number" class="form-control">
+                            <div class="form-group">
+                                <input type="tel" id="contact-no" name="contact_number" class="form-control">
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div>
                             <label for="email">Email <span class="text-red">*</span></label>
-                            <input type="email" id="email" name="email" class="form-control">
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" class="form-control">
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div>
                             <label for="nationality">Nationality <span class="text-red">*</span></label>
-                            @include('front.elements.country')
+                            <div class="form-group">
+                                @include('front.elements.country')
+                            </div>
                         </div>
                         <fieldset>
                             <legend>Preferred method of contact<span class="text-red">*</span></legend>
                             <div class="flex flex-wrap gap-1">
                                 <div>
-                                    <input type="radio" id="method-email" name="contact_method" value="email"
-                                        class="radio-input-compact">
+                                    <input type="radio" id="method-email" name="contact_method" value="email" class="radio-input-compact">
                                     <label for="method-email">
-                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                            aria-hidden="true" class="w-6 h-6">
-                                            <circle cx="10" cy="10" r="9" fill="white"
-                                                stroke="currentColor" />
+                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                                            <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor" />
                                             <circle cx="10" cy="10" r="6" class="check" />
                                         </svg>
                                         Email
@@ -721,13 +689,10 @@ if (isset($trip) && !empty($trip)) {
                                 </div>
 
                                 <div>
-                                    <input type="radio" id="method-phone" name="contact_method" value="phone"
-                                        class="radio-input-compact">
+                                    <input type="radio" id="method-phone" name="contact_method" value="phone" class="radio-input-compact">
                                     <label for="method-phone">
-                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                            aria-hidden="true" class="w-6 h-6">
-                                            <circle cx="10" cy="10" r="9" fill="white"
-                                                stroke="currentColor" />
+                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                                            <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor" />
                                             <circle cx="10" cy="10" r="6" class="check" />
                                         </svg>
                                         Phone
@@ -735,13 +700,10 @@ if (isset($trip) && !empty($trip)) {
                                 </div>
 
                                 <div>
-                                    <input type="radio" id="method-both" name="contact_method" value="both"
-                                        class="radio-input-compact">
+                                    <input type="radio" id="method-both" name="contact_method" value="both" class="radio-input-compact">
                                     <label for="method-both">
-                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                            aria-hidden="true" class="w-6 h-6">
-                                            <circle cx="10" cy="10" r="9" fill="white"
-                                                stroke="currentColor" />
+                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                                            <circle cx="10" cy="10" r="9" fill="white" stroke="currentColor" />
                                             <circle cx="10" cy="10" r="6" class="check" />
                                         </svg>
                                         Both
@@ -755,8 +717,7 @@ if (isset($trip) && !empty($trip)) {
                     <div>
                         <input type="checkbox" id="privacy-policy" name="privacy_policy">
                         <label for="privacy-policy">
-                            I have read and accept the <a href="{{ url('/privacy-policy') }}">Privacy Policy</a>. <span
-                                class="text-red">*</span>
+                            I have read and accept the <a href="{{ url('/privacy-policy') }}" class="text-accent">Privacy Policy</a>. <span class="text-red">*</span>
                         </label>
                         <div id="privacy-policy-error"></div>
                     </div>
@@ -833,9 +794,9 @@ if (isset($trip) && !empty($trip)) {
 
             function addTripsToDiv(trips) {
                 let html = "";
-                    const selected_trip_id = "{!! $selected_trip_id !!}";
-                    for (const trip of trips) {
-                        html += `<div class="destination-trip">\
+                const selected_trip_id = "{!! $selected_trip_id !!}";
+                for (const trip of trips) {
+                    html += `<div class="destination-trip">\
                                 <input type="checkbox" id="trip${trip.id}" name="trip_interested[]" value="${trip.id}"\
                                     class="check-input">\
                                 <label for="trip${trip.id}">\
@@ -850,11 +811,12 @@ if (isset($trip) && !empty($trip)) {
                                     ${trip.name}\
                                 </label>\
                             </div>`;
-                    }
-                    $("#trips-block").append(html);
+                }
+                $("#trips-block").append(html);
             }
 
             initDestination();
+
             function initDestination() {
                 const selected_destinations = "{!! $all_selected_destinations !!}";
                 if (selected_destinations.length > 0) {
@@ -862,7 +824,7 @@ if (isset($trip) && !empty($trip)) {
                     boxes.each(function(i, v) {
                         const dest_id = $(v).val();
                         if (selected_destinations.includes(dest_id)) {
-                           $(v).prop('checked', true);
+                            $(v).prop('checked', true);
                         }
                     });
                     // get the selected trips and make it selected
@@ -908,7 +870,7 @@ if (isset($trip) && !empty($trip)) {
                     $('.destination-checkbox:checked').each(function() {
                         selectedDestinationArr.push($(this).val());
                     });
-                    let url = '{!! route("front.destinations.gettrips") !!}' + `?ids=${selectedDestinationArr.join(',')}&page=${currentPage}`;
+                    let url = '{!! route('front.destinations.gettrips') !!}' + `?ids=${selectedDestinationArr.join(',')}&page=${currentPage}`;
                     let result = [];
                     $.ajax({
                         url: url,
@@ -917,9 +879,9 @@ if (isset($trip) && !empty($trip)) {
                         async: "false",
                         beforeSend: function(xhr) {
                             var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
-                                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
-                                                                                Loading Trips...\
-                                                                                </button>';
+                                                                                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
+                                                                                                        Loading Trips...\
+                                                                                                        </button>';
                             $("#spinner-block").html(spinner);
                             $("#show-more").hide();
                         },
@@ -928,7 +890,7 @@ if (isset($trip) && !empty($trip)) {
                                 result = res.data.data;
                                 totalPage = res.data.total;
                                 currentPage = res.data.current_page;
-                                nextPage = (res.data.next_page_url)? true: false;
+                                nextPage = (res.data.next_page_url) ? true : false;
                             }
                         }
                     }).done(function(data) {
@@ -1113,7 +1075,8 @@ if (isset($trip) && !empty($trip)) {
                         return;
                     }
                     currentFieldset.hide();
-                    formSteps.eq(currentStep).show();
+                    // formSteps.eq(currentStep).show();
+                    formSteps.eq(currentStep).css('display', 'grid');
                     currentStep++;
                 } else {
                     // Display error messages for the current step
@@ -1139,12 +1102,14 @@ if (isset($trip) && !empty($trip)) {
                 $(this).find("button.next").on("click", function(e) {
                     e.preventDefault();
                     nextStep();
+                    window.scrollTo(0, 238);
                 });
 
                 if (index > 0) {
                     $(this).find("button.back").on("click", function(e) {
                         e.preventDefault();
                         prevStep();
+                        window.scrollTo(0, 238);
                     });
                 }
             });

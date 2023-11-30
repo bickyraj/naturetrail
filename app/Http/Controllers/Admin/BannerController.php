@@ -78,11 +78,18 @@ class BannerController extends Controller
 	            Storage::put($path . $banner['id'] . '/' . $imageName, (string) $image->encode('jpg', $image_quality));
 
 	            // thumbnail image
-	            $image->fit(300, 100, function ($constraint) {
+	            $image->fit(360, 270, function ($constraint) {
 	                $constraint->aspectRatio();
 	            });
 
 	            Storage::put($path . $banner['id'] . '/thumb_' . $imageName, (string) $image->encode('jpg', $image_quality));
+	            
+	            // large image
+	            $image->fit(1680, 900, function ($constraint) {
+	                $constraint->aspectRatio();
+	            });
+
+	            Storage::put($path . $banner['id'] . '/large_' . $imageName, (string) $image->encode('jpg', $image_quality));
 	            $status = 1;
 	        }
 	        $status = 1;

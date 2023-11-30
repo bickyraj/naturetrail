@@ -1,26 +1,30 @@
-<div class="price-card bg-primary mb-6 pt-4">
-    <div class="relative flex mb-4 ribbon">
-        <div class="bg-white relative px-4 py-1 font-display text-accent text-2xl">
-            Best Price
-        </div>
-    </div>
+<div class="price-card bg-gray mb-6 pt-4">
 
-    <div class="p-4 text-white">
+    <div class="p-10">
         @if($trip->cost)
-        <div class="">
-            <span class="text-sm mb-2 mr-2">Price starting from</span>
-            <s class="font-bold text-xl">${{ number_format($trip->cost) }}</s>
-        </div>
-        <div class="mb-2 font-display mb-0">
-            <span class="font-bold text-2xl">USD $</span>
-            <span class="font-bold text-5xl text-accent">{{ number_format($trip->offer_price) }}</span>
-            <span class="text-xl">per person</span>
-        </div>
+            <div class="flex justify-between gap-6 mb-4">
+                <div>
+                    Save
+                    <div class="font-bold text-2xl text-gray-600 font-display">US$ {{ number_format($trip->cost - $trip->offer_price) }}</div>
+                </div>
+                <div>
+                    <div class="">
+                        <span class="mr-2">Group discount</span>
+                    </div>
+                    <div>
+                        <div>
+                            <s class="font-bold text-red text-lg">US ${{ number_format($trip->cost) }}</s>
+                        </div>
+                        <span class="font-display font-bold text-3xl text-gray-600">US $</span>
+                        <span class="font-display font-bold text-3xl text-gray-600">{{ number_format($trip->offer_price) }}</span>
+                        <div class="text-sm">(per person)</div>
+                    </div>
+                </div>
+            </div>
         @endif
         <div class="mb-2 text-center">
             <a href="{{ route('front.trips.booking', $trip->slug) }}" class="mb-2 btn btn-accent w-full">Book Now</a>
-            <a href="{{ route('front.plantrip.createfortrip', $trip->slug) }}" class="btn btn-accent">
-
+            <a href="{{ route('front.plantrip.createfortrip', $trip->slug) }}" class="btn btn-primary">
                 <svg class="w-6 h-6 flex-shrink-0 mr-2">
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#adjustments" />
                 </svg>
@@ -28,19 +32,19 @@
             </a>
         </div>
         <div class="actions p-1">
-            <a href="{{ route('front.trips.print', ['slug' => $trip->slug]) }}" class="flex items-center p-1 text-accent" title="Print tour details">
+            <a href="{{ route('front.trips.print', ['slug' => $trip->slug]) }}" class="flex items-center p-1" title="Print tour details">
                 <svg class="w-4 h-4 flex-shrink-0 mr-2">
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#printer" />
                 </svg>
                 <span class="text-sm">Print Tour Details</span>
             </a>
-            <a href="#" class="flex items-center p-1 text-accent" title="">
+            <a href="#" class="flex items-center p-1" title="">
                 <svg class="w-4 h-4 flex-shrink-0 mr-2">
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#download" />
                 </svg>
                 <span class="text-sm">Download Tour Brochure</span>
             </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ route('front.trips.show', ['slug' => $trip->slug]) }}" class="flex items-center p-1 text-accent" title="Share tour">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ route('front.trips.show', ['slug' => $trip->slug]) }}" class="flex items-center p-1" title="Share tour">
                 <svg class="w-4 h-4 flex-shrink-0 mr-2">
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#share" />
                 </svg>

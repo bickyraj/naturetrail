@@ -2,11 +2,11 @@
 @section('content')
 <!-- Hero -->
 <section class="hero hero-alt relative">
-    <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="" style="border-radius: 0px;height: 300px;">
-    <div class="overlay absolute">
+    <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="" >
+    <div class="overlay absolute py-10">
         <div class="container ">
-            <h1>Blog</h1>
-            <div class="breadcrumb-wrapper">
+            <h1 class="mb-4">Blog</h1>
+            <div class="breadcrumb-wrapper text-white">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb fs-sm wrap">
                         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
@@ -20,25 +20,14 @@
 <section class="news py-20">
     <div class="container">
 
-        <div class="grid lg:grid-cols-3 gap-2 xl:gap-3">
+        <div class="mb-10 grid lg:grid-cols-3 gap-2 lg:gap-6">
             @forelse ($blogs as $blog)
-                <a href="{{ route('front.blogs.show', ['slug' => $blog->slug]) }}">
-                    <div class="article">
-                        <div class="image">
-                            <img src="{{ $blog->imageUrl }}" alt="">
-                        </div>
-                        <div class="content">
-                            <h2>{{ $blog->name }}</h2>
-                            <p class="fs-sm">{{ truncate(strip_tags($blog->description)) }}</p>
-                        </div>
-                    </div>
-                </a>
+                @include('front.elements.blog-card')
             @empty
             @endforelse
         </div>
-        <a href="#" class="theme">Go to blog
-            <svg><use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" /></svg>
-        </a>
+
+        {{ $blogs->links('pagination.default') }}
     </div>
 </section>
 @endsection

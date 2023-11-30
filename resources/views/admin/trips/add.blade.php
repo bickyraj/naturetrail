@@ -93,7 +93,7 @@
                           <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Maximum Altitude(in meters)</label>
                             <div class="col-lg-7">
-                              <input type="text" class="form-control form-control-sm" name="max_altitude">
+                              <input type="number" class="form-control form-control-sm" name="max_altitude">
                               {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
                             </div>
                           </div>
@@ -389,7 +389,8 @@
                           </div>
 
                           <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">About Leader</label>
+                            {{-- originally about leader --}}
+                            <label class="col-lg-2 col-form-label">Equipment List</label>
                             <div class="col-lg-7">
                               <div id="summernote-leader" class="summernote"></div>
                             </div>
@@ -842,7 +843,7 @@ $(function() {
     	}
 
 	    cropper = new Cropper(image, {
-	        aspectRatio: 3 / 1,
+	        // aspectRatio: 3 / 1,
 	        zoomable: false,
 	        viewMode: 2,
 	        crop(event) {

@@ -1,67 +1,73 @@
-<div class="p-2 mb-8 quick-enquiry-card bg-light border-primary lg:p-4">
-    <h2 class="mb-2 text-2xl uppercase font-display text-primary">Quick Enquiry</h2>
-    <div class="card-body">
-        <form id="enquiry-form" action="{{ route('front.contact.store') }}" method="POST">
-            @csrf
-            <input type="hidden" id="redirect-url" name="redirect_url">
-            <div class="mb-2 form-group">
-                <label class="sr-only" for="">Name</label>
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center p-2 rounded-full bg-primary">
-                        <svg class="w-4 h-4 text-white">
-                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#users" />
-                        </svg>
+<button x-on:click="showModal = true" class="border-gray-400 w-full px-4 py-2 font-display">Quick Enquiry</button>
+
+{{-- Enquiry Modal --}}
+<div style="background-color: rgba(0,0,0,0.5); z-index:100;" x-show="showModal" x-trap="showModal" class="overflow-auto fixed inset-0 z-10 flex items-center justify-center">
+    <div class="mx-auto rounded shadow-lg text-left" x-show="showModal" @click.away="showModal = false" >
+        <div class="p-2 quick-enquiry-card bg-light lg:p-10">
+            <h2 class="mb-8 text-2xl uppercase font-display text-gray-600">Quick Enquiry</h2>
+            <form id="enquiry-form" action="{{ route('front.contact.store') }}" method="POST" style="width:320px" >
+                @csrf
+                <input type="hidden" id="redirect-url" name="redirect_url">
+                <div class="mb-2 form-group">
+                    <label class="sr-only" for="">Name</label>
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center justify-center p-2 rounded-full bg-gray">
+                            <svg class="w-4 h-4 text-white">
+                                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#users" />
+                            </svg>
+                        </div>
+                        <input type="text" name="name" class="form-control" placeholder="Name" required>
                     </div>
-                    <input type="text" name="name" class="form-control" placeholder="Name" required>
                 </div>
-            </div>
-            <div class="mb-2 form-group">
-                <label class="sr-only" for="email">E-mail</label>
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center p-2 rounded-full bg-primary">
-                        <svg class="w-4 h-4 text-white">
-                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#mail" />
-                        </svg>
+                <div class="mb-2 form-group">
+                    <label class="sr-only" for="email">E-mail</label>
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center justify-center p-2 rounded-full bg-gray">
+                            <svg class="w-4 h-4 text-white">
+                                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#mail" />
+                            </svg>
+                        </div>
+                        <input type="email" name="email" class="form-control" placeholder="Email">
                     </div>
-                    <input type="email" name="email" class="form-control" placeholder="Email">
                 </div>
-            </div>
-            <div class="mb-2 form-group">
-                <label class="sr-only" for="country">Country</label>
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center p-2 rounded-full bg-primary">
-                        <svg class="w-4 h-4 text-white">
-                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#flag" />
-                        </svg>
+                <div class="mb-2 form-group">
+                    <label class="sr-only" for="country">Country</label>
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center justify-center p-2 rounded-full bg-gray">
+                            <svg class="w-4 h-4 text-white">
+                                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#flag" />
+                            </svg>
+                        </div>
+                        <input name="country" id="" class="form-control" list="countries" placeholder="Country">
                     </div>
-                    <input name="country" id="" class="form-control" list="countries" placeholder="Country">
                 </div>
-            </div>
-            <div class="mb-2 form-group">
-                <label class="sr-only" for="phone">Phone Number</label>
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center p-2 rounded-full bg-primary">
-                        <svg class="w-4 h-4 text-white">
-                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
-                        </svg>
+                <div class="mb-2 form-group">
+                    <label class="sr-only" for="phone">Phone Number</label>
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center justify-center p-2 rounded-full bg-gray">
+                            <svg class="w-4 h-4 text-white">
+                                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
+                            </svg>
+                        </div>
+                        <input type="tel" name="phone" class="form-control" placeholder="Phone No.">
                     </div>
-                    <input type="tel" name="phone" class="form-control" placeholder="Phone No.">
                 </div>
-            </div>
-            <div class="mb-2 form-group">
-                <label class="sr-only" for="">Message</label>
-                <div class="flex items-center">
-                    <textarea name="message" class="form-control" placeholder="Message" required></textarea>
+                <div class="mb-2 form-group">
+                    <label class="sr-only" for="">Message</label>
+                    <div class="flex items-center">
+                        <textarea name="message" class="form-control" placeholder="Message" required></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-2 form-group">
-                <div id="inquiry-g-recaptcha" data-sitekey="{{ config('constants.google_recaptcha') }}" data-callback="onSubmitEnquiry" data-size="invisible">
+                <div class="mb-2 form-group">
+                    <input type="hidden" id="enquiry-recaptcha" name="enquiry-recaptcha">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="button" class="btn bg-white border-gray-400" x-on:click="showModal=false">Cancel</button>
                 </div>
-                <input type="hidden" id="enquiry-recaptcha" name="enquiry-recaptcha">
-                <button type="submit" class="btn btn-sm btn-primary">Send</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
+</div>
+<div id="inquiry-g-recaptcha" data-sitekey="{{ config('constants.google_recaptcha') }}" data-callback="onSubmitEnquiry" data-size="invisible">
 </div>
 
 <datalist id="countries">

@@ -38,7 +38,7 @@
 @section('meta_og_image'){!! $seo->socialImageUrl ?? '' !!}@stop
 @section('content')
     <!-- Hero -->
-    <section class="hero hero-alt relative">
+    <section class="hero hero-alt relative bg-gray">
         <img src="{{ $destination->imageUrl }}" alt="">
         <div class="overlay absolute">
             <div class="container ">
@@ -56,23 +56,31 @@
         </div>
     </section>
 
-    <section class="pt-5">
-        <div class="container" style="padding-top: 20px;max-width: 1100px;">
-            <div class="mb-4">
-                @if (strip_tags($destination->description) != '')
-                    <div class="tour-details-section mb-4 relative" x-data="{ expanded: false }">
-                        <div x-show="expanded" class="prose mx-auto pb-20" x-collapse.min.427px>
-                            <?= $destination->description ?></div>
-                        <div class="flex justify-center absolute bottom-0 w-full py-4"
-                            style="background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));"><button
-                                class="text-xs bg-light rounded-full px-4 py-2" x-on:click="expanded=!expanded"
-                                x-text="expanded?'Show less':'Show more'">Show more</button></div>
+    <section class="py-20">
+        <div class="container">
+            @if (strip_tags($destination->description) != '')
+                <div class="tour-details-section mb-4 relative" x-data="{ expanded: false, showControls: true }" x-init="if ($refs.description.scrollHeight < 427) { expanded = true; showControls = false }">
+                    <div x-show="expanded" :class="{'pb-20': showControls}" x-collapse.min.427px x-ref="description">
+                        <div class="grid lg:grid-cols-3 gap-10">
+                            <div class="lg:col-span-2">
+                                <div class="prose">{!! $destination->description !!}</div>
+                            </div>
+                            <div>
+                                <div class="prose">{!! $destination->tour_guide_description !!}</div>
+                            </div>
+                        </div>
                     </div>
-                @endif
-            </div>
+                    <div class="flex justify-center absolute bottom-0 w-full py-4"
+                        style="background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));" x-show="showControls"><button
+                            class="text-xs bg-light rounded-full px-4 py-2" x-on:click="expanded=!expanded"
+                            x-text="expanded?'Show less':'Show more'">Show more</button></div>
+                </div>
+            @endif
         </div>
+    </section>
 
-        {{-- Activities --}}
+    {{-- Activities --}}
+    <section>
         <div class="py-10 activities bg-gray">
             <div class="container">
                 <div class="items-center justify-between gap-20 mb-4 lg:flex">
@@ -86,7 +94,7 @@
                             </h2>
                         </div>
                     </div>
-                    <div class="flex gap-10 activities-slider-controls">
+                    {{--<div class="flex gap-10 activities-slider-controls">
                         <button>
                             <svg class="w-6 h-6 text-accent">
                                 <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
@@ -97,10 +105,11 @@
                                 <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
                             </svg>
                         </button>
-                    </div>
+                    </div>--}}
                 </div>
 
-                <div class="activities-slider">
+                <!--<div class="activities-slider">-->
+                <div class="flex flex-wrap justify-center gap-10">
 
                     @foreach ($activities as $activity)
                         @include('front.elements.activity-card', ['activity' => $activity])
@@ -139,18 +148,16 @@
         </div>{{-- Travel Guide --}}
     </section>
 
-    <section class="pt-5">
-        <div class="container">
-            <div class="mb-4" id="searchDiv">
-                <div class="grid lg:grid-cols-4 gap-2">
-                    <div class="col-lg-2 col-md-2 col-sm-2">
+    <section>
+        <div class="pt-5 bg-light border-b">
+            <div class="container">
+                <div class="mb-4" id="searchDiv">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
                         <div class="form-group">
                             <label for="">Keywords</label>
                             <input type="text" id="keyword" class="form-control" value="{{ $get_keyword ?? '' }}"
                                 name="keyword" />
                         </div>
-                    </div>
-                    <div class="col-lg-4">
                         <div class="form-group">
                             <label for="">Activities</label>
                             <select name="" id="select-activity" class="custom-select">
@@ -164,38 +171,32 @@
                                 @endif
                             </select>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group"
-                            style="border-left: 1px solid #ededed; padding-left: 19px; margin-left: 12px;">
+                        <div class="form-group">
                             <label for="">Duration</label>
                             <div class="custom-slider-container">
                                 <div id="duration-slider-range"></div>
-                                <input class="price-range-input" type="text" id="trip-days" readonly
+                                <input class="price-range-input bg-transparent w-full text-center mt-2" type="text" id="trip-days" readonly
                                     style="border:0; color:black; font-size:16px;" value="1 days - 60 days">
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group"
-                            style="border-left: 1px solid #ededed; padding-left: 19px; margin-left: 12px;">
+                        <div class="form-group">
                             <label for="">Price Range</label>
                             <div class="custom-slider-container">
                                 <div id="slider-range"></div>
-                                <input class="price-range-input" type="text" id="amount" readonly
-                                    style="border:0; color:black; font-size:16px;" value="$0 - $5000">
+                                <input class="price-range-input bg-transparent w-full text-center mt-2" type="text" id="amount" readonly
+                                    style="border:0; color:black; font-size:16px;" value="$0 - $65000">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="bg-light">
-            <div class="container py-4">
-                <div id="tirps-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-8">
+        <div class="bg-gray">
+            <div class="container py-20">
+                <div id="tirps-block" class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-10">
                 </div>
             </div>
-            <div class="flex items-center" style="justify-content: center; margin-top: 50px;">
+            <div class="flex items-center justify-center">
                 <div id="spinner-block"></div>
                 <button id="show-more" class="btn btn-accent" style="display: block; margin-bottom: 50px;">show
                     more</button>
@@ -243,8 +244,8 @@
                     },
                     range: true,
                     min: 0,
-                    max: 5000,
-                    values: [0, 5000],
+                    max: 65000,
+                    values: [0, 65000],
                     change: function(event, ui) {
                         performSearch();
                     },
@@ -407,7 +408,7 @@
             }
         });
     </script>
-    <script>
+    {{--<script>
         const activitiesSlider = tns({
             container: '.activities-slider',
             nav: false,
@@ -424,5 +425,5 @@
                 }
             }
         })
-    </script>
+    </script>--}}
 @endpush

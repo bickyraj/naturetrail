@@ -96,8 +96,15 @@ class ActivityController extends Controller
 
                 Storage::put($path . $activity['id'] . '/' . $imageName, (string) $image->encode('jpg', $image_quality));
 
+                // medium image
+                $image->fit(630, 375, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                
+                Storage::put($path . $activity['id'] . '/medium_' . $imageNameUniqid, (string) $image->encode('jpg', 100));
+                
                 // thumbnail image
-                $image->fit(300, 100, function ($constraint) {
+                $image->fit(360, 270, function ($constraint) {
                     $constraint->aspectRatio();
                 });
 
@@ -211,8 +218,14 @@ class ActivityController extends Controller
 
                 Storage::put($path . $activity['id'] . '/' . $imageName, (string) $image->encode('jpg', $image_quality));
 
+                // medium image
+                $image->fit(630, 375, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                Storage::put($path . $activity['id'] . '/medium_' . $imageNameUniqid, (string) $image->encode('jpg', 100));
+                
                 // thumbnail image
-                $image->fit(300, 100, function ($constraint) {
+                $image->fit(360, 270, function ($constraint) {
                     $constraint->aspectRatio();
                 });
 
@@ -236,8 +249,15 @@ class ActivityController extends Controller
 
                     Storage::put($path . $activity['id'] . '/' . $imageNameUniqid, (string) $image->encode('jpg', 100));
 
+                    // medium image
+                    $image->fit(630, 375, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    
+                    Storage::put($path . $activity['id'] . '/medium_' . $imageNameUniqid, (string) $image->encode('jpg', 100));
+                    
                     // thumbnail image
-                    $image->fit(300, 100, function ($constraint) {
+                    $image->fit(360, 270, function ($constraint) {
                         $constraint->aspectRatio();
                     });
 

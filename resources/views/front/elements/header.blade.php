@@ -35,26 +35,16 @@
             {{-- Search --}}
             
             {{-- Talk to expert --}}
-            <div class="hidden lg:block">
-                <div class="flex items-center justify-end gap-1 header-color">
-                    <span class="text-xs">Talk to an expert</span>
-                    <a href="{{ Setting::get('viber') ?? '' }}" style="color:#d766ff">
-                        <svg class="w-5 h-5">
-                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#viber" />
-                        </svg>
-                    </a>
-                    <a href="{{ Setting::get('whatsapp') ?? '' }}" style="color:#28d146">
-                        <svg class="w-5 h-5">
-                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#whatsapp" />
-                        </svg>
-                    </a>
-                </div>
-                <div>
-                    <a href="tel:{{ Setting::get('mobile1') ?? '' }}" class="flex items-center header-color">
-                        <svg class="w-4 h-4">
-                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
-                        </svg>
-                        <div>{{ Setting::get('mobile1') ?? '' }}</div>
+            <div class="hidden lg:flex items-center gap-2 header-color">
+                <a href="{{ Setting::get('whatsapp') ?? '' }}" class="flex items-baseline header-color gap-1">
+                    <svg class="w-6 h-6" style="color:#28d146">
+                        <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#whatsapp" />
+                    </svg>
+                </a>
+                <div class="header-color text-right">
+                    Talk to an expert
+                    <a href="{{ Setting::get('whatsapp') ?? '' }}" class="flex items-baseline header-color gap-1">
+                        <div class="font-bold">{{ Setting::get('mobile1') ?? '' }}</div>
                     </a>
                 </div>
             </div>{{-- Talk to expert --}}

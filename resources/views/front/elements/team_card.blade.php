@@ -7,7 +7,7 @@
             <h2 class="mb-1 font-display text-2xl text-primary">{{ $item->name }}</h2>
             <div class="mb-2 text-gray">{{ $item->position }}</div>
             <p class="mb-4">
-                <?= $item->description; ?>
+                <?= Str::limit($item->description, 940) ?>
             </p>
             <a href="{{ route('front.teams.show', ['slug' => $item->slug]) }}" class="btn btn-sm btn-primary">Read more</a>
         </div>

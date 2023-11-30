@@ -18,111 +18,118 @@ use DB;
 
 class HomeController extends Controller
 {
-	public function index()
-	{
-		// $data['banners'] = \App\Trip::latest()->limit(5)->get();
-		$data['destinations'] = \App\Destination::orderBy('id')->select('id', 'name', 'slug', 'image_name')->get();
-		$data['activities'] = \App\Activity::orderBy('id')->select('id', 'name', 'slug', 'image_name')->get();
-		$data['block_1_trips'] = \App\Trip::where('block_1', 1)->latest()->get();
-		$data['block_2_trips'] = \App\Trip::where('block_2', 1)->latest()->get();
-		$data['block_3_trips'] = \App\Trip::where('block_3', 1)->latest()->get();
-		$data['reviews'] = \App\TripReview::latest()->limit(2)->published()->get();
-		$data['blogs'] = \App\Blog::latest()->limit(3)->get();
-		$data['why_chooses'] = \App\WhyChoose::latest()->limit(6)->get();
-		$data['departures'] = TripDeparture::where([
-			['status', 1],
-			['from_date', '>=', Carbon::today()]
-		])->orderBy('from_date', 'asc')->limit(10)->get();
+    public function index()
+    {
+        $data['banners'] = \App\Banner::all();
+        $data['destinations'] = \App\Destination::orderBy('id')->select('id', 'name', 'slug', 'image_name')->get();
+        $data['activities'] = \App\Activity::orderBy('id')->select('id', 'name', 'slug', 'image_name')->get();
+        $data['block_1_trips'] = \App\Trip::where('block_1', 1)->latest()->get();
+        $data['block_2_trips'] = \App\Trip::where('block_2', 1)->latest()->get();
+        $data['block_3_trips'] = \App\Trip::where('block_3', 1)->latest()->get();
+        $data['reviews'] = \App\TripReview::latest()->limit(3)->published()->get();
+        $data['blogs'] = \App\Blog::latest()->limit(3)->get();
+        $data['why_chooses'] = \App\WhyChoose::latest()->limit(6)->get();
+        $data['departures'] = TripDeparture::where([
+            ['status', 1],
+            ['from_date', '>=', Carbon::today()]
+        ])->orderBy('from_date', 'asc')->limit(10)->get();
+        $data['avg_rating'] = number_format(\App\TripReview::where('status', 1)->avg('rating'), 1);
+        $data['review_count'] = \App\TripReview::where('status', 1)->count();
 
-		return view('front.index', $data);
-	}
+        return view('front.index', $data);
+    }
 
-	public function faqs()
-	{
-		$faq_categories = \App\FaqCategory::with('faqs')->get();
-		// $faqs = \App\Faq::where('status', '=', 1)->get();
-		return view('front.faqs.index', compact('faq_categories'));
-	}
+    public function faqs()
+    {
+        $faq_categories = \App\FaqCategory::with('faqs')->get();
+        // $faqs = \App\Faq::where('status', '=', 1)->get();
+        return view('front.faqs.index', compact('faq_categories'));
+    }
 
-	public function reviews()
-	{
-		$trips = \App\Trip::orderBy('name', 'asc')->select('id', 'name')->get();
-		$reviews = \App\TripReview::latest()->published()->paginate(5);
-		return view('front.reviews.index', compact('trips', 'reviews'));
-	}
+    public function reviews()
+    {
+        $trips = \App\Trip::orderBy('name', 'asc')->select('id', 'name')->get();
+        $reviews = \App\TripReview::latest()->published()->paginate(10);
 
-	public function contact()
-	{
-		return view('front.contacts.index');
-	}
+        $avg_rating = number_format(\App\TripReview::where('status', 1)->avg('rating'), 1);
+        $review_count = \App\TripReview::where('status', 1)->count();
 
-	public function contactStore(Request $request)
-	{
-		$request->validate([
-			'name' => 'required'
-		]);
-		$verifiedRecaptcha = RecaptchaService::verifyRecaptcha($request->get('g-recaptcha-response'));
+        return view('front.reviews.index', compact('trips', 'reviews', 'avg_rating', 'review_count'));
+    }
 
-		if (!$verifiedRecaptcha) {
-			session()->flash('error_message', 'Google recaptcha error.');
-			return redirect()->back();
-		}
+    public function contact()
+    {
+        return view('front.contacts.index');
+    }
 
-		try {
-			$request->merge([
-				'ip_address' => $request->ip()
-			]);
-			Mail::send('emails.contact', ['body' => $request], function ($message) use ($request) {
-				$message->to(Setting::get('email'));
-				$message->from($request->email);
-				$message->subject('Enquiry');
-			});
-			session()->flash('success_message', "Thank you for your enquiry. We'll contact you very soon.");
-			$prev_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+    public function contactStore(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+        ]);
+        $verifiedRecaptcha = RecaptchaService::verifyRecaptcha($request->get('g-recaptcha-response'));
 
-			if ($request->redirect_url) {
-				return redirect()->to($request->redirect_url);
-			}
-		} catch (\Exception $e) {
-			Log::info($e->getMessage());
-			session()->flash('error_message', __('alerts.save_error'));
-		}
-		return redirect()->route('front.contact.index');
-	}
+        if (!$verifiedRecaptcha) {
+            session()->flash('error_message', 'Google recaptcha error.');
+            return redirect()->back();
+        }
 
-	public function verifyRecaptcha($recaptcha)
-	{
-		$url = 'https://www.google.com/recaptcha/api/siteverify';
-		// $data = [
-		//     'secret' => config('constants.recaptcha.secret'),
-		//     'response' => $recaptcha
-		// ];
+        try {
+            $request->merge([
+                'ip_address' => $request->ip()
+            ]);
+            Mail::send('emails.contact', ['body' => $request], function ($message) use ($request) {
+                $message->to(Setting::get('email'));
+                $message->from($request->email);
+                $message->subject('Enquiry');
+            });
+            session()->flash('success_message', "Thank you for your enquiry. We'll contact you very soon.");
+            $prev_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
 
-		// $options = [
-		//     'http' => [
-		//         'header'  => "Content-type: application/x-www-form-urlencode\r\n",
-		//         'method'  => 'POST',
-		//         'content' => http_build_query($data)
-		//     ]
-		// ];
+            if ($request->redirect_url) {
+                return redirect()->to($request->redirect_url);
+            }
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            session()->flash('error_message', __('alerts.save_error'));
+        }
+        return redirect()->route('front.contact.index');
+    }
 
-		// $context = stream_context_create($options);
-		// $result = file_get_contents($url, false, $context);
-		// $resultJson = json_decode($result);
+    public function verifyRecaptcha($recaptcha)
+    {
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        // $data = [
+        //     'secret' => config('constants.recaptcha.secret'),
+        //     'response' => $recaptcha
+        // ];
 
-		$recaptcha = file_get_contents($url . '?secret=' . config('constants.recaptcha.secret') . '&response=' . $recaptcha);
-		$resultJson = json_decode($recaptcha);
+        // $options = [
+        //     'http' => [
+        //         'header'  => "Content-type: application/x-www-form-urlencode\r\n",
+        //         'method'  => 'POST',
+        //         'content' => http_build_query($data)
+        //     ]
+        // ];
 
-		$valid = false;
+        // $context = stream_context_create($options);
+        // $result = file_get_contents($url, false, $context);
+        // $resultJson = json_decode($result);
 
-		if ($resultJson->success) {
-			if ($resultJson->score >= 0.5) {
-				$valid = true;
-			}
-		}
+        $recaptcha = file_get_contents($url . '?secret=' . config('constants.recaptcha.secret') . '&response=' . $recaptcha);
+        $resultJson = json_decode($recaptcha);
 
-		return $valid;
-	}
+        $valid = false;
+
+        if ($resultJson->success) {
+            if ($resultJson->score >= 0.5) {
+                $valid = true;
+            }
+        }
+
+        return $valid;
+    }
 
     public function payment()
     {
@@ -136,7 +143,7 @@ class HomeController extends Controller
             // save data to database.
             $invoice = new Invoice();
             $latest_invoice = DB::table('invoices')->latest('id')->first();
-            $last_id = $latest_invoice ? $latest_invoice->id: 1;
+            $last_id = $latest_invoice ? $latest_invoice->id : 1;
             $invoice_number = str_pad($last_id, 5, "0", STR_PAD_LEFT);
             $invoice_id = 'IV-' . $invoice_number;
             $invoice->invoice_id = $invoice_id;
@@ -144,7 +151,7 @@ class HomeController extends Controller
             // price is 25% of the booking amount
             $trip_offer_price = floatval($trip->offer_price);
             $trip_cost_price = floatval($trip->cost);
-            $trip_price = ($trip_offer_price != 0)? $trip_offer_price: $trip_cost_price;
+            $trip_price = ($trip_offer_price != 0) ? $trip_offer_price : $trip_cost_price;
 
             $trip_rate = 0.25;
             if ($request->payment_type == "full") {
@@ -175,6 +182,35 @@ class HomeController extends Controller
             $payment['invoiceNo'] = $invoice->invoice_id;
             $payment['ref_id'] = $invoice->ref_id;
             //echo "Payment jose request \n ";
+
+            // Send Email
+            $request->merge([
+                'trip_name' => $trip->name,
+                'ip_address' => $request->ip()
+            ]);
+            try {
+                Mail::send('emails.common', ['body' => $request], function ($message) use ($request) {
+                    $message->to(Setting::get('email'));
+                    $message->from($request->email);
+                    $message->subject('Trip Booking');
+                });
+            } catch (\Exception $e) {
+                Log::info($e->getMessage());
+                return redirect()->back();
+            }
+
+            $paymentObj = [
+                "order_no" => $payment['ref_id'],
+                "amount" => $payment['input_amount'],
+                "success_url" => $payment['success_url'],
+                "failed_url" => $payment['fail_url'],
+                "cancel_url" => $payment['cancel_url'],
+                "backend_url" => $payment['backend_url'],
+                "custom_fields" => [
+                    'RefID' => $payment['ref_id']
+                ],
+            ];
+
             $paymentObj = [
                 "order_no" => $payment['ref_id'],
                 "amount" => $payment['input_amount'],
@@ -188,7 +224,6 @@ class HomeController extends Controller
             ];
 
             HblPayment::pay($paymentObj);
-
         } catch (\Throwable $th) {
             \Log::info($th->getMessage());
             return redirect()->back();
@@ -230,6 +265,22 @@ class HomeController extends Controller
             $payment['backend_url'] = route('home');
             $payment['invoiceNo'] = $invoice->invoice_id;
             $payment['ref_id'] = $invoice->ref_id;
+
+            // Send Email
+            $request->merge([
+                'ip_address' => $request->ip()
+            ]);
+            try {
+                Mail::send('emails.common', ['body' => $request], function ($message) use ($request) {
+                    $message->to(Setting::get('email'));
+                    $message->from($request->email);
+                    $message->subject('Payment from footer');
+                });
+            } catch (\Exception $e) {
+                Log::info($e->getMessage());
+                return redirect()->back();
+            }
+
             $paymentObj = [
                 "order_no" => $payment['ref_id'],
                 "amount" => $payment['input_amount'],
@@ -256,7 +307,7 @@ class HomeController extends Controller
         $payment['invoiceNo'] = $invoice->invoice_id;
         $payment['productDesc'] = $invoice->trip_name;
         $payment['price'] =
-        str_pad((float) $invoice->price * 100, 12, "0", STR_PAD_LEFT);
+            str_pad((float) $invoice->price * 100, 12, "0", STR_PAD_LEFT);
         $payment['currencyCode'] = "840";
         $payment['nonSecure'] = "N";
         $payment['hashValue'] = config('constants.payment_merchant_key');
