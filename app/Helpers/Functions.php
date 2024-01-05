@@ -12,7 +12,7 @@ if (!function_exists('truncate')) {
 if (!function_exists('formatDate')) {
     function formatDate($date)
     {
-        return date('jS M, Y', strtotime($date));
+        return date('d M Y', strtotime($date));
     }
 }
 

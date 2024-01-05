@@ -17,59 +17,62 @@ if (session()->has('error_message')) {
 @section('meta_og_url'){!! $trip->trip_seo->canonical_url ?? '' !!}@stop
 @section('meta_og_description'){!! $trip->trip_seo->meta_description ?? '' !!}@stop
 @section('meta_og_image'){!! $trip->trip_seo->ogImageUrl ?? '' !!}@stop
-    @push('styles')
-        <script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit" async defer></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.css">
-        <style>
-            .blocker {
-                z-index: 10000 !important;
-            }
+@push('styles')
+    <script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit" async defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.css">
+    <style>
+        canvas#ctx{
+            background: center / cover url({{ asset('assets/front/img/mountain.jpg') }});
+        }
+        .blocker {
+            z-index: 10000 !important;
+        }
 
-            .embed-container {
-                position: relative;
-                padding-bottom: 56.25%;
-                height: 0;
-                overflow: hidden;
-                max-width: 100%;
-            }
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
 
-            .embed-container iframe,
-            .embed-container object,
-            .embed-container embed {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
-        </style>
-        <style type="text/css">
-            .modal {
-                z-index: 99999 !important;
-            }
+        .embed-container iframe,
+        .embed-container object,
+        .embed-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <style type="text/css">
+        .modal {
+            z-index: 99999 !important;
+        }
 
-            .map-image-modal {
-                cursor: zoom-in;
-                object-fit: cover;
-                /*width: 200px;*/
-            }
+        .map-image-modal {
+            cursor: zoom-in;
+            object-fit: cover;
+            /*width: 200px;*/
+        }
 
-            .trip-faq-description ul li {
-                list-style-type: inherit !important;
-            }
+        .trip-faq-description ul li {
+            list-style-type: inherit !important;
+        }
 
-            .modal-body {
-                /* 100% = dialog height, 120px = header + footer */
-                /*height: 70vh;*/
-                /*overflow-y: scroll;*/
-            }
+        .modal-body {
+            /* 100% = dialog height, 120px = header + footer */
+            /*height: 70vh;*/
+            /*overflow-y: scroll;*/
+        }
 
-            .trip-map-iframe {
-                display: flex;
-            }
-        </style>
-    @endpush
+        .trip-map-iframe {
+            display: flex;
+        }
+    </style>
+@endpush
 @section('content')
 
     <section>
@@ -160,7 +163,7 @@ if (session()->has('error_message')) {
 
         <div class="container pb-20 pt-20 mt-2">
 
-            <div class="grid gap-2 lg:grid-cols-3 lg:gap-10 xl:gap-20">
+            <div class="lg:grid gap-2 lg:grid-cols-3 lg:gap-10 xl:gap-20">
 
                 <div class="tour-details lg:col-span-2">
 
@@ -216,7 +219,7 @@ if (session()->has('error_message')) {
                             @if (iterator_count($trip->trip_galleries))
                                 @foreach ($trip->trip_galleries as $gallery)
                                     <div class="slide">
-                                        <img src="{{ $gallery->largeImageUrl }}" class="block rounded-xl" alt="">
+                                        <img src="{{ $gallery->mediumImageUrl }}" class="block rounded-xl" alt="">
                                     </div>
                                 @endforeach
                             @endif
@@ -250,8 +253,7 @@ if (session()->has('error_message')) {
                                     container: '.hero-slider',
                                     navContainer: '#slider-nav',
                                     controlsContainer: '#slider-controls',
-                                    autoplay: true,
-                                    autoplayTimeout: 6000,
+                                    autoplay: false,
                                     autoplayButtonOutput: false,
                                     mode: 'gallery'
                                 })
@@ -476,10 +478,15 @@ if (session()->has('error_message')) {
                             </div>
                         </div>
 
-                        <div class="mb-4 itinerary">
+                        <div class="mb-4 itinerary relative">
+                            <div class="absolute top-8 bottom-8 border-l border-gray-100 border-dashed"></div>
                             @foreach ($trip->trip_itineraries as $i => $itinerary)
-                                <div>
-                                    <button type="button" class="flex items-center w-full text-left py-3 border-t border-gray-100" x-on:click="day{{ $i + 1 }}Open = !day{{ $i + 1 }}Open ">
+                                <div class="pl-4 relative">
+                                    @if($loop->last)
+                                        <div class="absolute top-8 bottom-8 left-0 border-l border-white"></div>
+                                    @endif
+                                    <button type="button" class="flex items-center w-full text-left py-3 @if(!$loop->first) border-t @endif border-gray-300 hover:text-primary relative" x-on:click="day{{ $i + 1 }}Open = !day{{ $i + 1 }}Open ">
+                                        <div class="absolute -left-6 top-2 w-4 h-4 bg-white border-2 border-primary rounded-full"></div>
                                         <div class="flex items-center mr-4">
                                             <div class=" text-xl mr-2 font-display">Day</div>
                                             <div class="text-xl font-display">
@@ -487,7 +494,7 @@ if (session()->has('error_message')) {
                                             </div>
                                         </div>
                                         <div class="flex justify-between flex-grow-1">
-                                            <h3 class="text-xl font-display text-gray-600">{{ $itinerary->name }}</h3>
+                                            <h3 class="text-xl font-display">{{ $itinerary->name }}</h3>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="transition flex-shrink-0 w-6 h-6" x-bind:class="{'rotate-180': day{{ $i + 1 }}Open}" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                             </svg>
@@ -511,7 +518,7 @@ if (session()->has('error_message')) {
                                                     <img src="{{ asset('assets/front/img/elevation.png') }}" alt="" class="w-6 h-6">
                                                     <div>
                                                         <h4 class="uppercase font-display text-sm">Max. altitude</h4>
-                                                        <div class="">{{ number_format($itinerary->max_altitude) }}m / {{ number_format($itinerary->max_altitude * 3.28084) }} ft.</div>
+                                                        <div class="">{{ number_format((float)$itinerary->max_altitude) }}m / {{ number_format((float)$itinerary->max_altitude * 3.28084) }} ft.</div>
                                                     </div>
                                                 </div>
                                             @endif
@@ -544,47 +551,82 @@ if (session()->has('error_message')) {
 
                     @if ($canMakeChart)
                         <div class="py-10">
-                            <figure>
-                                <canvas id="ctx"></canvas>
+                            <figure class="border border-gray-100">
                                 <figcaption class="mt-6 text-center">Elevation Chart</figcaption>
+                                <div style="overflow-x: scroll;">
+                                    <div id="chart-wrapper">
+                                        <canvas id="ctx"></canvas>
+                                    </div>
+                                </div>
                             </figure>
                         </div>
                         @push('scripts')
                             <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
                             <script>
                                 const ctx = document.getElementById('ctx');
+
+                                Chart.register(ChartDataLabels);
+
+                                // const labels = ['Kathmandu', 'Kathmandu', 'Phakding', 'Namche Bazar', 'Namche Bazar', 'Tyangboche', 'Dingboche', 'Chukung', 'Lobuche', 'Gorakshep', 'Pheriche', 'Kyangjuma', 'Monjo', 'Lukla', 'Kathmandu'];
+                                const labels = [{{ implode(',', range(1, count($elevations))) }}];
+
+                                const chartWrapper = document.getElementById('chart-wrapper');
+
+                                chartWrapper.style.height = '400px';
+                                if (labels.length > 10) {
+                                    chartWrapper.style.width = labels.length * 70 + 'px';
+                                    chartWrapper.style.maxWidth = labels.length * 70 + 'px';
+                                }
 
                                 new Chart(ctx, {
                                     type: 'line',
                                     data: {
-                                        labels: [{{ implode(',', range(1, count($elevations))) }}],
+                                        labels: labels,
                                         datasets: [{
                                             label: 'Max. elevation (metres)',
                                             data: [{{ implode(',', $elevations) }}],
-                                            borderWidth: 2,
-                                            borderColor: '#93cd06',
-                                            pointBackgroundColor: '#93cd06',
+                                            fill: true,
+                                            backgroundColor: '#93cd0620',
+                                            borderWidth: 1,
+                                            borderColor: '#3eb368',
+                                            pointBackgroundColor: '#3eb368',
                                         }]
                                     },
                                     options: {
+                                        animation: false,
+                                        maintainAspectRatio: false,
+                                        layout: {
+                                            padding: {
+                                                left: 40,
+                                                right: 40,
+                                                bottom: 0
+                                            }
+                                        },
                                         plugins:{
+                                            tooltip: {
+                                                enabled: false
+                                            },
+                                            datalabels: {
+                                                color: '#3eb368',
+                                                align: 'top',
+                                                offset: 10,
+                                                formatter: function(value, ctx) {
+                                                  return 'Day ' + ctx.chart.data.labels[ctx.dataIndex]+ '\n' + value + ' m';
+                                                //   return `${value} m`;
+                                                },
+                                            },
                                             legend: {
                                                 display: false
                                             },
                                         },
                                         scales: {
                                             x: {
-                                                title: {
-                                                    display: true,
-                                                    text: 'Days'
-                                                }
+                                                display: false
                                             },
                                             y: {
-                                                beginAtZero: true,
-                                                title: {
-                                                    display: true,
-                                                    text: 'Max. Elevation (metres)'
-                                                }
+                                                display: false,
+                                                max: 6500
                                             }
                                         }
                                     }
@@ -607,14 +649,14 @@ if (session()->has('error_message')) {
                         <div id="inclusions" class="py-10 tds">
                             <div class="grid gap-4 lg:grid-cols-2">
                                 <div>
-                                    <h2 class="text-2xl uppercase lg:text-3xl font-display text-gray-600">Includes</h2>
+                                    <h2 class="mb-4 text-2xl uppercase lg:text-3xl font-display text-gray-600">Includes</h2>
                                     <ul class="includes">
                                         <?= $trip->trip_include_exclude->include ?>
                                     </ul>
                                 </div>
 
                                 <div>
-                                    <h2 class="text-2xl uppercase lg:text-3xl font-display text-gray-600">Doesn't Include</h2>
+                                    <h2 class="mb-4 text-2xl uppercase lg:text-3xl font-display text-gray-600">Doesn't Include</h2>
                                     <ul class="excludes">
                                         <?= $trip->trip_include_exclude->exclude ?>
                                     </ul>
@@ -626,9 +668,66 @@ if (session()->has('error_message')) {
                     {{-- Departure dates --}}
                     @if (!$trip->trip_departures->isEmpty())
                         <div id="date-price" class="tds py-10">
-                            <h2 class="text-2xl uppercase lg:text-3xl font-display text-gray-600">Upcoming Departure Dates
-                            </h2>
-                            <div class="table-wrapper-scroll">
+                            <div class="mb-4 flex flex-wrap justify-between items-center gap-10">
+                                <h2 class="text-2xl uppercase lg:text-3xl font-display text-gray-600">Upcoming Departure Dates
+                                </h2>
+                                <div class="flex gap-2">
+                                    <button class="flex items-center gap-2 border border-gray-100 p-2 text-sm rounded hover:text-primary hover:border-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
+                                          <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+                                        </svg>
+                                        Group departures
+                                    </button>
+                                    <button class="flex items-center gap-2 border border-gray-100 p-2 text-sm rounded hover:text-primary hover:border-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
+                                          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"/>
+                                        </svg>
+                                        Private departures
+                                    </button>
+                                </div>
+                            </div>
+                            @php
+                                $months = ['Dec-2023', 'Jan-2024', 'Feb-2024', 'Mar-2024', 'Apr-2024', 'May-2024', 'Jun-2024', 'Jul-2024', 'Aug-2024', 'Sep-2024', 'Oct-2024', 'Nov-2024', 'Dec-2024'];
+                            @endphp
+                            <div class="mb-4 grid grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-2">
+                                <button class="p-2 border border-primary bg-primary text-white px-4 py-2 text-center rounded font-bold"> All <br> Dep</button>
+                                @foreach($months as $month)
+                                    <button class="p-2 border border-gray-100 px-4 py-2 text-center rounded font-bold hover:border-primary hover:text-primary">{!! Str::replaceFirst('-', '<br>', $month) !!}</button>
+                                @endforeach
+                            </div>
+
+                            <div class="mb-6 grid gap-4">
+                                @foreach ($trip->trip_departures as $departure)
+                                    <div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
+                                        <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Group</div>
+                                        <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
+                                            <div class="bg-red-600 w-16 text-white text-xs px-1 pt-4 text-center" style="rotate: 45deg; margin-top: -8px">-10%</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold">{{ formatDate($departure->from_date) }}</div>
+                                            <div class="text-sm text-gray-400">From Kathmandu</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold">{{ formatDate($departure->to_date) }}</div>
+                                            <div class="text-sm text-gray-400">To Kathmandu</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold">2</div>
+                                            <div class="text-sm text-gray-400">people booked</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold">From <span class="text-red"><s>US $ {{ number_format($trip->cost) }}</s></span></div>
+                                            <div class="font-bold text-lg">US$ {{ number_format($departure->price) }}</div>
+                                            <div class="text-sm"><span class="text-gray-400">Saving </span>US$ {{ number_format($trip->cost - $departure->price ) }}</div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <a href="{{ route('front.trips.departure-booking', ['slug' => $trip->slug, 'id' => $departure->id]) }}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            {{-- <div class="table-wrapper-scroll">
                                 <table class="table mb-2">
                                     <thead>
                                         <tr class="bg-gray">
@@ -675,14 +774,64 @@ if (session()->has('error_message')) {
                                     </tbody>
                                 </table>
                                 <!-- <p class="text-center"><button id="more-dates" class="btn btn-sm btn-gray">See more dates</button></p> -->
-                            </div>
+                            </div> --}}
                         </div>
                     @endif{{-- Departure dates --}}
+
+                    {{-- Why book --}}
+                    <div class="p-4 bg-light border border-primary" x-data="{isExpanded: false}">
+                        <div class="mb-2 font-display text-xl uppercase">Why Book with Nature Trail</div>
+                        <ul class="mb-2 grid grid-cols-2 gap-2">
+                            <li class="relative pl-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
+                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </svg>
+                                Earn <b class="font-bold">US$ 39+</b> in travel credits.</li>
+                            <li class="relative pl-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
+                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </svg>
+                                Excellent customer service. Our travel experts are ready to help you 24/7.</li>
+                            <li class="relative pl-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
+                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </svg>
+                                Best price guaranteed.</li>
+                            <li class="relative pl-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
+                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </svg>
+                                No credit card or booking fees.</li>
+                            <li class="relative pl-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
+                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </svg>
+                                100% financial protection. </li>
+                            <li class="relative pl-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
+                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </svg>
+                                Carbon neutral tours.</li>
+                            {{-- li elements after the 6th --}}
+                            <div class="col-span-2" x-show="isExpanded">
+                                <li class="relative pl-6 pb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
+                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                    </svg>
+                                    25,000+ trip reviews, with an average rating of 4.8 out of 5.</li>
+                            </div>
+                        </ul>
+                        <div class="text-sm text-primary">
+                            <button x-on:click="isExpanded=true" x-show="!isExpanded">Read more reasons to book with Nature Trail</button>
+                            <button x-on:click="isExpanded=false" x-show="isExpanded">Read less</button>
+                        </div>
+                    </div>
+                    {{-- Why book --}}
 
                     {{-- Equipment List --}}
                     @if ($trip->trip_seo->about_leader)
                         <div id="equipment-list" class="pt-10 pb-4 mb-4 tds">
-                            <h2 class="text-2xl uppercase lg:text-3xl font-display text-gray-600">Equipment List</h2>
+                            <h2 class="mb-4 text-2xl uppercase lg:text-3xl font-display text-gray-600">Equipment List</h2>
                             <div class="prose">
                                 {!! $trip->trip_seo->about_leader !!}
                             </div>
@@ -725,7 +874,7 @@ if (session()->has('error_message')) {
                     {{-- Trip reviews --}}
                     @if (iterator_count($trip->trip_reviews))
                         <div id="reviews" class="pt-10 pb-4 mb-4 tds">
-                            <div class="items-center justify-between mb-4 lg:flex">
+                            <div class="items-center justify-between mb-4 lg:flex gap-4">
                                 <h2 class="text-2xl uppercase text-3xl font-display text-gray-600">Reviews
                                 </h2>
 
@@ -838,10 +987,69 @@ if (session()->has('error_message')) {
                 {{-- aside --}}
                 <aside class="pt-10">
 
-                    <div class="sticky" style="top: 10rem;  ">
-                        @include('front.elements.price_card')
-                        <div class="mb-10">@include('front.elements.enquiry')</div>
+                    <div id="aside-contents">
+
+                        <div>
+                            @include('front.elements.price_card')
+                            <div class="mb-10">@include('front.elements.enquiry')</div>
+                        </div>
+
+                        <div class="price-card border border-gray-100">
+                        <div class="p-8">
+                            <div class="font-bold mb-4">
+                                Tour with Flexible Booking Policy
+                            </div>
+                            <ul>
+                                <li class="flex gap-2 mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="flex-shrink-0 w-8 h-8 text-primary -mt-1" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                    </svg>
+                                    <div class="prose text-sm">
+                                        <div class="font-bold">
+                                            Change dates
+                                        </div>
+                                        It is free to change your tour start date prior to 30 days of departure.
+                                    </div>
+                                </li>
+                                <li class="flex gap-2 mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="flex-shrink-0 w-8 h-8 text-primary -mt-1" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                    </svg>
+                                    <div class="prose text-sm">
+                                        <div class="font-bold">
+                                            Choose a different tour
+                                        </div>
+                                        You can select a new tour run by the same operator up to 30 days before departure.
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
+
+                    </div>
+
+                    <div id="sticky-price" class="hidden sticky" style="top:10rem;">
+                        @include('front.elements.price_card')
+                    </div>
+
+
+                    @push('scripts')
+                        <script>
+                            const stickyPrice = document.querySelector('#sticky-price');
+                            const asideIO = new IntersectionObserver(
+                                (entries, observer) => {
+                                    if(!entries[0].isIntersecting) {
+                                        stickyPrice.classList.add('lg:block');
+                                    } else {
+                                        stickyPrice.classList.remove('lg:block');
+                                    };
+                                },
+                                {}
+                            );
+                            asideIO.observe(document.querySelector('#aside-contents'));
+                        </script>
+                    @endpush
 
 
                     {{-- <!-- Route Map -->
@@ -992,7 +1200,7 @@ if (session()->has('error_message')) {
     </script>
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            
+
             // const monthSlider = tns({
             //     container: '.trips-month-slider',
             //     nav: false,

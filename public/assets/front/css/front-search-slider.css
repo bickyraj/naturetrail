@@ -8,7 +8,7 @@
 }
 
 .ui-slider-range {
-    background-color: #0064ff;
+    background-color: var(--primary);
 }
 
 input:focus {
@@ -26,7 +26,7 @@ input:focus {
 }
 
 .custom-slider-container {
-    padding-top: 12px;
+    padding-top: 6px;
 }
 
 .custom-slider {}
