@@ -686,45 +686,61 @@ if (session()->has('error_message')) {
                                     </button>
                                 </div>
                             </div>
-                            @php
-                                $months = ['Dec-2023', 'Jan-2024', 'Feb-2024', 'Mar-2024', 'Apr-2024', 'May-2024', 'Jun-2024', 'Jul-2024', 'Aug-2024', 'Sep-2024', 'Oct-2024', 'Nov-2024', 'Dec-2024'];
-                            @endphp
+                            <?php
+                            $currentYear = date('Y');
+$currentMonth = date('n');
+$monthsArray = array();
+for ($i = 0; $i < 12; $i++) {
+    $year = $currentYear;
+    $month = $currentMonth + $i;
+    if ($month > 12) {
+        $month -= 12;
+        $year++;
+    }
+    //  $monthsArray[] = date('M Y', );
+     $monthsArray[] = strtotime("$year-$month-01");
+}
+
+                            ?>
                             <div class="mb-4 grid grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-2">
-                                <button class="p-2 border border-primary bg-primary text-white px-4 py-2 text-center rounded font-bold"> All <br> Dep</button>
-                                @foreach($months as $month)
-                                    <button class="p-2 border border-gray-100 px-4 py-2 text-center rounded font-bold hover:border-primary hover:text-primary">{!! Str::replaceFirst('-', '<br>', $month) !!}</button>
+                                <button id="all-departure-filter" class="p-2 border border-primary bg-primary text-white px-4 py-2 text-center rounded font-bold"> All <br> Dep</button>
+                                @foreach($monthsArray as $month)
+                                    <button data-date="{{ $month }}" class="select-date-departure p-2 border border-gray-100 px-4 py-2 text-center rounded font-bold hover:border-primary hover:text-primary">{{ Str::replaceFirst('-', '<br>', date('M Y', $month)) }}</button>
                                 @endforeach
                             </div>
 
                             <div class="mb-6 grid gap-4">
-                                @foreach ($trip->trip_departures as $departure)
-                                    <div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
-                                        <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Group</div>
-                                        <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
-                                            <div class="bg-red-600 w-16 text-white text-xs px-1 pt-4 text-center" style="rotate: 45deg; margin-top: -8px">-10%</div>
+                                <?php $trip_departures = $trip->trip_departures;?>
+                                <div id="departre-filter-block">
+                                    @foreach ($trip_departures as $departure)
+                                        <div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
+                                            <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Group</div>
+                                            <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
+                                                <div class="bg-red-600 w-16 text-white text-xs px-1 pt-4 text-center" style="rotate: 45deg; margin-top: -8px">-10%</div>
+                                            </div>
+                                            <div>
+                                                <div class="font-bold">{{ formatDate($departure->from_date) }}</div>
+                                                <div class="text-sm text-gray-400">From Kathmandu</div>
+                                            </div>
+                                            <div>
+                                                <div class="font-bold">{{ formatDate($departure->to_date) }}</div>
+                                                <div class="text-sm text-gray-400">To Kathmandu</div>
+                                            </div>
+                                            <div>
+                                                <div class="font-bold">{{ $departure->seats }}</div>
+                                                <div class="text-sm text-gray-400">people booked</div>
+                                            </div>
+                                            <div>
+                                                <div class="font-bold">From <span class="text-red"><s>US $ {{ number_format($trip->cost) }}</s></span></div>
+                                                <div class="font-bold text-lg">US$ {{ number_format($departure->price) }}</div>
+                                                <div class="text-sm"><span class="text-gray-400">Saving </span>US$ {{ number_format($trip->cost - $departure->price ) }}</div>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <a href="{{ route('front.trips.departure-booking', ['slug' => $trip->slug, 'id' => $departure->id]) }}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <div class="font-bold">{{ formatDate($departure->from_date) }}</div>
-                                            <div class="text-sm text-gray-400">From Kathmandu</div>
-                                        </div>
-                                        <div>
-                                            <div class="font-bold">{{ formatDate($departure->to_date) }}</div>
-                                            <div class="text-sm text-gray-400">To Kathmandu</div>
-                                        </div>
-                                        <div>
-                                            <div class="font-bold">2</div>
-                                            <div class="text-sm text-gray-400">people booked</div>
-                                        </div>
-                                        <div>
-                                            <div class="font-bold">From <span class="text-red"><s>US $ {{ number_format($trip->cost) }}</s></span></div>
-                                            <div class="font-bold text-lg">US$ {{ number_format($departure->price) }}</div>
-                                            <div class="text-sm"><span class="text-gray-400">Saving </span>US$ {{ number_format($trip->cost - $departure->price ) }}</div>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <a href="{{ route('front.trips.departure-booking', ['slug' => $trip->slug, 'id' => $departure->id]) }}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
 
                             {{-- <div class="table-wrapper-scroll">
@@ -1302,6 +1318,76 @@ if (session()->has('error_message')) {
     </script>
     <script>
         $(function() {
+            $(".select-date-departure").on('click', function(event) {
+                const dateStr = $(this).data('date');
+                filterDepartureByMonth(dateStr);
+            });
+            const trip_departures = @json($trip_departures);
+            const trip = @json($trip);
+
+            $("#all-departure-filter").on('click', function(event) {
+                filterDepartureByMonth("all");
+            });
+            function filterDepartureByMonth(dateStr) {
+                let html = "";
+
+                let filteredDepartures = trip_departures;
+                // Get the month from the startTimestamp
+                if (dateStr !== "all") {
+                    const startMonth = new Date(dateStr * 1000).getMonth() + 1; // Adding 1 because months are zero-based
+                    // Filter the array based on the start date in PHP strtotime format
+                    filteredDepartures = trip_departures.filter(departure => {
+                        const departureMonth = new Date(departure.from_date.replace(/-/g, '/')).getMonth() + 1; // Adding 1 because months are zero-based
+                        return departureMonth === startMonth
+                    });
+                }
+                if (filteredDepartures.length > 0) {
+                    $.each(filteredDepartures, (i, departure) => {
+                        html += `<div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
+                            <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Group</div>
+                            <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
+                                <div class="bg-red-600 w-16 text-white text-xs px-1 pt-4 text-center" style="rotate: 45deg; margin-top: -8px">-10%</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">${formatDate(departure.from_date)}</div>
+                                <div class="text-sm text-gray-400">From Kathmandu</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">${formatDate(departure.to_date)}</div>
+                                <div class="text-sm text-gray-400">To Kathmandu</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">${departure.seats}</div>
+                                <div class="text-sm text-gray-400">people booked</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">From <span class="text-red"><s>US $ ${numberFormatFromString(trip.cost)}</s></span></div>
+                                <div class="font-bold text-lg">US$ ${numberFormatFromString(departure.price)}</div>
+                                <div class="text-sm"><span class="text-gray-400">Saving </span>US$ ${numberFormatFromString(trip.cost - departure.price)}</div>
+                            </div>
+                            <div class="flex items-center">
+                                <a href="route('front.trips.departure-booking', ['slug' => trip.slug, 'id' => departure.id])}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
+                            </div>
+                        </div>`;
+                    })
+                } else {
+                    html = "No departures found.";
+                }
+                console.log(filteredDepartures);
+                $("#departre-filter-block").html(html);
+            }
+
+            function formatDate(date) {
+                return new Date(date.replace(/-/g, '/')).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    });
+            }
+
+            function numberFormatFromString(price) {
+                return parseInt(price, 10).toLocaleString();
+            }
             var enquiry_validator = $("#enquiry-form").validate({
                 ignore: "",
                 rules: {
