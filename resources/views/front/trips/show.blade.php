@@ -9,6 +9,7 @@ if (session()->has('error_message')) {
     $session_error_message = session('error_message');
     session()->forget('error_message');
 }
+// dd($trip->toArray());
 ?>
 @extends('layouts.front_inner')
 @section('meta_og_title'){!! $trip->trip_seo->meta_title ?? '' !!}@stop
@@ -672,13 +673,13 @@ if (session()->has('error_message')) {
                                 <h2 class="text-2xl uppercase lg:text-3xl font-display text-gray-600">Upcoming Departure Dates
                                 </h2>
                                 <div class="flex gap-2">
-                                    <button id="group-departure" class="flex items-center gap-2 border border-gray-100 p-2 text-sm rounded hover:text-primary hover:border-primary border-primary text-primary">
+                                    <button id="group-departure" class="flex items-center gap-2 border border-gray-100 p-2 text-sm rounded hover:text-primary hover:border-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
                                           <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
                                         </svg>
                                         Group departures
                                     </button>
-                                    <button id="private-departure" class="flex items-center gap-2 border border-gray-100 p-2 text-sm rounded hover:text-primary hover:border-primary">
+                                    <button id="private-departure" class="flex items-center gap-2 border border-gray-100 p-2 text-sm rounded hover:text-primary hover:border-primary border-primary text-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
                                           <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"/>
                                         </svg>
@@ -711,7 +712,7 @@ for ($i = 0; $i < 12; $i++) {
 
                             <div class="mb-6 grid gap-4">
                                 <?php $trip_departures = $trip->trip_departures;?>
-                                <div id="departre-filter-block">
+                                <div id="departure-filter-block">
                                     @foreach ($trip_departures as $departure)
                                         <div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
                                             <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Group</div>
@@ -740,6 +741,10 @@ for ($i = 0; $i < 12; $i++) {
                                             </div>
                                         </div>
                                     @endforeach
+                                </div>
+                                {{-- bicky --}}
+                                <div style=" display: flex; justify-content: center;">
+                                    <button id="show-more-departure-button" style="display: none;" class="text-xs bg-light rounded-full px-4 py-2">Show more</button>
                                 </div>
                             </div>
 
@@ -1182,8 +1187,8 @@ for ($i = 0; $i < 12; $i++) {
                 <div class="container">
                     <h2 class="mb-10 text-2xl uppercase lg:text-3xl font-display text-gray-600">Similar Tours</h2>
                     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
-                        @forelse ($trip->similar_trips as $trip)
-                            @include('front.elements.tour-card', ['tour' => $trip])
+                        @forelse ($trip->similar_trips as $similar_trip)
+                            @include('front.elements.tour-card', ['tour' => $similar_trip])
                         @empty
                         @endforelse
                     </div>
@@ -1319,6 +1324,7 @@ for ($i = 0; $i < 12; $i++) {
     <script>
         $(function() {
             let groupDepartureStatus = true;
+            let privateDepartureList = [];
             $(".select-date-departure").on('click', function(event) {
                 const dateStr = $(this).data('date');
                 filterDepartureByMonth(dateStr);
@@ -1378,7 +1384,7 @@ for ($i = 0; $i < 12; $i++) {
                 } else {
                     html = "No departures found.";
                 }
-                $("#departre-filter-block").html(html);
+                $("#departure-filter-block").html(html);
             }
 
             function showPrivateDeparture(month = 1) {
@@ -1394,39 +1400,58 @@ for ($i = 0; $i < 12; $i++) {
                         next = false;
                     }
                 }
-                // console.log(dateList);
+                privateDepartureList = dateList;
                 let html = "";
-                $.each(dateList, function(i, v) {
+                $("#departure-filter-block").html(html);
+                displayMorePrivateDepartureItems(privateDepartureList, 10);
+            }
+
+            function displayMorePrivateDepartureItems(items, limit) {
+                const itemsContainer = document.getElementById('departure-filter-block');
+                // Display the first 'limit' items
+                for (let i = 0; i < limit && i < items.length; i++) {
+                    const item = items[i];
                     let urlroute = `{{ route('front.trips.departure-booking', ['slug' => 'TRIP_SLUG', 'id' => 'DEPARTURE_ID']) }}`;
                     urlroute = urlroute.replace('TRIP_SLUG', trip.slug);
                     urlroute = urlroute.replace('DEPARTURE_ID', trip.id);
-                    html += `<div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
+                    const listItem = `<div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
                             <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Private</div>
                             <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
                                 <div class="bg-red-600 w-16 text-white text-xs px-1 pt-4 text-center" style="rotate: 45deg; margin-top: -8px">-10%</div>
                             </div>
                             <div>
-                                <div class="font-bold">${convertToFormattedDate(v.start)}</div>
+                                <div class="font-bold">${convertToFormattedDate(item.start)}</div>
                                 <div class="text-sm text-gray-400">From Kathmandu</div>
                             </div>
                             <div>
-                                <div class="font-bold">${convertToFormattedDate(v.end)}</div>
+                                <div class="font-bold">${convertToFormattedDate(item.end)}</div>
                                 <div class="text-sm text-gray-400">To Kathmandu</div>
                             </div>
                             <div>
-                                <div class="font-bold">1</div>
-                                <div class="text-sm text-gray-400">people booked</div>
-                            </div>
-                            <div>
-                                <div class="font-bold text-lg">US$ ${numberFormatFromString(trip.cost)}</div>
+                                <div class="font-bold text-lg">US$ ${numberFormatFromString(((trip.offer_price != "")? trip.offer_price: trip.cost))}</div>
                             </div>
                             <div class="flex items-center">
                                 <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
                             </div>
                         </div>`;
-                });
-                $("#departre-filter-block").html(html);
+                    $(itemsContainer).append(listItem);
+                }
+
+                // If there are more items, add a "Show More" button
+                if (items.length > limit) {
+                    privateDepartureList = privateDepartureList.slice(limit);
+
+                    $('#show-more-departure-button').show();
+                } else {
+                    $('#show-more-departure-button').hide();
+                }
             }
+
+            $("#show-more-departure-button").on('click', function(event) {
+                displayMorePrivateDepartureItems(privateDepartureList, 10); // Display the next set of items
+            });
+
+            $("#private-departure").click();
 
             function isTimestampInMonth(timestamp, targetMonth) {
                 const date = new Date(timestamp * 1000);
@@ -1519,7 +1544,7 @@ for ($i = 0; $i < 12; $i++) {
                         html = "No departures found.";
                     }
                     console.log(filteredDepartures);
-                    $("#departre-filter-block").html(html);
+                    $("#departure-filter-block").html(html);
                 } else {
                     // private
                     let startMonth = 1;
