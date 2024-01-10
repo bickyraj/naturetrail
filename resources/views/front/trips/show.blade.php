@@ -1323,7 +1323,7 @@ for ($i = 0; $i < 12; $i++) {
                 const dateStr = $(this).data('date');
                 filterDepartureByMonth(dateStr);
             });
-            const trip_departures = @json($trip_departures);
+            const trip_departures = @json($trip_departures ?? []);
             const trip = @json($trip);
 
             $("#group-departure").on('click', function(event) {
