@@ -737,7 +737,7 @@ for ($i = 0; $i < 12; $i++) {
                                                 <div class="text-sm"><span class="text-gray-400">Saving </span>US$ {{ number_format($trip->cost - $departure->price ) }}</div>
                                             </div>
                                             <div class="flex items-center">
-                                                <a href="{{ route('front.trips.departure-booking', ['slug' => $trip->slug, 'id' => $departure->id]) }}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
+                                                <a href="{{ route('front.trips.departure-booking', ['slug' => $trip->slug, 'id' => $departure->id]) }}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Check Availability</a>
                                             </div>
                                         </div>
                                     @endforeach
@@ -1325,6 +1325,7 @@ for ($i = 0; $i < 12; $i++) {
         $(function() {
             let groupDepartureStatus = true;
             let privateDepartureList = [];
+            let groupDepartureList = [];
             $(".select-date-departure").on('click', function(event) {
                 const dateStr = $(this).data('date');
                 filterDepartureByMonth(dateStr);
@@ -1347,44 +1348,17 @@ for ($i = 0; $i < 12; $i++) {
             });
 
             function showGroupDeparture() {
+                $('#show-more-departure-button').hide();
                 let html = "";
                 let filteredDepartures = trip_departures;
                 if (filteredDepartures.length > 0) {
-                    $.each(filteredDepartures, (i, departure) => {
-                        let urlroute = `{{ route('front.trips.departure-booking', ['slug' => 'TRIP_SLUG', 'id' => 'DEPARTURE_ID']) }}`;
-                        urlroute = urlroute.replace('TRIP_SLUG', trip.slug);
-                        urlroute = urlroute.replace('DEPARTURE_ID', departure.id);
-                        html += `<div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
-                            <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Group</div>
-                            <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
-                                <div class="bg-red-600 w-16 text-white text-xs px-1 pt-4 text-center" style="rotate: 45deg; margin-top: -8px">-10%</div>
-                            </div>
-                            <div>
-                                <div class="font-bold">${formatDate(departure.from_date)}</div>
-                                <div class="text-sm text-gray-400">From Kathmandu</div>
-                            </div>
-                            <div>
-                                <div class="font-bold">${formatDate(departure.to_date)}</div>
-                                <div class="text-sm text-gray-400">To Kathmandu</div>
-                            </div>
-                            <div>
-                                <div class="font-bold">${departure.seats}</div>
-                                <div class="text-sm text-gray-400">people booked</div>
-                            </div>
-                            <div>
-                                <div class="font-bold">From <span class="text-red"><s>US $ ${numberFormatFromString(trip.cost)}</s></span></div>
-                                <div class="font-bold text-lg">US$ ${numberFormatFromString(departure.price)}</div>
-                                <div class="text-sm"><span class="text-gray-400">Saving </span>US$ ${numberFormatFromString(trip.cost - departure.price)}</div>
-                            </div>
-                            <div class="flex items-center">
-                                <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
-                            </div>
-                        </div>`;
-                    })
+                    groupDepartureList = trip_departures;
+                    $("#departure-filter-block").html(html);
+                    displayMoreGroupDepartureItems(groupDepartureList, 10);
                 } else {
                     html = "No departures found.";
+                    $("#departure-filter-block").html(html);
                 }
-                $("#departure-filter-block").html(html);
             }
 
             function showPrivateDeparture(month = 1) {
@@ -1404,6 +1378,52 @@ for ($i = 0; $i < 12; $i++) {
                 let html = "";
                 $("#departure-filter-block").html(html);
                 displayMorePrivateDepartureItems(privateDepartureList, 10);
+            }
+
+            function displayMoreGroupDepartureItems(items, limit) {
+                const itemsContainer = document.getElementById('departure-filter-block');
+                // Display the first 'limit' items
+                for (let i = 0; i < limit && i < items.length; i++) {
+                    const item = items[i];
+                    let urlroute = `{{ route('front.trips.departure-booking', ['slug' => 'TRIP_SLUG', 'id' => 'DEPARTURE_ID']) }}`;
+                        urlroute = urlroute.replace('TRIP_SLUG', trip.slug);
+                        urlroute = urlroute.replace('DEPARTURE_ID', item.id);
+                        listItem = `<div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
+                            <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Group</div>
+                            <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
+                                <div class="bg-red-600 w-16 text-white text-xs px-1 pt-4 text-center" style="rotate: 45deg; margin-top: -8px">-10%</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">${formatDate(item.from_date)}</div>
+                                <div class="text-sm text-gray-400">From Kathmandu</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">${formatDate(item.to_date)}</div>
+                                <div class="text-sm text-gray-400">To Kathmandu</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">${item.seats}</div>
+                                <div class="text-sm text-gray-400">people booked</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">From <span class="text-red"><s>US $ ${numberFormatFromString(trip.cost)}</s></span></div>
+                                <div class="font-bold text-lg">US$ ${numberFormatFromString(item.price)}</div>
+                                <div class="text-sm"><span class="text-gray-400">Saving </span>US$ ${numberFormatFromString(trip.cost - item.price)}</div>
+                            </div>
+                            <div class="flex items-center">
+                                <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Check Availability</a>
+                            </div>
+                        </div>`;
+                    $(itemsContainer).append(listItem);
+                }
+
+                // If there are more items, add a "Show More" button
+                if (items.length > limit) {
+                    groupDepartureList = groupDepartureList.slice(limit);
+                    $('#show-more-departure-button').show();
+                } else {
+                    $('#show-more-departure-button').hide();
+                }
             }
 
             function displayMorePrivateDepartureItems(items, limit) {
@@ -1431,7 +1451,7 @@ for ($i = 0; $i < 12; $i++) {
                                 <div class="font-bold text-lg">US$ ${numberFormatFromString(((trip.offer_price != "")? trip.offer_price: trip.cost))}</div>
                             </div>
                             <div class="flex items-center">
-                                <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
+                                <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Check Availability</a>
                             </div>
                         </div>`;
                     $(itemsContainer).append(listItem);
@@ -1440,7 +1460,6 @@ for ($i = 0; $i < 12; $i++) {
                 // If there are more items, add a "Show More" button
                 if (items.length > limit) {
                     privateDepartureList = privateDepartureList.slice(limit);
-
                     $('#show-more-departure-button').show();
                 } else {
                     $('#show-more-departure-button').hide();
@@ -1448,7 +1467,11 @@ for ($i = 0; $i < 12; $i++) {
             }
 
             $("#show-more-departure-button").on('click', function(event) {
-                displayMorePrivateDepartureItems(privateDepartureList, 10); // Display the next set of items
+                if (groupDepartureStatus) {
+                    displayMoreGroupDepartureItems(groupDepartureList, 10); // Display the next set of items
+                } else {
+                    displayMorePrivateDepartureItems(privateDepartureList, 10); // Display the next set of items
+                }
             });
 
             $("#private-departure").click();
