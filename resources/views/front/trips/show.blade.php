@@ -672,13 +672,13 @@ if (session()->has('error_message')) {
                                 <h2 class="text-2xl uppercase lg:text-3xl font-display text-gray-600">Upcoming Departure Dates
                                 </h2>
                                 <div class="flex gap-2">
-                                    <button class="flex items-center gap-2 border border-gray-100 p-2 text-sm rounded hover:text-primary hover:border-primary">
+                                    <button id="group-departure" class="flex items-center gap-2 border border-gray-100 p-2 text-sm rounded hover:text-primary hover:border-primary border-primary text-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
                                           <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
                                         </svg>
                                         Group departures
                                     </button>
-                                    <button class="flex items-center gap-2 border border-gray-100 p-2 text-sm rounded hover:text-primary hover:border-primary">
+                                    <button id="private-departure" class="flex items-center gap-2 border border-gray-100 p-2 text-sm rounded hover:text-primary hover:border-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
                                           <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"/>
                                         </svg>
@@ -1318,6 +1318,7 @@ for ($i = 0; $i < 12; $i++) {
     </script>
     <script>
         $(function() {
+            let groupDepartureStatus = true;
             $(".select-date-departure").on('click', function(event) {
                 const dateStr = $(this).data('date');
                 filterDepartureByMonth(dateStr);
@@ -1325,24 +1326,28 @@ for ($i = 0; $i < 12; $i++) {
             const trip_departures = @json($trip_departures);
             const trip = @json($trip);
 
-            $("#all-departure-filter").on('click', function(event) {
-                filterDepartureByMonth("all");
+            $("#group-departure").on('click', function(event) {
+                document.getElementById("private-departure").classList.remove('text-primary', 'border-primary');
+                document.getElementById("group-departure").classList.add('text-primary', 'border-primary');
+                showGroupDeparture();
+                groupDepartureStatus = true;
             });
-            function filterDepartureByMonth(dateStr) {
-                let html = "";
 
+            $("#private-departure").on('click', function(event) {
+                document.getElementById("group-departure").classList.remove('text-primary', 'border-primary');
+                document.getElementById("private-departure").classList.add('text-primary', 'border-primary');
+                showPrivateDeparture();
+                groupDepartureStatus = false;
+            });
+
+            function showGroupDeparture() {
+                let html = "";
                 let filteredDepartures = trip_departures;
-                // Get the month from the startTimestamp
-                if (dateStr !== "all") {
-                    const startMonth = new Date(dateStr * 1000).getMonth() + 1; // Adding 1 because months are zero-based
-                    // Filter the array based on the start date in PHP strtotime format
-                    filteredDepartures = trip_departures.filter(departure => {
-                        const departureMonth = new Date(departure.from_date.replace(/-/g, '/')).getMonth() + 1; // Adding 1 because months are zero-based
-                        return departureMonth === startMonth
-                    });
-                }
                 if (filteredDepartures.length > 0) {
                     $.each(filteredDepartures, (i, departure) => {
+                        let urlroute = `{{ route('front.trips.departure-booking', ['slug' => 'TRIP_SLUG', 'id' => 'DEPARTURE_ID']) }}`;
+                        urlroute = urlroute.replace('TRIP_SLUG', trip.slug);
+                        urlroute = urlroute.replace('DEPARTURE_ID', departure.id);
                         html += `<div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
                             <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Group</div>
                             <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
@@ -1366,15 +1371,163 @@ for ($i = 0; $i < 12; $i++) {
                                 <div class="text-sm"><span class="text-gray-400">Saving </span>US$ ${numberFormatFromString(trip.cost - departure.price)}</div>
                             </div>
                             <div class="flex items-center">
-                                <a href="route('front.trips.departure-booking', ['slug' => trip.slug, 'id' => departure.id])}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
+                                <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
                             </div>
                         </div>`;
                     })
                 } else {
                     html = "No departures found.";
                 }
-                console.log(filteredDepartures);
                 $("#departre-filter-block").html(html);
+            }
+
+            function showPrivateDeparture(month = 1) {
+                const trip_days = {!! json_encode($trip->duration) !!};
+                const dateList = [];
+                let next = true;
+                let startDate = convertToTimestamp(`2024-0${month}-01`);
+                while (next) {
+                    const generateDate = getDateRangeForGap(startDate, parseInt(trip_days));
+                    dateList.push(generateDate);
+                    startDate = getNextDayTimestamp(generateDate.start);
+                    if (!isTimestampInMonth(startDate, month)) {
+                        next = false;
+                    }
+                }
+                // console.log(dateList);
+                let html = "";
+                $.each(dateList, function(i, v) {
+                    let urlroute = `{{ route('front.trips.departure-booking', ['slug' => 'TRIP_SLUG', 'id' => 'DEPARTURE_ID']) }}`;
+                    urlroute = urlroute.replace('TRIP_SLUG', trip.slug);
+                    urlroute = urlroute.replace('DEPARTURE_ID', trip.id);
+                    html += `<div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
+                            <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Private</div>
+                            <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
+                                <div class="bg-red-600 w-16 text-white text-xs px-1 pt-4 text-center" style="rotate: 45deg; margin-top: -8px">-10%</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">${convertToFormattedDate(v.start)}</div>
+                                <div class="text-sm text-gray-400">From Kathmandu</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">${convertToFormattedDate(v.end)}</div>
+                                <div class="text-sm text-gray-400">To Kathmandu</div>
+                            </div>
+                            <div>
+                                <div class="font-bold">1</div>
+                                <div class="text-sm text-gray-400">people booked</div>
+                            </div>
+                            <div>
+                                <div class="font-bold text-lg">US$ ${numberFormatFromString(trip.cost)}</div>
+                            </div>
+                            <div class="flex items-center">
+                                <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
+                            </div>
+                        </div>`;
+                });
+                $("#departre-filter-block").html(html);
+            }
+
+            function isTimestampInMonth(timestamp, targetMonth) {
+                const date = new Date(timestamp * 1000);
+                const month = date.getMonth() + 1; // Adding 1 to match the input targetMonth (1-based)
+
+                return month === targetMonth;
+            }
+
+            function getNextDayTimestamp(timestamp) {
+                const currentDate = new Date(timestamp * 1000);
+                const nextDate = new Date(currentDate);
+                nextDate.setDate(currentDate.getDate() + 1);
+
+                const nextDayTimestamp = Math.floor(nextDate.getTime() / 1000);
+                return nextDayTimestamp;
+            }
+
+            function convertToTimestamp(dateString) {
+                    const timestamp = Math.floor(Date.parse(dateString) / 1000);
+                    return timestamp;
+                }
+
+            function convertToFormattedDate(timestamp) {
+                const date = new Date(timestamp * 1000); // Convert timestamp to milliseconds
+                const options = { day: 'numeric', month: 'short', year: 'numeric' };
+                return date.toLocaleDateString('en-US', options);
+            }
+
+            function getDateRangeForGap(startTimestamp, gap) {
+                const startDateObj = new Date(startTimestamp * 1000);
+                const endDateObj = new Date(startDateObj.getFullYear(), startDateObj.getMonth(), startDateObj.getDate() + gap - 1);
+
+                const startTimestampResult = Math.floor(startDateObj.getTime() / 1000);
+                const endTimestampResult = Math.floor(endDateObj.getTime() / 1000);
+
+                return { start: startTimestampResult, end: endTimestampResult };
+            }
+
+            $("#all-departure-filter").on('click', function(event) {
+                filterDepartureByMonth("all");
+            });
+
+            function filterDepartureByMonth(dateStr) {
+                let html = "";
+
+                let filteredDepartures = trip_departures;
+                // Get the month from the startTimestamp
+                if (groupDepartureStatus) {
+                    if (dateStr !== "all") {
+                        const startMonth = new Date(dateStr * 1000).getMonth() + 1; // Adding 1 because months are zero-based
+                        // Filter the array based on the start date in PHP strtotime format
+                        filteredDepartures = trip_departures.filter(departure => {
+                            const departureMonth = new Date(departure.from_date.replace(/-/g, '/')).getMonth() + 1; // Adding 1 because months are zero-based
+                            return departureMonth === startMonth
+                        });
+                    }
+                    if (filteredDepartures.length > 0) {
+                        $.each(filteredDepartures, (i, departure) => {
+                            let urlroute = "{{ route('front.trips.departure-booking', ['slug' => 'TRIP_SLUG', 'id' => 'DEPARTURE_ID']) }}";
+                            urlroute = urlroute.replace('TRIP_SLUG', trip.slug);
+                            urlroute = urlroute.replace('DEPARTURE_ID', departure.id);
+                            html += `<div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
+                                <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Group</div>
+                                <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
+                                    <div class="bg-red-600 w-16 text-white text-xs px-1 pt-4 text-center" style="rotate: 45deg; margin-top: -8px">-10%</div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">${formatDate(departure.from_date)}</div>
+                                    <div class="text-sm text-gray-400">From Kathmandu</div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">${formatDate(departure.to_date)}</div>
+                                    <div class="text-sm text-gray-400">To Kathmandu</div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">${departure.seats}</div>
+                                    <div class="text-sm text-gray-400">people booked</div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">From <span class="text-red"><s>US $ ${numberFormatFromString(trip.cost)}</s></span></div>
+                                    <div class="font-bold text-lg">US$ ${numberFormatFromString(departure.price)}</div>
+                                    <div class="text-sm"><span class="text-gray-400">Saving </span>US$ ${numberFormatFromString(trip.cost - departure.price)}</div>
+                                </div>
+                                <div class="flex items-center">
+                                    <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
+                                </div>
+                            </div>`;
+                        })
+                    } else {
+                        html = "No departures found.";
+                    }
+                    console.log(filteredDepartures);
+                    $("#departre-filter-block").html(html);
+                } else {
+                    // private
+                    let startMonth = 1;
+                    if (dateStr !== "all") {
+                        startMonth = new Date(dateStr * 1000).getMonth() + 1;
+                    }
+                    showPrivateDeparture(startMonth);
+                }
             }
 
             function formatDate(date) {
