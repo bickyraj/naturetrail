@@ -39,11 +39,16 @@ class TripController extends Controller
         ])->first();
 
         $canMakeChart = true;
+        // dd($trip->trip_itineraries->toArray());
         $elevations = $trip->trip_itineraries->map(function ($day) use (&$canMakeChart) {
-            if (!is_numeric($day->name)) {
+            if (!is_numeric($day->max_altitude)) {
                 $canMakeChart = false;
             }
-            return $day->max_altitude;
+            // return $day->max_altitude;
+            return [
+                'place_name' => $day->name,
+                'max_altitude' => $day->max_altitude,
+            ];
         })->toArray();
 
         $why_choose_us = \App\WhyChoose::select('id', 'title')->latest()->get();

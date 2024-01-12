@@ -568,7 +568,7 @@
                                 Chart.register(ChartDataLabels);
 
                                 // const labels = ['Kathmandu', 'Kathmandu', 'Phakding', 'Namche Bazar', 'Namche Bazar', 'Tyangboche', 'Dingboche', 'Chukung', 'Lobuche', 'Gorakshep', 'Pheriche', 'Kyangjuma', 'Monjo', 'Lukla', 'Kathmandu'];
-                                const labels = [{{ implode(',', range(1, count($elevations))) }}];
+                                const labels = {!! json_encode(array_column($elevations, 'place_name')) !!};
 
                                 const chartWrapper = document.getElementById('chart-wrapper');
 
@@ -584,7 +584,7 @@
                                         labels: labels,
                                         datasets: [{
                                             label: 'Max. elevation (metres)',
-                                            data: [{{ implode(',', $elevations) }}],
+                                            data: {!! json_encode(array_column($elevations, 'max_altitude')) !!},
                                             fill: true,
                                             backgroundColor: '#93cd0620',
                                             borderWidth: 1,
@@ -604,14 +604,34 @@
                                         },
                                         plugins:{
                                             tooltip: {
-                                                enabled: false
+                                                enabled: true,
+                                                usePointStyle: true,
+                                                callbacks: {
+                                                    labelPointStyle: function(context) {
+                                                        return {
+                                                            pointStyle: 'triangle',
+                                                            rotation: 0
+                                                        };
+                                                    },
+                                                    label: function(context) {
+                                                        let label = context.dataset.label || '';
+
+                                                        if (label) {
+                                                            label += ': ';
+                                                        }
+                                                        if (context.parsed.y !== null) {
+                                                            label += context.parsed.y + 'm'
+                                                        }
+                                                        return label;
+                                                    }
+                                                }
                                             },
                                             datalabels: {
                                                 color: '#3eb368',
                                                 align: 'top',
                                                 offset: 10,
                                                 formatter: function(value, ctx) {
-                                                  return 'Day ' + ctx.chart.data.labels[ctx.dataIndex]+ '\n' + value + ' m';
+                                                  return ctx.chart.data.labels[ctx.dataIndex].substring(0, 10) + '\n' + value + ' m';
                                                 //   return `${value} m`;
                                                 },
                                             },
