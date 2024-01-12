@@ -68,7 +68,7 @@
                             <h3 class="mb-2">Departure</h3>
                             <div>
                                 <span class="text-2xl font-bold text-gray-600">{{ formatDate(date('Y-m-d', $departure_date)) }}</span><br>to
-                                <span class="text-gray-600">{{ formatDate(date('Y-m-d',strtotime('+'.$trip->duration. ' days', $departure_date))) }}</span>
+                                <span class="text-gray-600">{{ formatDate(date('Y-m-d',strtotime('+'.(intVal($trip->duration)-1). ' days', $departure_date))) }}</span>
                             </div>
                         </div>
                     </div>
@@ -146,10 +146,10 @@
                                 <label for="">No. of travellers </label>
                                 <input type="number" name="no_of_travellers" class="form-control" min="1" x-model="noOfTravellers" placeholder="No. of travellers">
                             </div>
-                            {{-- <div class="form-group">
+                            <div class="form-group">
                                 <label for="">Preferred departure date</label>
-                                <input type="date" name="preferred_departure_date" name="" id="" class="form-control" min="{{ date('Y-m-d') }}">
-                            </div> --}}
+                                <input type="date" name="preferred_departure_date" value="{{ date('Y-m-d', $departure_date) }}" id="" class="form-control" min="<?php echo date('Y-m-d'); ?>">
+                            </div>
                             <div class="form-group">
                                 <label for="">Message </label>
                                 <textarea name="message" id="" cols="60" rows="3" class="form-control" placeholder="Message"></textarea>

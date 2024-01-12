@@ -703,6 +703,7 @@
                             </div>\
                             <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="form-control mb-3 form-control-sm" placeholder="Title">\
                             <input type="text" id="input-trip-max-altitude" class="form-control mb-3 form-control-sm" placeholder="Max altitude">\
+                            <input type="text" id="input-trip-place-name" class="form-control mb-3 form-control-sm" placeholder="Place Name">\
                             <input type="text" id="input-trip-accomodation" class="form-control mb-3 form-control-sm" placeholder="Accomodation">\
                             <input type="text" id="input-trip-meals" class="form-control mb-3 form-control-sm" placeholder="Meals">\
                             <input type="file" id="input-trip-image" class="form-control mb-3 form-control-sm">\
@@ -987,6 +988,7 @@
                     var desc = $(v).find('.summernote-itinerary').summernote('code');
                     var day = $(v).find('.day-number').find('input').val();
                     const max_altitude = $(v).find("#input-trip-max-altitude").val();
+                    const place_name = $(v).find("#input-trip-place-name").val();
                     const accomodation = $(v).find("#input-trip-accomodation").val();
                     const meals = $(v).find("#input-trip-meals").val();
                     const fileInput = $(v).find('#input-trip-image');
@@ -999,6 +1001,7 @@
                     formData.append('trip_itineraries[' + i + '][display_order]', i + 1);
                     formData.append('trip_itineraries[' + i + '][description]', desc);
                     formData.append('trip_itineraries[' + i + '][max_altitude]', max_altitude);
+                    formData.append('trip_itineraries[' + i + '][place_name]', place_name);
                     formData.append('trip_itineraries[' + i + '][accomodation]', accomodation);
                     formData.append('trip_itineraries[' + i + '][meals]', meals);
                     formData.append('trip_itineraries[' + i + '][itinerary_id]', itinerary_id);

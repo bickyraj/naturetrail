@@ -614,6 +614,7 @@ class TripController extends Controller
             $itinerary->display_order = $trip_itinerary['display_order'];
             $itinerary->description = $trip_itinerary['description'];
             $itinerary->max_altitude = $trip_itinerary['max_altitude'];
+            $itinerary->place_name = $trip_itinerary['place_name'];
             $itinerary->accomodation = $trip_itinerary['accomodation'];
             $itinerary->meals = $trip_itinerary['meals'];
 

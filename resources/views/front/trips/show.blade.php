@@ -37,6 +37,11 @@
             max-width: 100%;
         }
 
+        .departure-date-active {
+            background-color: #3eb368;
+            color: white;
+        }
+
         .embed-container iframe,
         .embed-container object,
         .embed-container embed {
@@ -721,8 +726,8 @@
                                     }
 
                             ?>
-                            <div class="mb-4 grid grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-2">
-                                <button id="all-departure-filter" class="p-2 border border-primary bg-primary text-white px-4 py-2 text-center rounded font-bold"> All <br> Dep</button>
+                            <div id="all-dates-block" class="mb-4 grid grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-2">
+                                <button id="all-departure-filter" class="p-2 border border-primary departure-date-active px-4 py-2 text-center rounded font-bold"> All <br> Dep</button>
                                 @foreach($monthsArray as $month)
                                     <button data-date="{{ $month }}" class="select-date-departure p-2 border border-gray-100 px-4 py-2 text-center rounded font-bold hover:border-primary hover:text-primary">{{ Str::replaceFirst('-', '<br>', date('M Y', $month)) }}</button>
                                 @endforeach
@@ -1341,7 +1346,18 @@
             $(".select-date-departure").on('click', function(event) {
                 const dateStr = $(this).data('date');
                 filterDepartureByMonth(dateStr);
+                removeDateActive();
+                $(this).addClass('departure-date-active');
             });
+            function removeDateActive() {
+                var parentDiv = document.getElementById('all-dates-block');
+                var childDivs = parentDiv.getElementsByTagName('button');
+                for (var i = 0; i < childDivs.length; i++) {
+                    if (childDivs[i].classList.contains('departure-date-active')) {
+                        childDivs[i].classList.remove('departure-date-active');
+                    }
+                }
+            }
             const trip_departures = @json($trip_departures ?? []);
             const trip = @json($trip);
 
@@ -1527,6 +1543,8 @@
 
             $("#all-departure-filter").on('click', function(event) {
                 filterDepartureByMonth("all");
+                removeDateActive();
+                $(this).addClass('departure-date-active');
             });
 
             function filterDepartureByMonth(dateStr) {
