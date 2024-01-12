@@ -1,15 +1,14 @@
 <?php
-$mapImageUrl = $trip->mapImageUrl;
-if (session()->has('success_message')) {
-    $session_success_message = session('success_message');
-    session()->forget('success_message');
-}
+    $mapImageUrl = $trip->mapImageUrl;
+    if (session()->has('success_message')) {
+        $session_success_message = session('success_message');
+        session()->forget('success_message');
+    }
 
-if (session()->has('error_message')) {
-    $session_error_message = session('error_message');
-    session()->forget('error_message');
-}
-// dd($trip->toArray());
+    if (session()->has('error_message')) {
+        $session_error_message = session('error_message');
+        session()->forget('error_message');
+    }
 ?>
 @extends('layouts.front_inner')
 @section('meta_og_title'){!! $trip->trip_seo->meta_title ?? '' !!}@stop
@@ -75,7 +74,6 @@ if (session()->has('error_message')) {
     </style>
 @endpush
 @section('content')
-
     <section>
         {{-- Sticky Nav --}}
         <div class="text-white tdb bg-primary-dark sticky-top" style="top:5rem;z-index:98">
@@ -689,18 +687,18 @@ if (session()->has('error_message')) {
                             </div>
                             <?php
                             $currentYear = date('Y');
-$currentMonth = date('n');
-$monthsArray = array();
-for ($i = 0; $i < 12; $i++) {
-    $year = $currentYear;
-    $month = $currentMonth + $i;
-    if ($month > 12) {
-        $month -= 12;
-        $year++;
-    }
-    //  $monthsArray[] = date('M Y', );
-     $monthsArray[] = strtotime("$year-$month-01");
-}
+                                    $currentMonth = date('n');
+                                    $monthsArray = array();
+                                    for ($i = 0; $i < 12; $i++) {
+                                        $year = $currentYear;
+                                        $month = $currentMonth + $i;
+                                        if ($month > 12) {
+                                            $month -= 12;
+                                            $year++;
+                                        }
+                                        //  $monthsArray[] = date('M Y', );
+                                        $monthsArray[] = strtotime("$year-$month-01");
+                                    }
 
                             ?>
                             <div class="mb-4 grid grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-2">
@@ -721,11 +719,11 @@ for ($i = 0; $i < 12; $i++) {
                                             </div>
                                             <div>
                                                 <div class="font-bold">{{ formatDate($departure->from_date) }}</div>
-                                                <div class="text-sm text-gray-400">From Kathmandu</div>
+                                                <div class="text-sm text-gray-400">From {{ $trip->starting_point }}</div>
                                             </div>
                                             <div>
                                                 <div class="font-bold">{{ formatDate($departure->to_date) }}</div>
-                                                <div class="text-sm text-gray-400">To Kathmandu</div>
+                                                <div class="text-sm text-gray-400">To {{ $trip->starting_point }}</div>
                                             </div>
                                             <div>
                                                 <div class="font-bold">{{ $departure->seats }}</div>
@@ -737,7 +735,7 @@ for ($i = 0; $i < 12; $i++) {
                                                 <div class="text-sm"><span class="text-gray-400">Saving </span>US$ {{ number_format($trip->cost - $departure->price ) }}</div>
                                             </div>
                                             <div class="flex items-center">
-                                                <a href="{{ route('front.trips.departure-booking', ['slug' => $trip->slug, 'id' => $departure->id]) }}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Check Availability</a>
+                                                <a href="{{ route('front.trips.departure-booking', ['slug' => $trip->slug, 'id' => $departure->id]) }}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
                                             </div>
                                         </div>
                                     @endforeach
@@ -1071,8 +1069,6 @@ for ($i = 0; $i < 12; $i++) {
                             asideIO.observe(document.querySelector('#aside-contents'));
                         </script>
                     @endpush
-
-
                     {{-- <!-- Route Map -->
                         @if ($trip->map_file_name)
                         <div class="mb-8">
@@ -1098,10 +1094,6 @@ for ($i = 0; $i < 12; $i++) {
                             </div>
                         </div>
                     @endif --}}
-
-
-
-
                     {{-- <div class="px-2 py-10 text-white experts-card bg-primary">
                         <div class="grid grid-cols-3">
                             <div class="col-span-2">
@@ -1395,11 +1387,11 @@ for ($i = 0; $i < 12; $i++) {
                             </div>
                             <div>
                                 <div class="font-bold">${formatDate(item.from_date)}</div>
-                                <div class="text-sm text-gray-400">From Kathmandu</div>
+                                <div class="text-sm text-gray-400">From ${trip.starting_point}</div>
                             </div>
                             <div>
                                 <div class="font-bold">${formatDate(item.to_date)}</div>
-                                <div class="text-sm text-gray-400">To Kathmandu</div>
+                                <div class="text-sm text-gray-400">To ${trip.ending_point}</div>
                             </div>
                             <div>
                                 <div class="font-bold">${item.seats}</div>
@@ -1411,7 +1403,7 @@ for ($i = 0; $i < 12; $i++) {
                                 <div class="text-sm"><span class="text-gray-400">Saving </span>US$ ${numberFormatFromString(trip.cost - item.price)}</div>
                             </div>
                             <div class="flex items-center">
-                                <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Check Availability</a>
+                                <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
                             </div>
                         </div>`;
                     $(itemsContainer).append(listItem);
@@ -1431,9 +1423,9 @@ for ($i = 0; $i < 12; $i++) {
                 // Display the first 'limit' items
                 for (let i = 0; i < limit && i < items.length; i++) {
                     const item = items[i];
-                    let urlroute = `{{ route('front.trips.departure-booking', ['slug' => 'TRIP_SLUG', 'id' => 'DEPARTURE_ID']) }}`;
+                    let urlroute = `{{ route('front.trips.private-departure-booking', ['slug' => 'TRIP_SLUG', 'date' => 'DEPARTURE_DATE']) }}`;
                     urlroute = urlroute.replace('TRIP_SLUG', trip.slug);
-                    urlroute = urlroute.replace('DEPARTURE_ID', trip.id);
+                    urlroute = urlroute.replace('DEPARTURE_DATE', item.start);
                     const listItem = `<div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
                             <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Private</div>
                             <div class="absolute top-0 right-0 w-10 h-10 rounded overflow-hidden">
@@ -1441,17 +1433,17 @@ for ($i = 0; $i < 12; $i++) {
                             </div>
                             <div>
                                 <div class="font-bold">${convertToFormattedDate(item.start)}</div>
-                                <div class="text-sm text-gray-400">From Kathmandu</div>
+                                <div class="text-sm text-gray-400">From ${trip.starting_point}</div>
                             </div>
                             <div>
                                 <div class="font-bold">${convertToFormattedDate(item.end)}</div>
-                                <div class="text-sm text-gray-400">To Kathmandu</div>
+                                <div class="text-sm text-gray-400">To ${trip.ending_point}</div>
                             </div>
                             <div>
                                 <div class="font-bold text-lg">US$ ${numberFormatFromString(((trip.offer_price != "")? trip.offer_price: trip.cost))}</div>
                             </div>
                             <div class="flex items-center">
-                                <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Check Availability</a>
+                                <a href="${urlroute}" class="border border-primary py-2 px-3 text-sm text-primary rounded hover:bg-primary hover:text-white">Book Now</a>
                             </div>
                         </div>`;
                     $(itemsContainer).append(listItem);
@@ -1543,11 +1535,11 @@ for ($i = 0; $i < 12; $i++) {
                                 </div>
                                 <div>
                                     <div class="font-bold">${formatDate(departure.from_date)}</div>
-                                    <div class="text-sm text-gray-400">From Kathmandu</div>
+                                    <div class="text-sm text-gray-400">From ${trip.starting_point}</div>
                                 </div>
                                 <div>
                                     <div class="font-bold">${formatDate(departure.to_date)}</div>
-                                    <div class="text-sm text-gray-400">To Kathmandu</div>
+                                    <div class="text-sm text-gray-400">To ${trip.ending_point}</div>
                                 </div>
                                 <div>
                                     <div class="font-bold">${departure.seats}</div>

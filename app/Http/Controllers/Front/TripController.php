@@ -40,7 +40,7 @@ class TripController extends Controller
 
         $canMakeChart = true;
         $elevations = $trip->trip_itineraries->map(function ($day) use (&$canMakeChart) {
-            if (!is_numeric($day->max_altitude)) {
+            if (!is_numeric($day->name)) {
                 $canMakeChart = false;
             }
             return $day->max_altitude;
@@ -64,6 +64,13 @@ class TripController extends Controller
         $trip_departure = \App\TripDeparture::find($departureId);
 
         return view('front.trips.departure-booking', compact('trip', 'trip_departure'));
+    }
+
+    public function privateDepartureBooking(Request $request, $slug)
+    {
+        $trip = Trip::where('slug', '=', $slug)->first();
+        $departure_date = $request->date;
+        return view('front.trips.private-departure-booking', compact('trip', 'departure_date'));
     }
 
     public function search(Request $request)

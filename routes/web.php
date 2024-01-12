@@ -267,6 +267,7 @@ Route::post('/search-ajax', 'Front\TripController@searchAjax')->name('front.trip
 Route::get('/trips', 'Front\TripController@list')->name('front.trips.listing');
 Route::get('/trips/{slug}', 'Front\TripController@show')->name('front.trips.show');
 Route::get('/trips/{slug}/departure-booking/{id}', 'Front\TripController@departureBooking')->name('front.trips.departure-booking');
+Route::get('/trips/{slug}/private-departure-booking', 'Front\TripController@privateDepartureBooking')->name('front.trips.private-departure-booking');
 Route::get('/trips/{slug}/booking', 'Front\TripController@booking')->name('front.trips.booking');
 Route::get('/trips/{slug}/customize', 'Front\TripController@customize')->name('front.trips.customize');
 Route::post('/trips/departure-booking', 'Front\TripController@departureBookingStore')->name('front.trips.departure-booking.store');
