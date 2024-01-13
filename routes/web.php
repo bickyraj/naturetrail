@@ -181,6 +181,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 	Route::post('general/store', 'SiteSettingController@generalStore')->name('settings.general.store');
 	Route::post('social-media/store', 'SiteSettingController@socialMediaStore')->name('settings.socialmedia.store');
 	Route::post('home-page/store', 'SiteSettingController@homePageStore')->name('settings.home-page.store');
+	Route::post('tour-policy/store', 'SiteSettingController@tourPolicyStore')->name('tour-policy.store');
 	Route::post('contact-us/store', 'SiteSettingController@contactUsStore')->name('settings.contact-us.store');
 	Route::get('seo-manager', 'SiteSettingController@seoManager')->name('settings.seo-manager');
 	Route::post('seo-manager', 'SiteSettingController@seoManagerStore')->name('settings.seo-manager.store');

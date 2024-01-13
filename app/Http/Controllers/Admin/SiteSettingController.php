@@ -255,4 +255,11 @@ class SiteSettingController extends Controller
     {
         return view('admin.tourPolicy.index');
     }
+
+    public function tourPolicyStore(Request $request)
+    {
+        $request->get('tourPolicy') ? Setting::update('tourPolicy', $request->get('tourPolicy')) : '';
+        session()->flash('success_message', __('alerts.update_success'));
+        return redirect()->route('admin.settings.tour-policy');
+    }
 }
