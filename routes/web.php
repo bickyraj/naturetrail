@@ -177,11 +177,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 	Route::delete('menus/delete/{id}', 'MenuController@destroy')->name('menus.delete');
 
 	Route::get('tourPolicy', 'SiteSettingController@tourPolicy')->name('settings.tour-policy');
+	Route::get('price-box', 'SiteSettingController@priceBox')->name('settings.price-box');
+	Route::get('why-book-with-us', 'SiteSettingController@whyBookWithUs')->name('settings.why-book-with-us');
 	Route::get('general', 'SiteSettingController@general')->name('settings.general');
 	Route::post('general/store', 'SiteSettingController@generalStore')->name('settings.general.store');
 	Route::post('social-media/store', 'SiteSettingController@socialMediaStore')->name('settings.socialmedia.store');
 	Route::post('home-page/store', 'SiteSettingController@homePageStore')->name('settings.home-page.store');
 	Route::post('tour-policy/store', 'SiteSettingController@tourPolicyStore')->name('tour-policy.store');
+	Route::post('price-box-description/store', 'SiteSettingController@priceBoxStore')->name('price-box.store');
+	Route::post('why-book-with-us/store', 'SiteSettingController@whyBookWithUsStore')->name('why-book-with-us.store');
 	Route::post('contact-us/store', 'SiteSettingController@contactUsStore')->name('settings.contact-us.store');
 	Route::get('seo-manager', 'SiteSettingController@seoManager')->name('settings.seo-manager');
 	Route::post('seo-manager', 'SiteSettingController@seoManagerStore')->name('settings.seo-manager.store');

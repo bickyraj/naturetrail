@@ -825,7 +825,8 @@
                     {{-- Why book --}}
                     <div class="p-4 bg-light border border-primary" x-data="{isExpanded: false}">
                         <div class="mb-2 font-display text-xl uppercase">Why Book with Nature Trail</div>
-                        <ul class="mb-2 grid grid-cols-2 gap-2">
+                        <?= Setting::get('whyBookWithUs')??'' ?>
+                        <!-- <ul class="mb-2 grid grid-cols-2 gap-2">
                             <li class="relative pl-6">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
                                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
@@ -864,7 +865,7 @@
                                     </svg>
                                     25,000+ trip reviews, with an average rating of 4.8 out of 5.</li>
                             </div>
-                        </ul>
+                        </ul> -->
                         <div class="text-sm text-primary">
                             <button x-on:click="isExpanded=true" x-show="!isExpanded">Read more reasons to book with Nature Trail</button>
                             <button x-on:click="isExpanded=false" x-show="isExpanded">Read less</button>

@@ -256,10 +256,34 @@ class SiteSettingController extends Controller
         return view('admin.tourPolicy.index');
     }
 
+    public function priceBox()
+    {
+        return view('admin.priceBox.index');
+    }
+
+    public function whyBookWithUs()
+    {
+        return view('admin.whyBookWithUs.index');
+    }
+
     public function tourPolicyStore(Request $request)
     {
         $request->get('tourPolicy') ? Setting::update('tourPolicy', $request->get('tourPolicy')) : '';
         session()->flash('success_message', __('alerts.update_success'));
         return redirect()->route('admin.settings.tour-policy');
+    }
+
+    public function priceBoxStore(Request $request)
+    {
+        $request->get('priceBox') ? Setting::update('priceBox', $request->get('priceBox')) : '';
+        session()->flash('success_message', __('alerts.update_success'));
+        return redirect()->route('admin.settings.price-box');
+    }
+
+    public function whyBookWithUsStore(Request $request)
+    {
+        $request->get('whyBookWithUs') ? Setting::update('whyBookWithUs', $request->get('whyBookWithUs')) : '';
+        session()->flash('success_message', __('alerts.update_success'));
+        return redirect()->route('admin.settings.why-book-with-us');
     }
 }
