@@ -46,7 +46,7 @@ class TripController extends Controller
             }
             // return $day->max_altitude;
             return [
-                'place_name' => $day->place_name,
+                'place_name' => $day->place_name ?? "-",
                 'max_altitude' => $day->max_altitude,
             ];
         })->toArray();
