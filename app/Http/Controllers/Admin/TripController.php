@@ -602,7 +602,7 @@ class TripController extends Controller
         $existing_trip_itineraries = $trip->trip_itineraries()->pluck('id')->toArray();
         $updated_trip_itineraries = [];
         foreach ($trip_itineraries as $trip_itinerary) {
-            if ($trip_itinerary['itinerary_id'] != "undefined") {
+            if (isset($trip_itinerary['itinerary_id']) && !empty($trip_itinerary['itinerary_id'])) {
                 $itinerary = TripItinerary::find($trip_itinerary['itinerary_id']);
                 $updated_trip_itineraries[] = $trip_itinerary['itinerary_id'];
             } else {

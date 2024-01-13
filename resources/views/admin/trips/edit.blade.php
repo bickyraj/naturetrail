@@ -702,8 +702,8 @@
                               </div>\
                             </div>\
                             <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="form-control mb-3 form-control-sm" placeholder="Title">\
-                            <input type="text" id="input-trip-max-altitude" class="form-control mb-3 form-control-sm" placeholder="Max altitude">\
                             <input type="text" id="input-trip-place-name" class="form-control mb-3 form-control-sm" placeholder="Place Name">\
+                            <input type="text" id="input-trip-max-altitude" class="form-control mb-3 form-control-sm" placeholder="Max altitude">\
                             <input type="text" id="input-trip-accomodation" class="form-control mb-3 form-control-sm" placeholder="Accomodation">\
                             <input type="text" id="input-trip-meals" class="form-control mb-3 form-control-sm" placeholder="Meals">\
                             <input type="file" id="input-trip-image" class="form-control mb-3 form-control-sm">\
@@ -987,8 +987,8 @@
                 $.each($("#itinerary-block>.itinerary-group"), function(i, v) {
                     var desc = $(v).find('.summernote-itinerary').summernote('code');
                     var day = $(v).find('.day-number').find('input').val();
-                    const max_altitude = $(v).find("#input-trip-max-altitude").val();
                     const place_name = $(v).find("#input-trip-place-name").val();
+                    const max_altitude = $(v).find("#input-trip-max-altitude").val();
                     const accomodation = $(v).find("#input-trip-accomodation").val();
                     const meals = $(v).find("#input-trip-meals").val();
                     const fileInput = $(v).find('#input-trip-image');
