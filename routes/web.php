@@ -176,6 +176,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 	Route::post('menus', 'MenuController@store')->name('menus.store');
 	Route::delete('menus/delete/{id}', 'MenuController@destroy')->name('menus.delete');
 
+	Route::get('tourPolicy', 'SiteSettingController@tourPolicy')->name('settings.tour-policy');
 	Route::get('general', 'SiteSettingController@general')->name('settings.general');
 	Route::post('general/store', 'SiteSettingController@generalStore')->name('settings.general.store');
 	Route::post('social-media/store', 'SiteSettingController@socialMediaStore')->name('settings.socialmedia.store');

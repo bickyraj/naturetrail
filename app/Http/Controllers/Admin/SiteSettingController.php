@@ -250,4 +250,9 @@ class SiteSettingController extends Controller
 
         return  redirect()->route('admin.setting.img-dimension');
     }
+
+    public function tourPolicy()
+    {
+        return view('admin.tourPolicy.index');
+    }
 }
