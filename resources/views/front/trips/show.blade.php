@@ -711,20 +711,20 @@
                                 </div>
                             </div>
                             <?php
-                            $currentYear = date('Y');
-                                    $currentMonth = date('n');
-                                    $monthsArray = array();
-                                    for ($i = 0; $i < 12; $i++) {
-                                        $year = $currentYear;
-                                        $month = $currentMonth + $i;
-                                        if ($month > 12) {
-                                            $month -= 12;
-                                            $year++;
-                                        }
-                                        //  $monthsArray[] = date('M Y', );
-                                        $monthsArray[] = strtotime("$year-$month-01");
+                                $currentYear = date('Y');
+                                $currentMonth = date('n');
+                                $monthsArray = array();
+                                for ($i = 0; $i < 26; $i++) {
+                                    $year = $currentYear;
+                                    $month = $currentMonth + $i;
+                                    if ($month > 24) {
+                                        break;
+                                    } elseif ($month > 12) {
+                                        $month -= 12;
+                                        $year++;
                                     }
-
+                                    $monthsArray[] = strtotime("$year-$month-01");
+                                }
                             ?>
                             <div id="all-dates-block" class="mb-4 grid grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-2">
                                 <button id="all-departure-filter" class="p-2 border border-primary departure-date-active px-4 py-2 text-center rounded font-bold"> All <br> Dep</button>
@@ -735,7 +735,7 @@
 
                             <div class="mb-6 grid gap-4">
                                 <?php $trip_departures = $trip->trip_departures;?>
-                                <div id="departure-filter-block">
+                                <div id="departure-filter-block" class="grid gap-4">
                                     @foreach ($trip_departures as $departure)
                                         <div class="grid grid-cols-2 lg:grid-cols-5 lg:place-items-center gap-4 relative p-4 border border-gray-100 rounded hover:border-primary">
                                             <div class="absolute top-0 left-4 border border-gray-100 bg-white px-1 rounded-full text-xs text-gray-400" style="translate: 0 -50%;">Group</div>
@@ -825,47 +825,43 @@
                     {{-- Why book --}}
                     <div class="p-4 bg-light border border-primary" x-data="{isExpanded: false}">
                         <div class="mb-2 font-display text-xl uppercase">Why Book with Nature Trail</div>
-                        <?= Setting::get('whyBookWithUs')??'' ?>
-                        <!-- <ul class="mb-2 grid grid-cols-2 gap-2">
-                            <li class="relative pl-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-                                Earn <b class="font-bold">US$ 39+</b> in travel credits.</li>
-                            <li class="relative pl-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-                                Excellent customer service. Our travel experts are ready to help you 24/7.</li>
-                            <li class="relative pl-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-                                Best price guaranteed.</li>
-                            <li class="relative pl-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-                                No credit card or booking fees.</li>
-                            <li class="relative pl-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-                                100% financial protection. </li>
-                            <li class="relative pl-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-                                Carbon neutral tours.</li>
+
+                        @php
+                            // generate the list of items from from the html content
+                            $whyBookWithUsContent = Setting::get('whyBookWithUs');
+                            $dom = new DomDocument;
+                            $dom->loadHTML($whyBookWithUsContent);
+
+                            $ulElement = $dom->getElementsByTagName('ul')->item(0);
+                            $listItems = array();
+                            if ($ulElement) {
+                                foreach ($ulElement->getElementsByTagName('li') as $liElement) {
+                                    $listItems[] = substr($liElement->ownerDocument->saveHTML($liElement), 4, -5);
+                                }
+                            }
+                        @endphp
+                        <ul class="mb-2 grid grid-cols-2 gap-2">
+                            @foreach ($listItems as $item)
+                                @if ($loop->index < 6)
+                                    <li class="relative pl-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                        </svg>
+                                        {!! $item !!}
+                                    </li>
+                                @else
+                                    <div class="col-span-2" x-show="isExpanded">
+                                        <li class="relative pl-6 pb-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                            </svg>
+                                            {!! $item !!}
+                                        </li>
+                                    </div>
+                                @endif
+                            @endforeach
                             {{-- li elements after the 6th --}}
-                            <div class="col-span-2" x-show="isExpanded">
-                                <li class="relative pl-6 pb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 text-primary absolute top-1 left-0" viewBox="0 0 16 16">
-                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                    </svg>
-                                    25,000+ trip reviews, with an average rating of 4.8 out of 5.</li>
-                            </div>
-                        </ul> -->
+                        </ul>
                         <div class="text-sm text-primary">
                             <button x-on:click="isExpanded=true" x-show="!isExpanded">Read more reasons to book with Nature Trail</button>
                             <button x-on:click="isExpanded=false" x-show="isExpanded">Read less</button>
@@ -947,7 +943,7 @@
                                 <a href="#reviews" class="block text-sm text-center">from {{ $trip->reviews_count }} reviews</a>
                             </div>
 
-                            <div class="mb-10 grid gap-10 lg:grid-cols-1 lg:gap-3">
+                            <div class="mb-10 grid gap-10">
 
                                 @foreach ($trip->trip_reviews()->where('status', 1)->get() as $review)
                                     <div class="review">
@@ -1044,31 +1040,32 @@
                             <div class="font-bold mb-4">
                                 Tour with Flexible Booking Policy
                             </div>
-                            <?= Setting::get('tourPolicy')??'' ?>
-                            {{-- <ul>
-                                <li class="flex gap-2 mb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="flex-shrink-0 w-8 h-8 text-primary -mt-1" viewBox="0 0 16 16">
-                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                    </svg>
-                                    <div class="prose text-sm">
-                                        <div class="font-bold">
-                                            Change dates
+                            @php
+                                // generate the list of items from from the html content
+                                $tourPolicyContent = Setting::get('tourPolicy');
+                                $dom = new DomDocument;
+                                $dom->loadHTML($tourPolicyContent);
+
+                                $ulElement = $dom->getElementsByTagName('ul')->item(0);
+                                $listItems = array();
+                                if ($ulElement) {
+                                    foreach ($ulElement->getElementsByTagName('li') as $liElement) {
+                                        $listItems[] = substr($liElement->ownerDocument->saveHTML($liElement), 4, -5);
+                                    }
+                                }
+                            @endphp
+                            <ul>
+                                @foreach ($listItems as $item)
+                                    <li class="flex gap-2 mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="flex-shrink-0 w-8 h-8 text-primary -mt-1" viewBox="0 0 16 16">
+                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                        </svg>
+                                        <div class="prose text-sm">
+                                            {!! $item !!}
                                         </div>
-                                        It is free to change your tour start date prior to 30 days of departure.
-                                    </div>
-                                </li>
-                                <li class="flex gap-2 mb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="flex-shrink-0 w-8 h-8 text-primary -mt-1" viewBox="0 0 16 16">
-                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                    </svg>
-                                    <div class="prose text-sm">
-                                        <div class="font-bold">
-                                            Choose a different tour
-                                        </div>
-                                        You can select a new tour run by the same operator up to 30 days before departure.
-                                    </div>
-                                </li>
-                            </ul> --}}
+                                    </li>
+                                @endforeach
+                            </ul>
                         </div>
 
                     </div>
@@ -1217,7 +1214,11 @@
     </section>
 
     <div class="fixed bottom-0 left-0 right-0 px-4 py-2 bg-white shadow-sm lg:none">
-        <a href="" class="w-full mb-2 btn btn-primary">Book Now</a>
+        @if ($trip->trip_departures->isEmpty())
+            <a href="{{ route('front.trips.booking', $trip->slug) }}" class="mb-2 btn btn-primary w-full">Book Now</a>
+        @else
+            <a href="#date-price" class="mb-2 btn btn-primary w-full">Check Availability</a>
+        @endif
     </div>
 
     <div id="ex1" class="modal" style="max-width: 70%;">
@@ -1373,7 +1374,7 @@
             $("#private-departure").on('click', function(event) {
                 document.getElementById("group-departure").classList.remove('text-primary', 'border-primary');
                 document.getElementById("private-departure").classList.add('text-primary', 'border-primary');
-                showPrivateDeparture();
+                showPrivateDeparture(2024, 1);
                 groupDepartureStatus = false;
             });
 
@@ -1391,11 +1392,14 @@
                 }
             }
 
-            function showPrivateDeparture(month = 1) {
+            const monthArray = @json($monthsArray ?? []);
+            function showPrivateDeparture(year, month) {
                 const trip_days = {!! json_encode($trip->duration) !!};
                 const dateList = [];
                 let next = true;
-                let startDate = convertToTimestamp(`2024-0${month}-01`);
+                var currentDate = new Date();
+                var currentDay = currentDate.getDate().toString().padStart(2, '0');
+                let startDate = convertToTimestamp(`${year}-0${month}-${currentDay}`);
                 while (next) {
                     const generateDate = getDateRangeForGap(startDate, parseInt(trip_days));
                     dateList.push(generateDate);
@@ -1508,9 +1512,12 @@
 
             function isTimestampInMonth(timestamp, targetMonth) {
                 const date = new Date(timestamp * 1000);
-                const month = date.getMonth() + 1; // Adding 1 to match the input targetMonth (1-based)
-
-                return month === targetMonth;
+                const month = date.getMonth() + 1;
+                const year = date.getFullYear();
+                if (month == targetMonth) {
+                    return true;
+                }
+                return false;
             }
 
             function getNextDayTimestamp(timestamp) {
@@ -1553,13 +1560,11 @@
                 let html = "";
 
                 let filteredDepartures = trip_departures;
-                // Get the month from the startTimestamp
                 if (groupDepartureStatus) {
                     if (dateStr !== "all") {
-                        const startMonth = new Date(dateStr * 1000).getMonth() + 1; // Adding 1 because months are zero-based
-                        // Filter the array based on the start date in PHP strtotime format
+                        const startMonth = new Date(dateStr * 1000).getMonth() + 1;
                         filteredDepartures = trip_departures.filter(departure => {
-                            const departureMonth = new Date(departure.from_date.replace(/-/g, '/')).getMonth() + 1; // Adding 1 because months are zero-based
+                            const departureMonth = new Date(departure.from_date.replace(/-/g, '/')).getMonth() + 1;
                             return departureMonth === startMonth
                         });
                     }
@@ -1606,7 +1611,8 @@
                     if (dateStr !== "all") {
                         startMonth = new Date(dateStr * 1000).getMonth() + 1;
                     }
-                    showPrivateDeparture(startMonth);
+                    const startyear = new Date(dateStr * 1000).getFullYear();
+                    showPrivateDeparture(startyear, startMonth);
                 }
             }
 

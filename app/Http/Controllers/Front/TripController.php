@@ -10,7 +10,9 @@ use App\Helpers\Setting;
 use App\Services\Recaptcha\RecaptchaService;
 use App\Trip;
 use Carbon\Carbon;
+use Route;
 use DB;
+use Illuminate\Support\Facades\URL;
 
 class TripController extends Controller
 {
@@ -209,7 +211,7 @@ class TripController extends Controller
             $query->orderBy('offer_price', $sortBy);
         }
 
-        $trips = $query->latest()->paginate($this->page_limit);
+        $trips = $query->paginate($this->page_limit);
         $html = "";
         if (!empty($trips)) {
             foreach ($trips as $trip) {
@@ -239,12 +241,11 @@ class TripController extends Controller
 
     public function bookingStore(Request $request)
     {
+
         $request->validate([
             'id' => 'required'
         ]);
-
         $trip = Trip::find($request->id);
-
         $request->merge([
             'trip_name' => $trip->name,
             'ip_address' => $request->ip()
@@ -257,9 +258,17 @@ class TripController extends Controller
                 $message->subject('Trip Booking');
             });
             session()->flash('success_message', "Thank you for your Booking. We'll contact you very soon.");
+            $refererUrl = app('router')->getRoutes()->match(app('request')->create(URL::previous()))->getName();
+            if ($refererUrl == 'front.trips.private-departure-booking') {
+                return redirect()->route('front.trips.show', $trip->slug);
+            }
             return redirect()->back();
         } catch (\Exception $e) {
             Log::info($e->getMessage());
+            $refererUrl = app('router')->getRoutes()->match(app('request')->create(URL::previous()))->getName();
+            if ($refererUrl == 'front.trips.private-departure-booking') {
+                return redirect()->route('front.trips.show', $trip->slug);
+            }
             return redirect()->back();
         }
     }
